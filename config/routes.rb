@@ -2,6 +2,17 @@ Rails.application.routes.draw do
 
   root 'pages#home'
   devise_for :users
+  devise_for :admin_users
+
+
+  namespace :admin do
+    resources :dashboard do
+      post 'approve', on: :member
+    end
+  end
+  namespace :trader do
+    resources :dashboard
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

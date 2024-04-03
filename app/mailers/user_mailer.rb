@@ -7,6 +7,6 @@ class UserMailer < ApplicationMailer
 
   def approved_email(user)
       @user = user
-      mail(to: @user.email, subject: 'Registration Approved')
+      mail(to: @user.email, subject: 'Your Trader Account has been Approved')
   end
 end

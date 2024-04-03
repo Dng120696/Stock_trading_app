@@ -1,0 +1,11 @@
+<h1>hello admin</h1>
+<%= button_to 'Logout', destroy_admin_user_session_path, method: :delete %>
+
+
+<% @users.each do |user| %>
+  <div class="grid grid-cols-3">
+    <p><%= user.email %></p>
+    <p><%= user.status %></p>
+    <%= button_to "Approve", approve_admin_dashboard_path(user), method: :post %>
+  </div>
+<% end %>
