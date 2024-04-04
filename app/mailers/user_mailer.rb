@@ -1,12 +1,12 @@
 class UserMailer < ApplicationMailer
   default from: 'dongyang0016@gmail.com'
-  def pending_email(user)
+  def newtrader_pending_email(user)
       @user = user
-      mail(to: @user.email, subject: 'Registration Received')
+      mail(to: @user.email, subject: 'Welcome to Our Trading Community!')
   end
 
   def approved_email(user)
       @user = user
-      mail(to: @user.email, subject: 'Your Trader Account has been Approved')
+      mail(to: @user.email, subject: "Congratulations, #{@user.firstname} #{@user.lastname}!")
   end
 end

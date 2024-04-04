@@ -1,3 +1,8 @@
-<p>Good news, <%= @user.firstname %> <%= @user.lastname %>!</p>
-<p>Your application has been approved. You may now start trading using your registered email.</p>
-<p>- Stock Harbor Team</p>
+<h3>Good news, <%= @user.firstname %> <%= @user.lastname %>!</h3>
+  <p>Congratulations! Your application has been approved. You are now officially a member of our trading community.</p>
+  <p>You may now start trading using your registered email.</p>
+  <p>Your new account balance is <%= number_to_currency(@user.balance, unit: '₱') %> pesos.</p>
+  <p>We wish you great success in your trading endeavors. If you have any questions or need assistance, feel free to reach out to us.</p>
+  <p>Happy trading!</p>
+  <p>Best regards,</p>
+  <p>Your Trading Community Team</p>

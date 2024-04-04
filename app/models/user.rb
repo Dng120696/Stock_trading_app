@@ -10,10 +10,10 @@ class User < ApplicationRecord
   private
 
   def send_status_email
-      UserMailer.pending_email(self).deliver_now
+      UserMailer.newtrader_pending_email(self).deliver_now
   end
   def send_admin_notification
-    AdminMailer.new_user_notification(self).deliver_now
+    AdminMailer.new_user_notification(AdminUser.first).deliver_now
   end
 
 end

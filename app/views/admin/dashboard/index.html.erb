@@ -4,8 +4,10 @@
 
 <% @users.each do |user| %>
   <div class="grid grid-cols-3">
+  <% if user.confirmed?%>
     <p><%= user.email %></p>
     <p><%= user.status %></p>
     <%= button_to "Approve", approve_admin_dashboard_path(user), method: :post %>
+  <%end%>
   </div>
 <% end %>
