@@ -1,2 +1,49 @@
-<h1>hello trader</h1>
+<h1>hello <%= current_user.firstname%> </h1>
+<p>Your Balance: <%= number_to_currency(current_user.balance, unit: '₱') %></p>
+<div>
+<h2>Explore Stocks</h2>
+
+# SEARCH BAR --->
+<%= form_tag trader_dashboard_index_path, method: :get do %>
+<div class="search-bar">
+<%= text_field_tag :search, params[:search], placeholder: 'Enter stock symbol...' %>
+<%= submit_tag 'Search', class: '' %>
+</div>
+<% end %>
+
+
+<ul class = 'grid grid-cols-6 text-2xl font-bold text-center mb-2'>
+  <li>Symbol</li>
+  <li>Company Name</li>
+  <li> Price</li>
+  <li> Change</li>
+  <li> High Price</li>
+  <li> Low Price</li>
+</ul>
+<% if @stock %>
+  <div class = 'grid grid-cols-6 text-center'>
+    <p><%= @stock.symbol %></p>
+    <p><%= @stock.company_name %></p>
+    <p><%= @stock.latest_price %></p>
+    <p><%= @stock.change %></p>
+    <p><%= @stock.week_52_high%></p>
+    <p><%= @stock.week_52_low %></p>
+    </div>
+<%else%>
+    <p class = 'text-center text-gray-400'> No Records Found</p>
+<% end %>
+
+<div class = 'border-t-[1px] mt-4'>
+<h1 class = 'text-3xl font-bold'>Top 10 List of Stocks</h1>
+<% @top_stocks.each do |stock| %>
+  <div class = 'grid grid-cols-6 text-center'>
+    <p> <%= stock.symbol%></p>
+    <p> <%= stock.company_name%></p>
+    <p> <%= stock.latest_price%></p>
+    <p> <%= stock.change%></p>
+    <p><%= stock.week_52_high%></p>
+    <p><%= stock.week_52_low %></p>
+</div>
+</div>
+<%end%>
 <%= button_to 'Logout', destroy_user_session_path, method: :delete %>

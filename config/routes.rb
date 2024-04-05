@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   end
   namespace :trader do
     resources :dashboard
+    resources :stock
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

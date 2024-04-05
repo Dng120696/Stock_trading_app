@@ -5,8 +5,8 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     if resource.is_a?(AdminUser)
       admin_dashboard_index_path
-    elsif resource.is_a?(Trader)
-      trader_dashboard_path
+    elsif resource.is_a?(User)
+      trader_dashboard_index_path
     else
       root_path
     end

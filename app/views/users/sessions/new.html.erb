@@ -19,8 +19,10 @@
   <% end %>
 
   <div class="actions">
-    <%= f.submit "Log in" %>
+    <%= f.submit "Log in",class: 'py-2 px-6 border-[1px] ' %>
   </div>
-<% end %>
-
+  <% end %>
+  <p class = ' my-2'>
+  <%= link_to 'Admin Sign In', new_admin_user_session_path, class: 'py-2 px-4 border-[1px] '%>
+  </p>
 <%= render "users/shared/links" %>
