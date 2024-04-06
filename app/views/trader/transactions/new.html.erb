@@ -1,0 +1,51 @@
+
+
+<div class = ''>
+
+    <h1><%= @transaction.transaction_type == 'buy' ? 'Buy' : 'Sell' %> stock</h1>
+    <%= link_to "Back to dashboard", trader_dashboard_index_path, class: '' %>
+
+    <div class='' >
+    <div class="text-red-400 text-sm my-4">
+    <% if @transaction.errors.any? %>
+      <h2>The following errors prevented the category from being saved:</h2>
+      <ul class = 'list-disc  pl-8'>
+        <% @transaction.errors.full_messages.each do |error| %>
+          <li class = ''><%= error %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+
+    <%= form_with(model: @transaction, url:trader_transactions_path, method: :post,data:{turbo:false}) do |f| %>
+
+        <div class="transaction-form-field">
+          <%= f.label :stock_symbol %><br />
+          <%= f.text_field :stock_symbol, value: @transaction.stock_symbol, readonly: true %>
+        </div>
+
+        <div class="transaction-form-field">
+          <%= f.label :stock_price %><br />
+          <%= f.text_field :stock_price, value: @transaction.stock_price, readonly: true %>
+        </div>
+
+        <div class="transaction-form-field">
+          <%= f.label :quantity %><br />
+          <%= f.number_field :quantity, value:1, min: 1, placeholder: 'minimum: 1' %>
+
+        </div>
+
+        <%= f.hidden_field :transaction_type, value: @transaction.transaction_type %>
+
+        <% if params[:transaction][:transaction_type] == 'buy' %>
+
+          <%= f.submit "Buy", class: 'btn btn-success' %>
+        <% else %>
+          <%= f.submit "Sell", class: 'btn btn-success' %>
+
+        <% end %>
+      <% end %>
+    </div>
+
+
+</div>

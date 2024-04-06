@@ -3,7 +3,6 @@
 <div>
 <h2>Explore Stocks</h2>
 
-# SEARCH BAR --->
 <%= form_tag trader_dashboard_index_path, method: :get do %>
 <div class="search-bar">
 <%= text_field_tag :search, params[:search], placeholder: 'Enter stock symbol...' %>
@@ -27,7 +26,11 @@
     <p><%= @stock.latest_price %></p>
     <p><%= @stock.change %></p>
     <p><%= @stock.week_52_high%></p>
-    <p><%= @stock.week_52_low %></p>
+    <p><%= @stock.week_52_low %></p>>
+    <%= link_to 'Buy', new_trader_transaction_path(transaction: { stock_symbol: @stock.symbol, stock_price: @stock.latest_price, transaction_type: :buy }) %>
+
+    <%= link_to 'Sell', new_trader_transaction_path(transaction: { stock_symbol: @stock.symbol, stock_price: @stock.latest_price, transaction_type: :sell }), class: "#{Stock.exists?(symbol: @stock.symbol) ? '' : 'cursor-not-allowed text-color-[#999] pointer-events-none' }" %>
+
     </div>
 <%else%>
     <p class = 'text-center text-gray-400'> No Records Found</p>
@@ -43,6 +46,8 @@
     <p> <%= stock.change%></p>
     <p><%= stock.week_52_high%></p>
     <p><%= stock.week_52_low %></p>
+    <%= link_to 'Buy', new_trader_transaction_path(transaction: { stock_symbol: stock.symbol, stock_price: stock.latest_price, transaction_type: :buy })%>
+    <%= link_to 'Sell', new_trader_transaction_path(transaction: { stock_symbol: stock.symbol, stock_price: stock.latest_price, transaction_type: :sell }), class: "#{ current_user.stocks.exists?(symbol: stock.symbol) ? '' : 'cursor-not-allowed text-color-[#999] pointer-events-none' }" %>
 </div>
 </div>
 <%end%>

@@ -11,8 +11,9 @@ Rails.application.routes.draw do
     end
   end
   namespace :trader do
-    resources :dashboard
-    resources :stock
+   resources :transactions, only: [ :new, :create ]
+    resources :dashboard,only:[:index]
+    resources :stocks,only: [:create]
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
