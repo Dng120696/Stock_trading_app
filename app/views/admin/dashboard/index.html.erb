@@ -2,6 +2,7 @@
 <%= button_to 'Logout', destroy_admin_user_session_path, method: :delete %>
 
 
+
 <% @users.each do |user| %>
   <div class="grid grid-cols-3">
   <% if user.confirmed?%>
