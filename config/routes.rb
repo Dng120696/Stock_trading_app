@@ -11,7 +11,8 @@ Rails.application.routes.draw do
     end
   end
   namespace :trader do
-   resources :transactions, only: [ :new, :create ]
+    get 'portfolio/index'
+   resources :transactions, only: [:index,:new, :create ]
     resources :dashboard,only:[:index]
     resources :stocks,only: [:create]
   end

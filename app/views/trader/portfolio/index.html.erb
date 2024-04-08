@@ -1,0 +1,16 @@
+<% @stocks.each do |stock|%>
+  <ul>
+    <li>
+    <%= stock.symbol%>
+    </li>
+    <li>
+    <%= stock.company_name%>
+    </li>
+    <li>
+    <%= stock.latest_price%>
+    </li>
+    <li>
+    <%= stock.shares%>
+    </li>
+
+<%end%>

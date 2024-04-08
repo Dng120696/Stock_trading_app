@@ -1,5 +1,5 @@
 class UserMailer < ApplicationMailer
-  default from: 'dongyang0016@gmail.com'
+  default from:'stock.trader798@gmail.com'
   def newtrader_pending_email(user)
       @user = user
       mail(to: @user.email, subject: 'Welcome to Our Trading Community!')

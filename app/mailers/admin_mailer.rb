@@ -1,6 +1,7 @@
 class AdminMailer < ApplicationMailer
-  def new_user_notification(admin)
+  def new_user_notification(user,admin)
     @admin = admin
-    mail(to: 'dongyang0016@gmail.com', subject: "New User Sign Up")
+    @user = user
+    mail(to: 'stock.trader798@gmail.com', subject: "New User Sign Up")
   end
 end

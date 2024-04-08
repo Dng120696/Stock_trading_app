@@ -14,7 +14,7 @@ class User < ApplicationRecord
       UserMailer.newtrader_pending_email(self).deliver_now
   end
   def send_admin_notification
-    AdminMailer.new_user_notification(AdminUser.first).deliver_now
+    AdminMailer.new_user_notification(self,AdminUser.last).deliver_now
   end
 
 end

@@ -1,20 +1,29 @@
 class Trader::TransactionsController < ApplicationController
-
+  def index
+      @transactions = current_user.transactions
+  end
   def new
     @transaction = current_user.transactions.new(transaction_params)
 
   end
   def create
     @transaction = current_user.transactions.new(transaction_params)
-    @stock = Stock.buy_stock(current_user, @transaction.stock_symbol, @transaction.quantity)
-    puts "@stock: #{@stock.inspect}"
-    if @stock.nil?
-      flash[:error] = "Error buying stock. Stock symbol not found."
-      redirect_to new_trader_transaction_path(transaction_params)
-      return
+    @transaction.total = @transaction.quantity * @transaction.stock_price
+
+    unless transaction_valid?
+      redirect_with_flash('Not enough money') and return
     end
 
-    @transaction.total = @transaction.quantity * @transaction.stock_price
+    @stock = Stock.buy_stock(current_user, @transaction.stock_symbol, @transaction.quantity, @transaction.transaction_type)
+    puts @stock
+    case @stock
+    when :insufficient_shares
+      redirect_with_flash('Not enough Shares.') and return
+    when :symbol_not_found
+      redirect_with_flash('Error buying stock. Stock symbol not found.') and return
+    end
+
+    # Continue with processing the transaction
     @transaction.stock_id = @stock.id
 
     if @transaction.save
@@ -25,8 +34,16 @@ class Trader::TransactionsController < ApplicationController
     end
   end
 
-
   private
+
+  def transaction_valid?
+    current_user.balance >= @transaction.total
+  end
+
+  def redirect_with_flash(message)
+    flash[:notice] = message
+    redirect_to new_trader_transaction_path(transaction: transaction_params)
+  end
   def update_user_balance
     if @transaction.buy?
       current_user.update(balance: current_user.balance - @transaction.total_cost)

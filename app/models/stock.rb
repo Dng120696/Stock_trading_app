@@ -1,18 +1,33 @@
 class Stock < ApplicationRecord
-  has_many :transactions
+  has_many :transactions,dependent: :destroy
   belongs_to :user
-  def self.buy_stock(user, ticker_symbol, quantity)
+  validates_presence_of :symbol , :company_name, :latest_price, :shares
+
+
+
+  def self.buy_stock(user, ticker_symbol, quantity,type)
     # Fetch stock data from API
     stock_data = new_lookup(ticker_symbol)
 
     if stock_data.present?
       existing_stock = user.stocks.find_by(symbol: stock_data.symbol)
       if existing_stock
-        # Update quantity and total price if the stock already exists
-        existing_stock.update(
-          shares: existing_stock.shares + quantity,
-          latest_price: stock_data.latest_price
-        )
+        if type == 'buy'
+          existing_stock.update(
+            shares: existing_stock.shares + quantity,
+            latest_price: stock_data.latest_price
+            )
+          else
+            if existing_stock.shares >= quantity
+              existing_stock.update(
+                shares: existing_stock.shares - quantity,
+                latest_price: stock_data.latest_price
+                )
+              else
+                return :insufficient_shares
+          end
+        end
+
         existing_stock
       else
         # Create a new stock if it doesn't exist
@@ -25,7 +40,7 @@ class Stock < ApplicationRecord
         )
       end
     else
-      nil  # Return nil if the symbol is not found or there's an error
+      return :symbol_not_found
     end
   end
 

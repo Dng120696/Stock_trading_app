@@ -1,3 +1,21 @@
+<nav class = 'flex items-center justify-between w-[clamp(30rem,90%,120rem)] mx-auto py-6'>
+  <ul class = 'flex gap-10  '>
+    <li>
+      <%= link_to 'Dashboard', trader_dashboard_index_path %>
+    </li>
+    <li>
+    <%= link_to 'Portfolio', trader_portfolio_index_path %>
+    </li>
+    <li>
+    <%= link_to 'Transaction', trader_transactions_path %>
+    </li>
+  </ul>
+  <%= button_to 'Logout', destroy_user_session_path, method: :delete %>
+</nav>
+
+
+
+
 <h1>hello <%= current_user.firstname%> </h1>
 <p>Your Balance: <%= number_to_currency(current_user.balance, unit: '₱') %></p>
 <div>
@@ -51,4 +69,3 @@
 </div>
 </div>
 <%end%>
-<%= button_to 'Logout', destroy_user_session_path, method: :delete %>
