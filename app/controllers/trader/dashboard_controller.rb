@@ -3,11 +3,12 @@ class Trader::DashboardController < ApplicationController
 
   def index
     @top_stocks = Stock.get_top_stocks
-
+    p @top_stocks
 
     if params[:search].present?
       begin
         @stock = Stock.new_lookup(params[:search])
+
         if @stock.nil?
           flash.now[:alert] = 'Stock symbol not found'
         end

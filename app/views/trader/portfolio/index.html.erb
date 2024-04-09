@@ -12,5 +12,9 @@
     <li>
     <%= stock.shares%>
     </li>
+    <%= link_to 'Buy', new_trader_transaction_path(transaction: { stock_symbol: stock.symbol, stock_price: stock.latest_price, transaction_type: :buy }) %>
+
+    <%= link_to 'Sell', new_trader_transaction_path(transaction: { stock_symbol: stock.symbol, stock_price: stock.latest_price, transaction_type: :sell }), class: "#{Stock.exists?(symbol: stock.symbol) ? '' : 'cursor-not-allowed text-color-[#999] pointer-events-none' }" %>
+
 
 <%end%>

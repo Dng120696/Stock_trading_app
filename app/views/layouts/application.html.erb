@@ -12,9 +12,49 @@
   </head>
 
   <body>
+  <header class = 'w-full border-b-[1px] border-b-gray-300'>
+    <nav class = 'flex items-center justify-between py-4 w-[clamp(300px,90%,1200px)] mx-auto '>
+        <ul class = 'flex gap-10  '>
+          <li>
+            <%= link_to 'Home', root_path %>
+          </li>
+          <li>
+            <%= link_to 'Dashboard', trader_dashboard_index_path %>
+          </li>
+          <li>
+          <%= link_to 'Portfolio', trader_portfolio_index_path %>
+          </li>
+          <li>
+          <%= link_to 'Transaction', trader_transactions_path %>
+          </li>
+        </ul>
+      <div>
+        <% if !user_signed_in? && !admin_user_signed_in?%>
+          <%= link_to 'User Sign In', new_user_session_path, class: 'p-2 border-[1px] '%>
+          <%= link_to 'Admin Sign In', new_admin_user_session_path, class: 'p-2 border-[1px] '%>
+        <%else%>
+        <% if current_user %>
+        <%= link_to "Logout", destroy_user_session_path, data: {
+                          turbo_method: :delete,
+                          turbo_confirm: "Are you sure?"
+                        } %>
+        <% elsif current_admin_user %>
+        <%= link_to "Logout", destroy_admin_user_session_path, data: {
+                          turbo_method: :delete,
+                          turbo_confirm: "Are you sure?"
+                        } %>
+          <% end %>
+        <%end%>
+      </div>
+    </nav>
+  </header>
+
+<div class = 'w-[clamp(300px,90%,1200px)] mx-auto'>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
 
       <%= yield %>
+  </div>
+
   </body>
 </html>
