@@ -1,24 +1,25 @@
 class Admin::TraderController < ApplicationController
-    before_action :authenticate_admin_user!
-    def create
-      trader = User.new(trader_params)
-      trader.password = Rails.application.credentials.trader.default_password
-      trader.skip_confirmation!
-      trader.status = 'approved'
+  def new
+    @trader = User.new
+  end
 
-      if trader.save
-        WelcomeMailer
-        redirect_to
-      else
-          render :new
-      end
-    end
+  def create
+    @trader = User.new(trader_params)
+    @trader.password = Rails.application.credentials.trader.default_password
+    @trader.skip_confirmation!
+    @trader.status = 'approved'
 
 
-    private
-    
-    def trader_params
-      params.require(:trader).permit(:email, :firstname, :lastname)
+    if @trader.save
+      redirect_to new_admin_trader_path, notice: "User created successfully."
+    else
+      render :new
     end
   end
-  
+
+  private
+
+  def trader_params
+    params.require(:trader).permit(:email, :password, :password_confirmation)
+  end
+end

@@ -10,6 +10,11 @@ Rails.application.routes.draw do
       post 'approve', on: :member
     end
   end
+
+    namespace :admin do
+      resources :trader, only: [:new, :create]
+  end
+
   namespace :trader do
     get 'portfolio/index'
    resources :transactions, only: [:index,:new, :create ]
