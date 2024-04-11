@@ -49,8 +49,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_08_134602) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.decimal "total"
-    t.bigint "stock_id", null: false
-    t.index ["stock_id"], name: "index_transactions_on_stock_id"
     t.index ["user_id"], name: "index_transactions_on_user_id"
   end
 
@@ -76,6 +74,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_08_134602) do
   end
 
   add_foreign_key "stocks", "users"
-  add_foreign_key "transactions", "stocks"
   add_foreign_key "transactions", "users"
 end

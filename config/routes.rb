@@ -11,10 +11,10 @@ Rails.application.routes.draw do
     end
   end
   namespace :trader do
-    get 'portfolio/index'
    resources :transactions, only: [:index,:new, :create ]
     resources :dashboard,only:[:index]
     resources :stocks,only: [:create]
+    resources :portfolio,only: [:index]
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

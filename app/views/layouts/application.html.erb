@@ -12,9 +12,9 @@
   </head>
 
   <body>
-  <header class = 'w-full border-b-[1px] border-b-gray-300'>
-    <nav class = 'flex items-center justify-between py-4 w-[clamp(300px,90%,1200px)] mx-auto '>
-        <ul class = 'flex gap-10  '>
+  <header class = 'w-full border-b-[1px] border-b-gray-200'>
+    <nav class = 'flex items-center justify-between py-4 w-[clamp(300px,90%,1200px)] mx-auto font-bold text-lg   '>
+        <ul class = 'flex gap-10 '>
           <li>
             <%= link_to 'Home', root_path %>
           </li>
@@ -25,7 +25,7 @@
           <%= link_to 'Portfolio', trader_portfolio_index_path %>
           </li>
           <li>
-          <%= link_to 'Transaction', trader_transactions_path %>
+          <%= link_to 'Transaction History', trader_transactions_path %>
           </li>
         </ul>
       <div>
@@ -50,9 +50,19 @@
   </header>
 
 <div class = 'w-[clamp(300px,90%,1200px)] mx-auto'>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+  <% unless notice.blank? %>
+    <div class="flex justify-between items-center my-4  bg-green-200 text-green-900 px-4 py-2 rounded-md flex-grow-1">
+      <p class="notic"><%= notice %></p>
+      <button type="button" class="close-button" onclick="this.parentNode.style.display = 'none';">×</button>
+    </div>
+  <% end %>
 
+  <% unless alert.blank? %>
+    <div class="flex justify-between items-center my-4  bg-red-200 text-red-900 px-4 py-2 rounded-md flex-grow-1">
+      <p class="alert"><%= alert %></p>
+      <button type="button" class="close-button" onclick="this.parentNode.style.display = 'none';">×</button>
+    </div>
+  <% end %>
       <%= yield %>
   </div>
 

@@ -7,8 +7,22 @@
 </div>
 <% end %>
 
-<div>
-<h1 class = 'py-8 text-gray-600 text-3xl' >Hello <%= current_user.firstname%> </h1>
+<h1 class = 'pt-8 pb-6 text-gray-600 text-3xl' >Hello <%= current_user.firstname%> </h1>
+
+<div class = 'flex items-center justify-between mb-10'>
+  <div class = 'shadow-[0_0_10px_rgba(0,0,0,0.15)] p-8 w-[350px] h-[150px] '>
+    <h1 class =' text-2xl font-bold text-gray-500 mb-2 '>Cash balance</h1>
+    <p class = 'text-center text-3xl font-bold text-sky-800 '><%= number_to_currency(current_user.balance, unit: '$')   %></p>
+  </div>
+  <div class = 'shadow-[0_0_10px_rgba(0,0,0,0.15)] p-8 w-[350px] h-[150px] '>
+    <h1  class =' text-2xl font-bold text-gray-500 mb-2 '>Portfolio Value</h1>
+    <p class = 'text-center text-3xl font-bold text-sky-800 '><%= number_to_currency(@total_portfolio, unit: '$')   %></p>
+  </div>
+  <div class = 'shadow-[0_0_10px_rgba(0,0,0,0.15)] p-8 w-[350px] h-[150px]'>
+    <h1 class =' text-2xl font-bold text-gray-500 mb-2 '>Portfolio Profit & Loss</h1>
+    <p class = 'text-center text-3xl font-bold text-sky-800 '>X</p>
+  </div>
+</div>
 
 <div>
   <%= form_tag trader_dashboard_index_path, method: :get do %>
@@ -20,67 +34,52 @@
 </div>
 
 <% if @stock %>
-  <ul class = 'grid grid-cols-[0.75fr,1.75fr,0.75fr,1fr,1fr,1fr,1.25fr] text-lg font-bold  text-center mt-6 my-2 pb-2 border-b-[2px] border-b-gray-600'>
+  <ul class = 'grid grid grid-cols-[0.75fr,1.75fr,0.75fr,0.75fr,1fr,1fr,1fr] text-lg font-bold mt-4 mb-2 pb-2 border-b-[2px] border-b-gray-600'>
     <li>Symbol</li>
     <li>Company</li>
     <li> Price</li>
     <li> Change</li>
-    <li> High Price</li>
-    <li> Low Price</li>
+    <li class = 'text-sm'> All-time High Price</li>
+    <li class = 'text-sm'> All-time Low Price</li>
   </ul>
-  <div class = 'grid grid-cols-[0.75fr,1.75fr,0.75fr,1fr,1fr,1fr,1.25fr] text-center text-md mb-2 pb-2 border-b-[1px] border-b-gray-200'>
-    <p class = 'flex items-center justify-center gap-2 '>
+  <div class = 'grid grid grid-cols-[0.75fr,1.75fr,0.75fr,0.75fr,1fr,1fr,1fr] text-center text-md mb-2 pb-2 border-b-[1px] border-b-gray-200'>
+    <p class = 'flex items-center gap-2 '>
     <%= image_tag(@stock[:logo], alt: 'Logo',class: 'w-6 h-6  object-fit') %> <%= @stock[:symbol] %></p>
-    <p  class = 'flex items-center justify-center gap-2 '><%= @stock[:company_name] %></p>
-    <p  class = 'flex items-center justify-center gap-2 '><%= number_to_currency(@stock[:latest_price], unit: '$')   %></p>
-    <p  class = 'flex items-center justify-center gap-2 '><%= number_to_currency(@stock[:change], unit: '$') %></p>
-    <p  class = 'flex items-center justify-center gap-2 '><%= number_to_currency(@stock[:week_52_high], unit: '$') %></p>
-    <p  class = 'flex items-center justify-center gap-2 '><%= number_to_currency(@stock[:week_52_low], unit: '$')  %></p>
-    <div class = 'flex gap-2 items-center justify-center'>
-      <%= link_to 'Buy', new_trader_transaction_path(transaction: { stock_symbol:@stock[:symbol], stock_price: @stock[:latest_price], transaction_type: :buy }) ,class: 'text-sm px-5 py-2 bg-green-500 text-white rounded-md '%>
-      <%= link_to 'Sell', new_trader_transaction_path(transaction: { stock_symbol: @stock[:symbol], stock_price: @stock[:latest_price], transaction_type: :sell }), class: "#{current_user.stocks.exists?(symbol: @stock[:symbol]) ? '  text-sm px-5 py-2 bg-red-500 text-white  rounded-md' : 'hover:cursor-not-allowed  cursor-not-allowed text-color-[#999] pointer-events-none text-sm px-5 py-2 bg-gray-500 text-white  rounded-md' }" %>
+    <p  class = 'flex items-center gap-2 '><%= @stock[:company_name] %></p>
+    <p  class = 'flex items-center gap-2 '><%= number_to_currency(@stock[:latest_price], unit: '$')   %></p>
+    <p  class = 'flex items-center gap-2 text-red-600 '><%= number_to_currency(@stock[:change], unit: '$') %></p>
+    <p  class = 'flex items-center gap-2 text-green-600'><%= number_to_currency(@stock[:week_52_high], unit: '$') %></p>
+    <p  class = 'flex items-center gap-2 text-red-600'><%= number_to_currency(@stock[:week_52_low], unit: '$')  %></p>
+    <div class = 'flex gap-2 items-center'>
+      <%= link_to 'Buy', new_trader_transaction_path(transaction: { stock_symbol:@stock[:symbol], stock_price: @stock[:latest_price], transaction_type: :buy }) ,class: 'text-sm px-5 py-2 bg-green-600 text-white rounded-md '%>
+      <%= link_to 'Sell', new_trader_transaction_path(transaction: { stock_symbol: @stock[:symbol], stock_price: @stock[:latest_price], transaction_type: :sell }), class: "#{current_user.stocks.exists?(symbol: @stock[:symbol]) ? '  text-sm px-5 py-2 bg-red-600 text-white  rounded-md' : 'hover:cursor-not-allowed  cursor-not-allowed text-color-[#999] pointer-events-none text-sm px-5 py-2 bg-gray-400 text-white  rounded-md' }" %>
     </div>
   </div>
 <% end %>
-<div class = 'flex items-center justify-between mt-6'>
-  <div class = 'shadow-[0_0_10px_rgba(0,0,0,0.15)] p-8 w-[350px] h-[150px] '>
-    <h1 class =' text-2xl font-bold text-gray-500 mb-2 '>Cash balance</h1>
-    <p class = 'text-center text-3xl font-bold text-sky-800 '><%= number_to_currency(current_user.balance, unit: '$')   %></p>
-  </div>
-  <div class = 'shadow-[0_0_10px_rgba(0,0,0,0.15)] p-8 w-[350px] h-[150px] '>
-    <h1  class =' text-2xl font-bold text-gray-500 mb-2 '>Portfolio Value</h1>
-    <p class = 'text-center text-3xl font-bold text-sky-800 '>X</p>
-  </div>
-  <div class = 'shadow-[0_0_10px_rgba(0,0,0,0.15)] p-8 w-[350px] h-[150px]'>
-    <h1 class =' text-2xl font-bold text-gray-500 mb-2 '>Portfolio Profit & Loss</h1>
-    <p class = 'text-center text-3xl font-bold text-sky-800 '>X</p>
-  </div>
 
-</div>
 <%if @top_stocks %>
 <div class = ' mt-6'>
   <h1 class = 'text-2xl font-bold py-2 '>Top 5 List of Stocks</h1>
-  <ul class = 'grid grid-cols-[0.75fr,1.75fr,0.75fr,1fr,1fr,1fr,1.25fr] text-lg font-bold  text-center mt-6 my-2 pb-2 border-b-[2px] border-b-gray-600'>
+  <ul class = 'grid grid-cols-[0.75fr,1.75fr,0.75fr,0.75fr,1fr,1fr,1fr] text-lg font-bold  my-2 pb-2 border-b-[2px] border-b-gray-600'>
   <li>Symbol</li>
   <li>Company</li>
   <li> Price</li>
   <li> Change</li>
-  <li> High Price</li>
-  <li> Low Price</li>
+  <li class = 'text-sm'>All-time High Price</li>
+  <li class = 'text-sm'>All-time Low Price</li>
 </ul>
   <% @top_stocks.each do |stock| %>
-    <div class="grid grid-cols-[0.75fr,1.75fr,0.75fr,1fr,1fr,1fr,1.25fr] text-center mb-2 pb-2 border-b-[1px] border-b-gray-200">
-      <p  class = 'flex items-center justify-center gap-2 '><%= image_tag(stock[:logo], alt: 'Logo',class: 'w-6 h-6  object-fit') %> <%= stock[:symbol] %></p>
-      <p  class = 'flex items-center justify-center gap-2 '><%= stock[:company_name] %></p>
-      <p  class = 'flex items-center justify-center gap-2 '><%= stock[:latest_price] %></p>
-      <p  class = 'flex items-center justify-center gap-2 '><%= stock[:change] %></p>
-      <p  class = 'flex items-center justify-center gap-2 '><%= stock[:week_52_high]%></p>
-      <p  class = 'flex items-center justify-center gap-2 '><%= stock[:week_52_low] %></p>
-    <div class = 'flex gap-2 items-center justify-center'>
-      <%= link_to 'Buy', new_trader_transaction_path(transaction: { stock_symbol:stock[:symbol], stock_price: stock[:latest_price], transaction_type: :buy }) ,class: 'text-sm px-5 py-2 bg-green-500 text-white rounded-md '%>
-      <%= link_to 'Sell', new_trader_transaction_path(transaction: { stock_symbol: stock[:symbol], stock_price: stock[:latest_price], transaction_type: :sell }), class: "#{current_user.stocks.exists?(symbol: stock[:symbol]) ? '  text-sm px-5 py-2 bg-red-500 text-white  rounded-md' : 'hover:cursor-not-allowed  cursor-not-allowed text-color-[#999] pointer-events-none text-sm px-5 py-2 bg-gray-500 text-white  rounded-md' }" %>
+    <div class="grid grid-cols-[0.75fr,1.75fr,0.75fr,0.75fr,1fr,1fr,1fr] text-center mb-2 pb-2 border-b-[1px] border-b-gray-200">
+      <p  class = 'flex items-center gap-2 '><%= image_tag(stock[:logo], alt: 'Logo',class: 'w-6 h-6  object-fit') %> <%= stock[:symbol] %></p>
+      <p  class = 'flex items-center pl-6 gap-2 '><%= stock[:company_name] %></p>
+      <p  class = 'flex items-center gap-2 '> <%= number_to_currency( stock[:latest_price], unit: '$') %></p>
+      <p  class = 'flex items-center gap-2  text-red-600 '><%= number_to_currency( stock[:change] , unit: '$') %></p>
+      <p  class = 'flex items-center gap-2 text-green-600'> <%= number_to_currency( stock[:week_52_high], unit: '$') %></p>
+      <p  class = 'flex items-center gap-2 text-red-600 '> <%= number_to_currency( stock[:week_52_low], unit: '$') %></p>
+    <div class = 'flex gap-2 items-center'>
+      <%= link_to 'Buy', new_trader_transaction_path(transaction: { stock_symbol:stock[:symbol], stock_price: stock[:latest_price], transaction_type: :buy }) ,class: 'text-sm px-5 py-2 bg-green-600 text-white rounded-md '%>
+      <%= link_to 'Sell', new_trader_transaction_path(transaction: { stock_symbol: stock[:symbol], stock_price: stock[:latest_price], transaction_type: :sell }), class: "#{current_user.stocks.exists?(symbol: stock[:symbol]) ? '  text-sm px-5 py-2 bg-red-600 text-white  rounded-md' : 'hover:cursor-not-allowed  cursor-not-allowed text-color-[#999] pointer-events-none text-sm px-5 py-2 bg-gray-400 text-white  rounded-md' }" %>
     </div>
   </div>
   <%end%>
 <%end%>
-</div>

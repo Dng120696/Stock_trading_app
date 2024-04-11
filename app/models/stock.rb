@@ -1,57 +1,45 @@
 class Stock < ApplicationRecord
-  has_many :transactions, dependent: :destroy
+
   belongs_to :user
 
   validates_presence_of :symbol, :company_name, :latest_price, :shares
+  validates :shares, numericality: { greater_than_or_equal_to: 1 }
 
-  def self.buy_stock(user, ticker_symbol, quantity, type)
-    stock_data = new_lookup(ticker_symbol)
-
-    return :symbol_not_found unless stock_data
-
-    existing_stock = user.stocks.find_by(symbol: stock_data[:symbol])
-
-    if existing_stock
-
-      if type == 'buy'
-        existing_stock.update(
-          shares: existing_stock.shares + quantity,
-          latest_price: stock_data[:latest_price]
-        )
-      elsif existing_stock.shares >= quantity
-        existing_stock.update(
-          shares: existing_stock.shares - quantity,
-          latest_price: stock_data[:latest_price]
-        )
-      else
-        return :insufficient_shares
-      end
-      existing_stock
-    else
-
-      Stock.create(
-        symbol: stock_data[:symbol],
-        company_name: stock_data[:company_name],
-        latest_price: stock_data[:latest_price],
-        shares: quantity,
-        logo: stock_data[:logo],
-        user_id: user.id
-      )
-    end
-  end
 
   def self.new_lookup(ticker_symbol)
-    stock_data = fetch_stock_data(ticker_symbol)
-    p stock_data
+    stock_data = fetch_stock_qoute(ticker_symbol)
     if stock_data
       {
+        logo: fetch_logo(ticker_symbol).url,
         symbol: stock_data.symbol,
         company_name: stock_data.company_name,
         latest_price: stock_data.latest_price,
         change: stock_data.change,
         week_52_high: stock_data.week_52_high,
+        week_52_low: stock_data.week_52_low
+      }
+    end
+  end
+
+  def self.fetch_stock_details(ticker_symbol)
+    client = iex_client
+    stock_data = fetch_stock_qoute(ticker_symbol)
+    historical_price = client.historical_prices(ticker_symbol,{range: '5d'})
+
+    if stock_data
+      {
+        logo: fetch_logo(ticker_symbol).url,
+        symbol: stock_data.symbol,
+        company_name: stock_data.company_name,
+        latest_price: stock_data.latest_price,
+        change: stock_data.change,
+        change_percent:stock_data.change_percent,
+        week_52_high: stock_data.week_52_high,
         week_52_low: stock_data.week_52_low,
-        logo: fetch_logo(ticker_symbol).url
+        high:historical_price.first.high,
+        low:historical_price.first.low,
+        market_cap:stock_data.market_cap,
+        latest_volume:historical_price.first.volume,
       }
     end
   end
@@ -68,6 +56,7 @@ class Stock < ApplicationRecord
           week_52_high: stock.week_52_high,
           week_52_low: stock.week_52_low,
           logo: fetch_logo(stock.symbol).url
+
         }
       end
       top_stocks
@@ -79,7 +68,7 @@ class Stock < ApplicationRecord
 
   private
 
-  def self.fetch_stock_data(ticker_symbol)
+  def self.fetch_stock_qoute(ticker_symbol)
     begin
       client = iex_client
       client.quote(ticker_symbol)
