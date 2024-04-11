@@ -1,4 +1,6 @@
 class Trader::TransactionsController < ApplicationController
+  before_action :authenticate_user!, except: [:admin_index]
+  before_action :authenticate_admin_user!, only: [:admin_index]
   def index
       @transactions = current_user.transactions
   end
@@ -32,6 +34,11 @@ class Trader::TransactionsController < ApplicationController
     else
       redirect_to new_trader_transaction_path(transaction: transaction_params), notice: 'Transaction Failed'
     end
+  end
+
+  def admin_index
+    @transactions = Transaction.all
+    render 'admin/transactions/admin_index'
   end
 
   private
