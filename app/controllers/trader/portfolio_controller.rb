@@ -1,5 +1,6 @@
 class Trader::PortfolioController < ApplicationController
   before_action :authenticate_user!
+
   def index
     @total_portfolio = 0
     current_user.stocks.each do |stock|

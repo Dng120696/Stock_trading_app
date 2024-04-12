@@ -1,8 +1,5 @@
 class Trader::TransactionsController < ApplicationController
-
   before_action :authenticate_user!
-
-
   def index
     @transactions = current_user.transactions.order(created_at: :desc)
 

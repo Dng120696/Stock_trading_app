@@ -12,10 +12,14 @@ class User < ApplicationRecord
   private
 
   def send_status_email
+    if self.status == :pending
       UserMailer.newtrader_pending_email(self).deliver_now
+    end
   end
   def send_admin_notification
-    AdminMailer.new_user_notification(self,AdminUser.last).deliver_now
+    if self.status == :pending
+      AdminMailer.new_user_notification(self,AdminUser.last).deliver_now
+    end
   end
 
 end

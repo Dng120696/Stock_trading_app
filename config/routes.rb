@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
 
   root 'pages#home'
-  devise_for :users
-  devise_for :admin_users
-
+devise_for :users, controllers: {
+  sessions: 'users/sessions'
+}
+devise_for :admin_users, controllers: {
+  sessions: 'admin_users/sessions'
+}
 
   namespace :admin do
     resources :trader, only: [:new, :create, :index, :show, :edit, :update]

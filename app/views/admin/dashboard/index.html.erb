@@ -1,7 +1,7 @@
 <h1>hello admin</h1>
 <%= button_to 'Logout', destroy_admin_user_session_path, method: :delete %>
 <%= link_to 'View all traders', admin_trader_index_path %>
-<%= link_to 'View All Transactions', admin_index_trader_transactions_path %>
+<%= link_to 'View All Transactions', admin_transactions_path %>
 
 <% @users.each do |user| %>
   <div class="grid grid-cols-3">

@@ -14,7 +14,6 @@ class Transaction < ApplicationRecord
 
       if user.balance < @transaction.total
         raise ActiveRecord::RecordInvalid.new(@transaction), "Insufficient balance"
-
       end
 
       stock_data = Stock.new_lookup(transaction_attr[:stock_symbol])
