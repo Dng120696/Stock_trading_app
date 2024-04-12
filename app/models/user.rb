@@ -5,8 +5,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,:confirmable
   enum status: {pending: 0, approved: 1 }
   after_create :send_status_email,:send_admin_notification
-  has_many :transactions
-  has_many :stocks, through: :transactions
+  has_many :transactions, dependent: :destroy
+  has_many :stocks,  dependent: :destroy
+  validates :balance, numericality: { greater_than_or_equal_to: 0 }
 
   private
 

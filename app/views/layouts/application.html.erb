@@ -11,10 +11,60 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+  <body class = 'bg-gray-50'>
+  <header class = 'w-full bg-white fixed top-0 left-0 shadow-[0_0_10px_rgba(0,0,0,0.15)] '>
+    <nav class = 'flex items-center justify-between py-4 w-[clamp(300px,90%,1200px)] mx-auto font-bold text-lg   '>
+        <ul class = 'flex gap-10 '>
+          <li>
+            <%= link_to 'Home', root_path %>
+          </li>
+          <li>
+          <% if current_user %>
+            <%= link_to 'Dashboard', trader_dashboard_index_path %>
+          </li>
+          <li>
+          <%= link_to 'Portfolio', trader_portfolio_index_path %>
+          </li>
+          <li>
+          <%= link_to 'Transaction History', trader_transactions_path %>
+          </li>
+        </ul>
+      <div class = 'flex items-center gap-4'>
+        <% if !user_signed_in? && !admin_user_signed_in?%>
+          <%= link_to 'User Sign In', new_user_session_path, class: ' '%>
+          <%= link_to 'Admin Sign In', new_admin_user_session_path, class: ''%>
+        <%else%>
+        <% if current_user %>
+        <%= link_to "Logout", destroy_user_session_path, data: {
+                          turbo_method: :delete,
+                          turbo_confirm: "Are you sure?"
+                        } %>
+        <% elsif current_admin_user %>
+        <%= link_to "Logout", destroy_admin_user_session_path, data: {
+                          turbo_method: :delete,
+                          turbo_confirm: "Are you sure?"
+                        } %>
+          <% end %>
+        <%end%>
+      </div>
+    </nav>
+  </header>
 
+<div class = 'w-[clamp(300px,90%,1200px)] mx-auto mt-20 mb-6'>
+  <% unless notice.blank? %>
+    <div class="flex justify-between items-center my-4  bg-green-200 text-green-900 px-4 py-2 rounded-md flex-grow-1">
+      <p class="notic"><%= notice %></p>
+      <button type="button" class="close-button" onclick="this.parentNode.style.display = 'none';">×</button>
+    </div>
+  <% end %>
+
+  <% unless alert.blank? %>
+    <div class="flex justify-between items-center my-4  bg-red-200 text-red-900 px-4 py-2 rounded-md flex-grow-1">
+      <p class="alert"><%= alert %></p>
+      <button type="button" class="close-button" onclick="this.parentNode.style.display = 'none';">×</button>
+    </div>
+  <% end %>
       <%= yield %>
+  </div>
   </body>
 </html>

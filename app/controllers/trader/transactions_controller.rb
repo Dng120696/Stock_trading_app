@@ -1,58 +1,54 @@
 class Trader::TransactionsController < ApplicationController
 
+  before_action :authenticate_user!
+
+
   def index
-      @transactions = current_user.transactions
+    @transactions = current_user.transactions.order(created_at: :desc)
+
+    @transactions = @transactions.map do |transaction|
+      {
+        stock_symbol: transaction.stock_symbol,
+        quantity: transaction.quantity,
+        type: transaction.transaction_type,
+        stock_price: transaction.stock_price,
+        total: transaction.total,
+        created_at: transaction.created_at,
+        logo: Stock.fetch_logo(transaction.stock_symbol).url
+      }
+    end
   end
+
   def new
-    @transaction = current_user.transactions.new(transaction_params)
+    @stock = Stock.fetch_stock_details(params[:transaction][:stock_symbol])
+    @historical_data = fetch_historical_prices(params[:transaction][:stock_symbol])
 
+    @transaction = current_user.transactions.new(transaction_params)
   end
+
   def create
-    @transaction = current_user.transactions.new(transaction_params)
-    @transaction.total = @transaction.quantity * @transaction.stock_price
-
-    unless transaction_valid?
-      redirect_with_flash('Not enough money') and return
-    end
-
-    @stock = Stock.buy_stock(current_user, @transaction.stock_symbol, @transaction.quantity, @transaction.transaction_type)
-    puts @stock
-    case @stock
-    when :insufficient_shares
-      redirect_with_flash('Not enough Shares.') and return
-    when :symbol_not_found
-      redirect_with_flash('Error buying stock. Stock symbol not found.') and return
-    end
-
-    # Continue with processing the transaction
-    @transaction.stock_id = @stock.id
-
-    if @transaction.save
-      update_user_balance
-      redirect_to trader_dashboard_index_path, notice: 'Transaction Complete'
-    else
-      redirect_to new_trader_transaction_path(transaction: transaction_params), notice: 'Transaction Failed'
-    end
+      Transaction.create_and_update_stock(current_user, transaction_params)
+        redirect_to trader_transactions_path, notice: 'Transaction Complete'
+      rescue ActiveRecord::RecordInvalid => e
+        redirect_to new_trader_transaction_path(transaction: transaction_params), alert: e.message
   end
 
 
   private
 
-  def transaction_valid?
-    current_user.balance >= @transaction.total
+  def fetch_historical_prices(symbol)
+    client = Stock.iex_client
+    historical_prices = client.historical_prices(symbol, range: '1m')
+    latest_price_entry = client.quote(symbol)
+    latest_price = latest_price_entry.latest_price
+    today = Date.today
+
+    historical_data = historical_prices.map { |entry| [entry.date, entry.close] }
+    historical_data << [today, latest_price]
+    historical_data
   end
 
-  def redirect_with_flash(message)
-    flash[:notice] = message
-    redirect_to new_trader_transaction_path(transaction: transaction_params)
-  end
-  def update_user_balance
-    if @transaction.buy?
-      current_user.update(balance: current_user.balance - @transaction.total_cost)
-    elsif @transaction.sell?
-      current_user.update(balance: current_user.balance + @transaction.total_cost)
-    end
-  end
+
   def transaction_params
     params.require(:transaction).permit(:stock_symbol, :quantity, :stock_price, :transaction_type,:total)
   end

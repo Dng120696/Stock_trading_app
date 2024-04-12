@@ -4,7 +4,7 @@
     "width": 2000,
     "height": 2000,
     "scrollTop": -159.36039999999997,
-    "scrollLeft": -23.6,
+    "scrollLeft": -26.6,
     "zoomLevel": 0.9,
     "show": {
       "tableComment": true,
@@ -213,7 +213,7 @@
           "active": false,
           "left": 23,
           "top": 314.5,
-          "zIndex": 11,
+          "zIndex": 2,
           "widthName": 70.86572265625,
           "widthComment": 60
         },
@@ -367,7 +367,7 @@
           "active": false,
           "left": 535.4457,
           "top": 151.841,
-          "zIndex": 12,
+          "zIndex": 1,
           "widthName": 60,
           "widthComment": 60
         },
@@ -494,8 +494,8 @@
             }
           },
           {
-            "id": "88d6c705-56bb-4919-bf1a-e475dacdf050",
-            "name": "stock_id",
+            "id": "d7f97c00-818a-4928-90d4-ac48d23948fc",
+            "name": "user_id",
             "comment": "",
             "dataType": "INT",
             "default": "",
@@ -518,10 +518,10 @@
           }
         ],
         "ui": {
-          "active": false,
-          "left": 746.9162,
-          "top": 379.0915,
-          "zIndex": 10,
+          "active": true,
+          "left": 553.5838,
+          "top": 426.869,
+          "zIndex": 6,
           "widthName": 69.4375,
           "widthComment": 60
         },
@@ -650,9 +650,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 57.75,
-          "top": 72.5,
-          "zIndex": 1,
+          "left": 26.6392,
+          "top": 104.7219,
+          "zIndex": 4,
           "widthName": 66.29541015625,
           "widthComment": 60
         },
@@ -667,32 +667,6 @@
   "relationship": {
     "relationships": [
       {
-        "id": "036b23e6-b35f-4ae1-8fb1-1296747fa34d",
-        "identification": false,
-        "relationshipType": "OneN",
-        "startRelationshipType": "Dash",
-        "start": {
-          "tableId": "ff367885-8ce4-4853-879f-fe317bb0e0f9",
-          "columnIds": [
-            "fc25fccb-7ba3-4ec5-a02b-1400f51e373e"
-          ],
-          "x": 736.20107109375,
-          "y": 343.841,
-          "direction": "bottom"
-        },
-        "end": {
-          "tableId": "23e63aea-8a0c-48d1-8fda-25da0e925ab6",
-          "columnIds": [
-            "88d6c705-56bb-4919-bf1a-e475dacdf050"
-          ],
-          "x": 746.9162,
-          "y": 475.0915,
-          "direction": "left"
-        },
-        "constraintName": "fk_stock_to_transaction",
-        "visible": true
-      },
-      {
         "id": "f8c34e60-fca7-4db9-8bfc-7c64b61710fc",
         "identification": false,
         "relationshipType": "OneN",
@@ -703,7 +677,7 @@
             "10e1dbcc-3e14-443b-90d3-9000cbe73b89"
           ],
           "x": 436.1015625,
-          "y": 420.75,
+          "y": 367.625,
           "direction": "right"
         },
         "end": {
@@ -716,6 +690,32 @@
           "direction": "left"
         },
         "constraintName": "fk_user/trader_to_stock",
+        "visible": true
+      },
+      {
+        "id": "b4f1960d-6f32-4429-a253-fe3233cc9ef0",
+        "identification": false,
+        "relationshipType": "OneN",
+        "startRelationshipType": "Dash",
+        "start": {
+          "tableId": "d6e9285c-89c5-4d27-9716-55e8ad5a2b2a",
+          "columnIds": [
+            "10e1dbcc-3e14-443b-90d3-9000cbe73b89"
+          ],
+          "x": 436.1015625,
+          "y": 473.875,
+          "direction": "right"
+        },
+        "end": {
+          "tableId": "23e63aea-8a0c-48d1-8fda-25da0e925ab6",
+          "columnIds": [
+            "d7f97c00-818a-4928-90d4-ac48d23948fc"
+          ],
+          "x": 553.5838,
+          "y": 522.869,
+          "direction": "left"
+        },
+        "constraintName": "fk_user/trader_to_transaction",
         "visible": true
       }
     ]

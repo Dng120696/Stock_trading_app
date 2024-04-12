@@ -1,51 +1,167 @@
-
-
-<div class = ''>
-
-    <h1><%= @transaction.transaction_type == 'buy' ? 'Buy' : 'Sell' %> stock</h1>
-    <%= link_to "Back to dashboard", trader_dashboard_index_path, class: '' %>
-
-    <div class='' >
-    <div class="text-red-400 text-sm my-4">
-    <% if @transaction.errors.any? %>
-      <h2>The following errors prevented the category from being saved:</h2>
-      <ul class = 'list-disc  pl-8'>
-        <% @transaction.errors.full_messages.each do |error| %>
-          <li class = ''><%= error %></li>
-        <% end %>
-      </ul>
-    <% end %>
+<% if current_user.status == 'approved' %>
+<div class = 'grid grid-cols-[1fr,2fr] gap-6 pt-6'>
+  <div class = 'flex items-center gap-4 '>
+    <p>
+    <%= image_tag @stock[:logo], alt:'logo', class: 'w-20 h-20 object-fit'%>
+    </p>
+    <div>
+    <p>
+    <span class = 'font-bold text-2xl text-gray-700'>
+        <%= @stock[:symbol] %>
+      </span>
+      <span class = 'font-bold text-xl text-gray-400'>
+        <%= @stock[:company_name] %>
+      </span>
+    </p>
+    <p  class = 'text-2xl'>
+    <span class = 'font-bold'>
+      <%= number_to_currency(@stock[:latest_price], unit: '$')   %>
+    </span>
+    <span class = 'text-red-400 text-lg'>
+    (<%= @stock[:change_percent] %>%)
+    </span>
+    </p>
+    </div>
   </div>
+  <div class = 'grid content-end'>
+    <ul class = 'grid grid-cols-[1.25fr,1fr,0.75fr,0.75fr,1fr] font-bold  text-center my-2 pb-2 border-b-[2px] gap-4 border-b-gray-600 text-md'  >
+      <li >
+        Market Cap
+      </li>
+      <li >
+        5d Volume
+      </li>
+      <li>
+        5d High
+      </li>
+      <li>
+        5d Low
+      </li>
+      <li>
+        All-time High
+      </li>
+    </ul>
+    <ul class = 'grid grid-cols-[1.25fr,1fr,0.75fr,0.75fr,1fr]  text-lg font-bold  text-sm text-gray-500 text-center mt-2 pb-2 border-b-[1px] gap-4 border-b-gray-300'  >
+      <li>
+        <%= number_to_currency(@stock[:market_cap], unit: '$')   %>
+      </li>
+      <li>
+        <%= number_to_currency(@stock[:latest_volume], unit: '$')   %>
+      </li>
+      <li>
+        <%= number_to_currency(@stock[:high], unit: '$')   %>
+      </li>
+      <li>
+        <%= number_to_currency(@stock[:low], unit: '$')   %>
+      </li>
+      <li>
+        <%= number_to_currency(@stock[:week_52_high], unit: '$')   %>
+      </li>
+    </ul>
+
+  </div>
+</div>
+
+
+<div class = 'flex gap-10 justify-between pt-10 h-[500px]'>
+  <div class = 'shadow-[0_0_10px_rgba(0,0,0,0.1)] px-8 py-12 flex items-center justify-center flex-col'>
+    <div class="text-red-400 text-sm ">
+      <% if @transaction.errors.any? %>
+        <h2>The following errors prevented the category from being saved:</h2>
+        <ul class = 'list-disc  pl-8'>
+          <% @transaction.errors.full_messages.each do |error| %>
+            <li class = ''><%= error %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+    <p class='w-full text-sm font-semibold mb-4 text-gray-500 flex justify-between items-center'>
+    <span>
+     Available Balance:
+    </span>
+    <span class = 'text-lg'>
+    <%= number_to_currency(current_user.balance, unit: '$')   %>
+    </span>
+  </p>
+    <div class = 'link_items grid grid-cols-2 gap-2 text-center mb-4 w-full'>
+
+      <%= link_to 'Buy', new_trader_transaction_path(transaction: { stock_symbol: @stock[:symbol], stock_price: @stock[:latest_price], transaction_type: :buy }),class: " border-[1px] border-blue-300 py-1 rounded-sm font-semibold  #{@transaction.transaction_type == 'buy' ? 'active' : ''}" %>
+
+      <%= link_to 'Sell', new_trader_transaction_path(transaction: { stock_symbol: @stock[:symbol], stock_price: @stock[:latest_price], transaction_type: :sell }), class: "  py-1 rounded-sm font-semibold #{Stock.exists?(symbol: @stock[:symbol]) ? ' border-[1px] border-blue-300 text-blue-500' : 'cursor-not-allowed pointer-events-none  bg-gray-400 text-white '}  #{@transaction.transaction_type == 'sell' ? 'active' : ''}" %>
+
+    </div>
 
     <%= form_with(model: @transaction, url:trader_transactions_path, method: :post,data:{turbo:false}) do |f| %>
-
-        <div class="transaction-form-field">
-          <%= f.label :stock_symbol %><br />
-          <%= f.text_field :stock_symbol, value: @transaction.stock_symbol, readonly: true %>
+        <div class="mb-2">
+          <%= f.label :stock_symbol ,class: 'text-sm font-semibold mb-2 text-gray-500' %><br />
+          <%= f.text_field :stock_symbol, value: @transaction.stock_symbol, readonly: true, class: ' text-gray-400 border-gray-300 rounded-sm'%>
         </div>
-
-        <div class="transaction-form-field">
-          <%= f.label :stock_price %><br />
-          <%= f.text_field :stock_price, value: @transaction.stock_price, readonly: true %>
+        <div class="mb-2">
+          <%= f.label :stock_price,class: 'text-sm font-semibold mb-2 text-gray-500'%><br />
+          <%= f.text_field :stock_price, value: @transaction.stock_price, readonly: true , class: ' text-gray-400 border-gray-300 rounded-sm' %>
         </div>
-
-        <div class="transaction-form-field">
-          <%= f.label :quantity %><br />
-          <%= f.number_field :quantity, value:1, min: 1, placeholder: 'minimum: 1' %>
-
+        <div class="mb-2">
+          <%= f.label :quantity ,class: 'text-sm font-semibold mb-2 text-gray-500' %><br />
+          <%= f.number_field :quantity, id: 'transaction_quantity', value: 1, min: 1, placeholder: 'minimum: 1', class: 'w-full border-gray-400 text-gray-500' %>
+          <% stock_share = current_user.stocks.where(symbol:@transaction.stock_symbol)%>
+          <% if @transaction.transaction_type == 'sell' %>
+          <span class = 'text-sm text-gray-400 font-semibold'>shares left: <%= stock_share.first.shares %> </span>
+          <%end%>
         </div>
-
         <%= f.hidden_field :transaction_type, value: @transaction.transaction_type %>
 
+        <p class='text-sm font-semibold mt-4 mb-2 text-gray-500 flex justify-between items-center'>
+        <span>
+         Total Amount:
+        </span>
+        <span  id="transaction_total">
+
+        </span>
+      </p>
+
         <% if params[:transaction][:transaction_type] == 'buy' %>
-
-          <%= f.submit "Buy", class: 'btn btn-success' %>
+          <%= f.submit "Buy", class: ' w-full text-white bg-green-700 text-center rounded-sm py-2 font-bold' %>
         <% else %>
-          <%= f.submit "Sell", class: 'btn btn-success' %>
-
+          <%= f.submit "Sell", class: ' w-full  text-white  bg-red-700 text-center rounded-sm py-2 font-bold'  %>
         <% end %>
       <% end %>
     </div>
-
-
+    <div class = 'w-[clamp(300px,90vw,100%)] shadow-[0_0_10px_rgba(0,0,0,0.1)] p-4 '>
+    <%= line_chart @historical_data,height: '420px', xtitle: 'Date', ytitle: 'Closing Price' %>
+    </div>
+  </div>
 </div>
+
+<% else %>
+<div class = 'w-[600px] mx-auto h-[60vh] flex items-center flex-col justify-center '>
+  <div class = 'p-8 shadow-[0_0_10px_rgba(0,0,0,0.1)]'>
+    <h1 class = 'font-bold text-2xl text-gray-800'> Account Pending Approval.</p>
+    <p class = 'font-semibold text-[16px] text-gray-600'>
+      " Your ability to engage in transactions like buying and selling stocks is temporarily disabled until our administrators review and approve your account. We'll notify you once your account is approved. Thank you for your cooperation."
+    </p>
+  </div>
+</div>
+
+<%end%>
+
+<script>
+document.addEventListener('turbo:load', function() {
+
+  const quantityInput = document.getElementById('transaction_quantity');
+  const totalDisplay = document.getElementById('transaction_total');
+  const stockPrice = parseFloat('<%= @transaction.stock_price %>');
+
+  function calculateTotal() {
+    const quantity = parseFloat(quantityInput.value);
+    if (!isNaN(quantity) && quantity >= 1) {
+      const total = quantity * stockPrice;
+      totalDisplay.textContent = "$" + total.toFixed(2);
+    }
+  }
+
+
+  quantityInput.addEventListener('input', calculateTotal);
+  calculateTotal();
+});
+
+</script>
