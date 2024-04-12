@@ -1,5 +1,7 @@
 <h1>hello admin</h1>
 <%= button_to 'Logout', destroy_admin_user_session_path, method: :delete %>
+<%= link_to 'Create new trader', new_admin_trader_path %>
+
 
 
 <% @users.each do |user| %>
