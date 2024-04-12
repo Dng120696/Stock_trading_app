@@ -1,0 +1,14 @@
+<h1><%= "#{@trader.firstname} #{@trader.lastname}" %></h1>
+
+<ul>
+  <li><strong>ID:</strong> <%= @trader.id %></li>
+  <li><strong>Firstname:</strong> <%= @trader.firstname %></li>
+  <li><strong>Lastname:</strong> <%= @trader.lastname %></li>
+  <li><strong>Email:</strong> <%= @trader.email %></li>
+  <li><strong>Status:</strong> <%= @trader.status %></li>
+  <li><strong>Balance:</strong> <%= @trader.balance %></li>
+  <li><strong>Created_at:</strong> <%= @trader.created_at.in_time_zone.strftime("%B %e, %Y %l:%M %p") %></li>
+  <li><strong>Updated_at:</strong> <%= @trader.updated_at.in_time_zone.strftime("%B %e, %Y %l:%M %p") %></li>
+</ul>
+
+<%= link_to 'Back', admin_trader_index_path %>

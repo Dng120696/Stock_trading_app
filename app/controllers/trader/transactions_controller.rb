@@ -1,4 +1,5 @@
 class Trader::TransactionsController < ApplicationController
+
   def index
       @transactions = current_user.transactions
   end
@@ -33,6 +34,7 @@ class Trader::TransactionsController < ApplicationController
       redirect_to new_trader_transaction_path(transaction: transaction_params), notice: 'Transaction Failed'
     end
   end
+
 
   private
 

@@ -1,0 +1,28 @@
+<h2>Sign up</h2>
+
+<%= form_for(@trader, url: admin_trader_index_path) do |f| %>
+    <%= render 'shared/error_messages', object: @trader %>
+    <div class="field">
+      <%= f.label :firstname %><br />
+      <%= f.text_field :firstname, autofocus: true %>
+    </div>
+    <div class="field">
+      <%= f.label :lastname %><br />
+      <%= f.text_field :lastname %>
+    </div>
+  
+    <div class="field">
+      <%= f.label :email %><br />
+      <%= f.email_field :email, autocomplete: "email" %>
+    </div>
+  
+    <% if @trader.new_record? %>
+    <div class="actions">
+      <%= f.submit "Create Trader" %>
+    </div>
+  <% else %>
+    <div class="actions">
+      <%= f.submit "Update Trader" %>
+    </div>
+  <% end %>
+<% end %>

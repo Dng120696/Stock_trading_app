@@ -1,0 +1,32 @@
+<h1>All Traders</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Last Name</th>
+      <th>First Name</th>
+      <th>Email</th>
+      <th>Status</th>
+      <th>Current Balance</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @traders.each do |trader| %>
+      <tr>
+        <td><%= trader.lastname %></td>
+        <td><%= trader.firstname %></td>
+        <td><%= trader.email %></td>
+        <td><%= trader.status %></td>
+        <td><%= trader.balance %></td>
+        <td>
+          <%= link_to 'Edit', edit_admin_trader_path(trader) %>
+          <%= link_to 'View', admin_trader_path(trader) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Add New Trader', new_admin_trader_path %>
+<%= link_to 'Back', admin_dashboard_index_path, class: 'button' %>
