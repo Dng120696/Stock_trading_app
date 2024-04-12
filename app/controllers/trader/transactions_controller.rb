@@ -1,6 +1,5 @@
 class Trader::TransactionsController < ApplicationController
-  before_action :authenticate_user!, except: [:admin_index]
-  before_action :authenticate_admin_user!, only: [:admin_index]
+
   def index
       @transactions = current_user.transactions
   end
@@ -36,10 +35,6 @@ class Trader::TransactionsController < ApplicationController
     end
   end
 
-  def admin_index
-    @transactions = Transaction.all
-    render 'admin/transactions/admin_index'
-  end
 
   private
 
