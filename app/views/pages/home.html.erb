@@ -1,7 +1,24 @@
 
-
-<div class = 'mb-4'>
-  <h1 class="font-bold text-4xl">Pages#home</h1>
-  <p class = 'text-red-500'>Find me in app/views/pages/home.html.erb</p>
-
+<div class = 'mt-10'>
+<h1 class = 'text-3xl mb-6 font-bold text-gray-800'>Explore Stock News </h1>
+  <% @stock_news.reverse.each do |stock_new|%>
+    <a href="<%=stock_new.url%>" target = '_blank' >
+    <div class = 'shadow-[0_0_10px_rgba(0,0,0,0.1)] p-6 rounded-sm  mb-6 grid grid-cols-[3fr,1fr]  gap-5 bg-white' >
+      <div class = 'flex  justify-center flex-col'>
+        <h1 class = 'text-xl font-bold text-gray-700'>
+        <%= stock_new.source %>
+        </h1>
+        <h3 class = ''>
+        <%= stock_new.headline %>
+        </h3>
+        <p class = ''>
+        <%= stock_new.summary %>
+        </p>
+      </div>
+        <p class = ' '>
+        <%= image_tag(stock_new.image, alt: 'Logo',class: 'w-full h-full  object-fit') %>
+        </p>
+      </div>
+    </a>
+  <%end%>
 </div>

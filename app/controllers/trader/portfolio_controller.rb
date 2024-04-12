@@ -10,13 +10,17 @@ class Trader::PortfolioController < ApplicationController
     stock_values = {}
     current_user.stocks.each do |stock|
     total_value = stock.latest_price * stock.shares
-    stock_values[stock.symbol] = total_value
+    if total_value > 0
+      stock_values[stock.symbol] = total_value
+    end
     end
 
     @pie_chart_data = stock_values.map { |symbol, total_value| [symbol, total_value] }
 
     @stocks = current_user.stocks.select(:symbol).distinct.map do |stock|
-      current_user.stocks.where(symbol: stock.symbol).last
-    end
+      latest_stock = current_user.stocks.where(symbol: stock.symbol).order(created_at: :desc).first
+      latest_stock if latest_stock.shares > 0
+    end.compact
+
   end
 end

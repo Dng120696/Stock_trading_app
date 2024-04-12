@@ -52,7 +52,8 @@
     <p  class = 'flex items-center gap-2 text-red-600'><%= number_to_currency(@stock[:week_52_low], unit: '$')  %></p>
     <div class = 'flex gap-2 items-center'>
       <%= link_to 'Buy', new_trader_transaction_path(transaction: { stock_symbol:@stock[:symbol], stock_price: @stock[:latest_price], transaction_type: :buy }) ,class: 'text-sm px-5 py-2 bg-green-600 text-white rounded-md '%>
-      <%= link_to 'Sell', new_trader_transaction_path(transaction: { stock_symbol: @stock[:symbol], stock_price: @stock[:latest_price], transaction_type: :sell }), class: "#{current_user.stocks.exists?(symbol: @stock[:symbol]) ? '  text-sm px-5 py-2 bg-red-600 text-white  rounded-md' : 'hover:cursor-not-allowed  cursor-not-allowed text-color-[#999] pointer-events-none text-sm px-5 py-2 bg-gray-400 text-white  rounded-md' }" %>
+      <%= link_to 'Sell', new_trader_transaction_path(transaction: { stock_symbol: @stock[:symbol], stock_price: @stock[:latest_price], transaction_type: :sell }), class: "#{current_user.stocks.exists?(symbol: @stock[:symbol]) && current_user.stocks.find_by(symbol: @stock[:symbol]).shares > 0 ? 'text-sm px-5 py-2 bg-red-600 text-white rounded-md' : 'hover:cursor-not-allowed cursor-not-allowed text-color-[#999] pointer-events-none text-sm px-5 py-2 bg-gray-400 text-white rounded-md' }" %>
+
     </div>
   </div>
 <% end %>
@@ -78,7 +79,7 @@
       <p  class = 'flex items-center gap-2 text-red-600 '> <%= number_to_currency( stock[:week_52_low], unit: '$') %></p>
     <div class = 'flex gap-2 items-center'>
       <%= link_to 'Buy', new_trader_transaction_path(transaction: { stock_symbol:stock[:symbol], stock_price: stock[:latest_price], transaction_type: :buy }) ,class: 'text-sm px-5 py-2 bg-green-600 text-white rounded-md '%>
-      <%= link_to 'Sell', new_trader_transaction_path(transaction: { stock_symbol: stock[:symbol], stock_price: stock[:latest_price], transaction_type: :sell }), class: "#{current_user.stocks.exists?(symbol: stock[:symbol]) ? '  text-sm px-5 py-2 bg-red-600 text-white  rounded-md' : 'hover:cursor-not-allowed  cursor-not-allowed text-color-[#999] pointer-events-none text-sm px-5 py-2 bg-gray-400 text-white  rounded-md' }" %>
+      <%= link_to 'Sell', new_trader_transaction_path(transaction: { stock_symbol: stock[:symbol], stock_price: stock[:latest_price], transaction_type: :sell }), class: "#{current_user.stocks.exists?(symbol: stock[:symbol]) && current_user.stocks.find_by(symbol: stock[:symbol]).shares.to_i > 0 ? 'text-sm px-5 py-2 bg-red-600 text-white rounded-md' : 'hover:cursor-not-allowed cursor-not-allowed text-color-[#999] pointer-events-none text-sm px-5 py-2 bg-gray-400 text-white rounded-md' }" %>
     </div>
   </div>
   <%end%>

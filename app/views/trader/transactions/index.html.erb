@@ -1,41 +1,55 @@
+<% if current_user.status == 'approved' %>
+  <h1 class = 'text-gray-700 text-4xl font-bold mt-10'>
+    Transaction History
+  </h1>
+  <div class = 'flex items-center h-[50vh] justify-center w-full'>
+    <div class = 'w-full' >
+      <ul class = 'grid grid-cols-[0.75fr,0.75fr,0.75fr,0.75fr,1.25fr,.75fr] text-lg font-bold  mt-4 mb-2 pb-2 border-b-[2px] border-b-gray-600'>
+        <li>Symbol</li>
+        <li>Shares</li>
+        <li class = 'ml-[-8px]'>Price</li>
+        <li class = 'ml-[-8px]'>Type</li>
+        <li class = 'ml-[-8px]'>Date Created</li>
+        <li class = 'ml-[-8px]'>Total Value</li>
+      </ul>
+      <div class = 'transaction_scroll overflow-y-scroll overflow-x-hidden h-[40vh]'>
+        <% @transactions.each do |transaction|%>
+          <ul class = 'grid  grid-cols-[0.75fr,0.75fr,0.75fr,0.75fr,1.25fr,.75fr] text-center text-md mb-2 pb-2 border-b-[1px] border-b-gray-200 ' >
+            <li class = 'flex items-center  gap-2 '>
+            <%= image_tag(transaction[:logo], alt: 'Logo',class: 'w-6 h-6  object-fit') %> <%= transaction[:stock_symbol] %>
+            </li>
+            <li class = 'flex items-center  gap-2 <%= transaction[:type] == 'buy' ? 'text-green-700' : 'text-red-700' %>'>
+            <%= transaction[:type] == 'buy' ? '+' : '-' %>
+            <%= transaction[:quantity]%>
+            </li>
 
-<h1 class = 'text-gray-700 text-4xl font-bold mt-10'>
-  Transaction History
-</h1>
-<div class = 'flex items-center h-[50vh] justify-center w-full'>
-  <div class = 'w-full' >
-    <ul class = 'grid grid-cols-[0.75fr,0.75fr,1.5fr,0.75fr,1.25fr,.75fr] text-lg font-bold  mt-4 mb-2 pb-2 border-b-[2px] border-b-gray-600'>
-      <li>Symbol</li>
-      <li>Stock Shares</li>
-      <li>Company Name</li>
-      <li> Price</li>
-      <li> Date Created</li>
-      <li> Total Value</li>
-    </ul>
-    <div class = 'transaction_scroll overflow-y-scroll overflow-x-hidden h-[40vh]'>
-      <% @transactions.each do |transaction|%>
-        <ul class = 'grid  grid-cols-[0.75fr,0.75fr,1.5fr,0.75fr,1.25fr,.75fr] text-center text-md mb-2 pb-2 border-b-[1px] border-b-gray-200 ' >
-          <li class = 'flex items-center  gap-2 '>
-          <%= image_tag(transaction[:logo], alt: 'Logo',class: 'w-6 h-6  object-fit') %> <%= transaction[:stock_symbol] %>
-          </li>
-          <li class = 'flex items-center  gap-2 '>
-          <%= transaction[:quantity]%>
-          </li>
-          <li class = 'flex items-center  gap-2 '>
-          <%= transaction[:company_name]%>
-          </li>
-          <li class = 'flex items-center  gap-2 '>
-          <%= number_to_currency(transaction[:stock_price], unit: '$') %>
-          </li>
-          <li class = 'flex items-center  gap-2 '>
-          <%= transaction[:created_at].strftime("%B %d, %Y %H:%M:%S") %>
+            <li class = 'flex items-center  gap-2 '>
+            <%= number_to_currency(transaction[:stock_price], unit: '$') %>
+            </li>
+            <li class = "flex items-center  gap-2 <%= transaction[:type] == 'buy' ? 'text-green-700' : 'text-red-700' %>">
+            <%= transaction[:type] == 'buy' ? 'Buy' : 'Sell' %>
+            </li>
+            <li class = 'flex items-center  gap-2 '>
+            <% transaction_created_at = transaction[:created_at] + 8.hours%>
+            <%= transaction_created_at.strftime("%B %d, %Y %H:%M:%S %p") %>
 
-          </li>
-          <li class = 'flex items-center  gap-2 '>
-          <%= number_to_currency(transaction[:total], unit: '$') %>
-          </li>
-        </ul>
-      <%end%>
+            </li>
+            <li class = "flex items-center  gap-2  <%= transaction[:type] == 'buy' ? 'text-red-700' : 'text-green-700' %>">
+            <%= transaction[:type] == 'buy' ? '-' : '+' %>
+            <%= number_to_currency(transaction[:total], unit: '$') %>
+            </li>
+          </ul>
+        <%end%>
+      </div>
     </div>
   </div>
+  <% else %>
+  <div class = 'w-[600px] mx-auto h-[60vh] flex items-center flex-col justify-center '>
+  <div class = 'p-8 shadow-[0_0_10px_rgba(0,0,0,0.1)]'>
+    <h1 class = 'font-bold text-2xl text-gray-800'> Account Pending Approval.</p>
+    <p class = 'font-semibold text-[16px] text-gray-600'>
+      " Your ability to engage in transactions like buying and selling stocks is temporarily disabled until our administrators review and approve your account. We'll notify you once your account is approved. Thank you for your cooperation."
+    </p>
+  </div>
 </div>
+<%end%>

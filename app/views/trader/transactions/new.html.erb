@@ -1,4 +1,4 @@
-
+<% if current_user.status == 'approved' %>
 <div class = 'grid grid-cols-[1fr,2fr] gap-6 pt-6'>
   <div class = 'flex items-center gap-4 '>
     <p>
@@ -29,13 +29,13 @@
         Market Cap
       </li>
       <li >
-        24h Volume
+        5d Volume
       </li>
       <li>
-        24h High
+        5d High
       </li>
       <li>
-        24h Low
+        5d Low
       </li>
       <li>
         All-time High
@@ -103,7 +103,10 @@
         <div class="mb-2">
           <%= f.label :quantity ,class: 'text-sm font-semibold mb-2 text-gray-500' %><br />
           <%= f.number_field :quantity, id: 'transaction_quantity', value: 1, min: 1, placeholder: 'minimum: 1', class: 'w-full border-gray-400 text-gray-500' %>
-
+          <% stock_share = current_user.stocks.where(symbol:@transaction.stock_symbol)%>
+          <% if @transaction.transaction_type == 'sell' %>
+          <span class = 'text-sm text-gray-400 font-semibold'>shares left: <%= stock_share.first.shares %> </span>
+          <%end%>
         </div>
         <%= f.hidden_field :transaction_type, value: @transaction.transaction_type %>
 
@@ -129,6 +132,17 @@
   </div>
 </div>
 
+<% else %>
+<div class = 'w-[600px] mx-auto h-[60vh] flex items-center flex-col justify-center '>
+  <div class = 'p-8 shadow-[0_0_10px_rgba(0,0,0,0.1)]'>
+    <h1 class = 'font-bold text-2xl text-gray-800'> Account Pending Approval.</p>
+    <p class = 'font-semibold text-[16px] text-gray-600'>
+      " Your ability to engage in transactions like buying and selling stocks is temporarily disabled until our administrators review and approve your account. We'll notify you once your account is approved. Thank you for your cooperation."
+    </p>
+  </div>
+</div>
+
+<%end%>
 
 <script>
 document.addEventListener('turbo:load', function() {
@@ -144,6 +158,7 @@ document.addEventListener('turbo:load', function() {
       totalDisplay.textContent = "$" + total.toFixed(2);
     }
   }
+
 
   quantityInput.addEventListener('input', calculateTotal);
   calculateTotal();

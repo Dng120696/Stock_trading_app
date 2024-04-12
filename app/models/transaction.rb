@@ -22,26 +22,28 @@ class Transaction < ApplicationRecord
 
 
       if existing_stock
-        if existing_stock.shares < transaction_attr[:quantity].to_i
-          raise ActiveRecord::RecordInvalid.new(@transaction), "Insufficient shares of stock"
-        end
         if transaction_attr[:transaction_type] == 'buy'
-
-          existing_stock.update!(
+          if existing_stock.shares == 0 || existing_stock.shares > transaction_attr[:quantity].to_i
+            existing_stock.update!(
               shares: existing_stock.shares + transaction_attr[:quantity].to_i,
               latest_price: stock_data[:latest_price]
 
             )
-          user.balance -= @transaction.total
-          user.save!
+            user.balance -= @transaction.total
+            user.save!
+          end
         else
-          existing_stock.update!(
+          if existing_stock.shares < transaction_attr[:quantity].to_i
+            raise ActiveRecord::RecordInvalid.new(@transaction), "Insufficient shares of stock"
+          else
+            existing_stock.update!(
               shares: existing_stock.shares - transaction_attr[:quantity].to_i,
               latest_price: stock_data[:latest_price]
 
             )
           user.balance += @transaction.total
            user.save!
+          end
         end
       else
         user.balance -= @transaction.total

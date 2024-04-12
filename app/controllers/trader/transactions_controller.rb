@@ -1,20 +1,20 @@
 class Trader::TransactionsController < ApplicationController
   before_action :authenticate_user!
-  def index
 
-    @transactions = current_user.transactions.map do |transaction|
+  def index
+    @transactions = current_user.transactions.order(created_at: :desc)
+
+    @transactions = @transactions.map do |transaction|
       {
         stock_symbol: transaction.stock_symbol,
         quantity: transaction.quantity,
         type: transaction.transaction_type,
         stock_price: transaction.stock_price,
         total: transaction.total,
-        created_at:transaction.created_at,
-        logo: Stock.fetch_logo(transaction.stock_symbol).url,
-        company_name:Stock.fetch_stock_qoute(transaction.stock_symbol).company_name
+        created_at: transaction.created_at,
+        logo: Stock.fetch_logo(transaction.stock_symbol).url
       }
     end
-      p @transactions
   end
 
   def new
