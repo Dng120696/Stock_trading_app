@@ -6,10 +6,13 @@ Rails.application.routes.draw do
 
 
   namespace :admin do
+    resources :trader, only: [:new, :create, :index, :show, :edit, :update]
+    resources :transactions, only: [:index]
     resources :dashboard do
       post 'approve', on: :member
     end
   end
+
   namespace :trader do
    resources :transactions, only: [:index,:new, :create ]
     resources :dashboard,only:[:index]

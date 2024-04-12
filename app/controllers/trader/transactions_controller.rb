@@ -1,5 +1,7 @@
 class Trader::TransactionsController < ApplicationController
+
   before_action :authenticate_user!
+
 
   def index
     @transactions = current_user.transactions.order(created_at: :desc)
@@ -30,6 +32,7 @@ class Trader::TransactionsController < ApplicationController
       rescue ActiveRecord::RecordInvalid => e
         redirect_to new_trader_transaction_path(transaction: transaction_params), alert: e.message
   end
+
 
   private
 
