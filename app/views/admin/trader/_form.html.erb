@@ -1,6 +1,6 @@
 <h2>Sign up</h2>
 
-<%= form_for(@trader, url: admin_trader_path,data:{turbo:false}) do |f| %>
+<%= form_with(model: @trader,url:admin_trader_path(@trader), data:{turbo:false}) do |f| %>
     <%= render 'shared/error_messages', object: @trader %>
     <div class="field">
       <%= f.label :firstname %><br />
@@ -13,7 +13,7 @@
 
     <div class="field">
       <%= f.label :email %><br />
-      <%= f.email_field :email, autocomplete: "email" %>
+      <%= f.email_field :email, autocomplete: "email",readonly:true,class: ' text-gray-400 border-gray-300 rounded-sm'%>
     </div>
 
     <% if @trader.new_record? %>

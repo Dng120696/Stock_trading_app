@@ -12,10 +12,9 @@ class Admin::TraderController < ApplicationController
     @trader.balance = 20000
     @trader.skip_confirmation!
     @trader.status = 1
-
+    p @trader
     if @trader.save
-      # UserMailer.newtrader_pending_email(@trader).deliver_now
-      # UserMailer.approved_email(@trader).deliver_now
+      UserMailer.approved_email(@trader).deliver_now
       redirect_to admin_trader_index_path, notice: "User created successfully."
     else
       render :new,alert: "User not created."
@@ -34,7 +33,7 @@ class Admin::TraderController < ApplicationController
 
   def update
     if @trader.update(trader_params)
-      redirect_to admin_trader_path(@trader), notice: "User details updated successfully."
+      redirect_to admin_trader_index_path, notice: "User details updated successfully."
     else
       render :edit
     end
