@@ -21,15 +21,12 @@ class Transaction < ApplicationRecord
 
 
       if existing_stock
-          last_avg = (user.transactions.where(stock_symbol:stock_data[:symbol],transaction_type: :buy).last.stock_price + stock_data[:latest_price]) / 2
-
 
         if transaction_attr[:transaction_type] == 'buy'
           if existing_stock.shares == 0
             existing_stock.update!(
               shares: existing_stock.shares + transaction_attr[:quantity].to_i,
               latest_price: stock_data[:latest_price],
-              last_avg_price: last_avg
             )
             user.balance -= @transaction.total
             user.save!
@@ -38,7 +35,6 @@ class Transaction < ApplicationRecord
           existing_stock.update!(
             shares: existing_stock.shares + transaction_attr[:quantity].to_i,
             latest_price: stock_data[:latest_price],
-            last_avg_price: last_avg
           )
           user.balance -= @transaction.total
           user.save!
@@ -65,7 +61,6 @@ class Transaction < ApplicationRecord
                 latest_price: stock_data[:latest_price],
                 shares: transaction_attr[:quantity],
                 logo: stock_data[:logo],
-                last_avg_price: stock_data[:latest_price]
                 )
         stock.save!
       end

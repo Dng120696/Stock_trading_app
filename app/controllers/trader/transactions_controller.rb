@@ -18,7 +18,7 @@ class Trader::TransactionsController < ApplicationController
 
   def new
     @stock = Stock.fetch_stock_details(params[:transaction][:stock_symbol])
-    @historical_data = fetch_historical_prices(params[:transaction][:stock_symbol])
+    @chart_data = Stock.fetch_historical_prices(params[:transaction][:stock_symbol])
 
     @transaction = current_user.transactions.new(transaction_params)
   end
@@ -32,19 +32,6 @@ class Trader::TransactionsController < ApplicationController
 
 
   private
-
-  def fetch_historical_prices(symbol)
-    client = Stock.iex_client
-    historical_prices = client.historical_prices(symbol, range: '1m')
-    latest_price_entry = client.quote(symbol)
-    latest_price = latest_price_entry.latest_price
-    today = Date.today
-
-    historical_data = historical_prices.map { |entry| [entry.date, entry.close] }
-    historical_data << [today, latest_price]
-    historical_data
-  end
-
 
   def transaction_params
     params.require(:transaction).permit(:stock_symbol, :quantity, :stock_price, :transaction_type,:total)

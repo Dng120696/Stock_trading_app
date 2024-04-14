@@ -23,28 +23,31 @@ html {
   box-sizing: inherit;
 }
 #search::placeholder{
-  @apply text-gray-300;
+  @apply text-gray-400;
 }
 
 .link_items a.active{
   @apply bg-blue-700 border-blue-700 text-white;
 }
 
+.dashboard_scroll::-webkit-scrollbar,
 .portfolio_scroll::-webkit-scrollbar,
 .transaction_scroll::-webkit-scrollbar {
   width: 1rem;
 }
 
 
+.dashboard_scroll::-webkit-scrollbar-track,
 .portfolio_scroll::-webkit-scrollbar-track,
 .transaction_scroll::-webkit-scrollbar-track {
   background: transparent;
 }
 
 
+.dashboard_scroll::-webkit-scrollbar-thumb,
 .portfolio_scroll::-webkit-scrollbar-thumb,
 .transaction_scroll::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.2);
   border-radius: 6px;
 }
 

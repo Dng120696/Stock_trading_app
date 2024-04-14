@@ -86,8 +86,15 @@
     <div class = 'link_items grid grid-cols-2 gap-2 text-center mb-4 w-full'>
 
       <%= link_to 'Buy', new_trader_transaction_path(transaction: { stock_symbol: @stock[:symbol], stock_price: @stock[:latest_price], transaction_type: :buy }),class: " border-[1px] border-blue-300 py-1 rounded-sm font-semibold  #{@transaction.transaction_type == 'buy' ? 'active' : ''}" %>
+      <% sell_link_classes = "py-1 rounded-sm font-semibold" %>
+      <% if Stock.exists?(symbol: @stock[:symbol]) %>
+        <% sell_link_classes += " border-[1px] border-blue-300 text-blue-500" %>
+      <% else %>
+        <% sell_link_classes += " cursor-not-allowed pointer-events-none bg-gray-400 text-white" %>
+      <% end %>
+      <% sell_link_classes += " active" if @transaction.transaction_type == 'sell' %>
 
-      <%= link_to 'Sell', new_trader_transaction_path(transaction: { stock_symbol: @stock[:symbol], stock_price: @stock[:latest_price], transaction_type: :sell }), class: "  py-1 rounded-sm font-semibold #{Stock.exists?(symbol: @stock[:symbol]) ? ' border-[1px] border-blue-300 text-blue-500' : 'cursor-not-allowed pointer-events-none  bg-gray-400 text-white '}  #{@transaction.transaction_type == 'sell' ? 'active' : ''}" %>
+      <%= link_to 'Sell', new_trader_transaction_path(transaction: { stock_symbol: @stock[:symbol], stock_price: @stock[:latest_price], transaction_type: :sell }), class: sell_link_classes %>
 
     </div>
 
@@ -127,7 +134,7 @@
       <% end %>
     </div>
     <div class = 'w-[clamp(300px,90vw,100%)] shadow-[0_0_10px_rgba(0,0,0,0.1)] p-4 bg-white'>
-    <%= line_chart @historical_data,height: '420px', xtitle: 'Date', ytitle: 'Closing Price' %>
+    <%= line_chart @chart_data,height: '420px', xtitle: 'Date', ytitle: 'Closing Price' %>
     </div>
   </div>
 </div>
