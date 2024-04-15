@@ -22,29 +22,42 @@ html {
   padding: 0;
   box-sizing: inherit;
 }
-#search::placeholder{
-  @apply text-gray-300;
+
+#search::placeholder,
+#user_email::placeholder,
+#user_firstname::placeholder,
+#user_lastname::placeholder,
+#user_balance::placeholder,
+#user_password_confirmation::placeholder,
+#user_password::placeholder,
+#admin_user_email::placeholder,
+#admin_user_password::placeholder{
+  @apply text-gray-400 text-sm;
 }
 
-.link_items a.active{
-  @apply bg-blue-700 border-blue-700 text-white;
+.link_items a.active,
+.log_in .active{
+  @apply bg-blue-800  text-white;
 }
 
+.dashboard_scroll::-webkit-scrollbar,
 .portfolio_scroll::-webkit-scrollbar,
 .transaction_scroll::-webkit-scrollbar {
   width: 1rem;
 }
 
 
+.dashboard_scroll::-webkit-scrollbar-track,
 .portfolio_scroll::-webkit-scrollbar-track,
 .transaction_scroll::-webkit-scrollbar-track {
   background: transparent;
 }
 
 
+.dashboard_scroll::-webkit-scrollbar-thumb,
 .portfolio_scroll::-webkit-scrollbar-thumb,
 .transaction_scroll::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.2);
   border-radius: 6px;
 }
 

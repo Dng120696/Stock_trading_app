@@ -1,6 +1,7 @@
 
 <% if current_user.status == 'approved' %>
-  <h1 class = 'text-gray-700 text-4xl font-bold mt-6'>
+<div class = 'w-full'>
+    <h1 class = 'text-gray-800 text-4xl font-bold mt-6'>
     Portfolio
   </h1>
   <div class = 'grid grid-cols-[1fr,2fr] gap-10 my-8'>
@@ -9,21 +10,24 @@
         <li class =' text-2xl font-bold text-gray-500 mb-2 '>
             Cash Balance
         </li>
-        <li  class = ' pl-10 text-3xl font-bold text-sky-700  mb-4'>
+        <li  class = ' pl-10 text-3xl font-bold text-sky-800  mb-4'>
         <%= number_to_currency(current_user.balance, unit: '$') %>
 
         </li>
         <li class =' text-2xl font-bold text-gray-500 mb-2 '>
             Porfolio Value
         </li>
-        <li class = ' pl-10  text-3xl font-bold text-sky-700  mb-4'>
+        <li class = ' pl-10  text-3xl font-bold text-sky-800  mb-4'>
           <%= number_to_currency(@total_portfolio, unit: '$') %>
         </li>
         <li class =' text-2xl font-bold text-gray-500 mb-2 '>
             Portfolio Profit & Loss
         </li>
-        <li  class = 'pl-10 text-3xl font-bold text-red-700 mb-4 '>
-            X
+        <li  class = "pl-10 text-3xl font-bold mb-4 flex items-center gap-2 <%= @total_profit_loss >= 0 ? 'text-sky-800' : 'text-red-800' %> ">
+        <%= number_to_currency(@total_profit_loss, unit: '$') %>
+          <span class = "text-[14px] ">
+          (<%= format('%.2f', @total_gain_loss) %>%)
+          </span>
         </li>
       </ul>
     </div>
@@ -37,8 +41,8 @@
   <li>Shares</li>
   <li class = 'ml-[-4px]' >Company</li>
   <li class = 'ml-[-8px]'> Price</li>
-  <li class = 'ml-[-8px]'> Average Price</li>
-  <li class = 'ml-[-8px]'> Total Value</li>
+  <li class = 'ml-[-8px]'> Profit/Loss</li>
+  <li class = 'ml-[-8px]'> Total</li>
   </ul>
   <div class = 'portfolio_scroll overflow-y-scroll overflow-x-hidden h-[25vh]'>
     <% @porfolio_stocks.each do |stock|%>
@@ -55,8 +59,15 @@
         <li class = 'flex items-center  gap-2 '>
         <%= number_to_currency(stock[:latest_price], unit: '$') %>
         </li>
-        <li class = 'flex items-center  gap-2 '>
-        <%= number_to_currency(stock[:last_avg], unit: '$') %>
+        <li class = 'flex items-center  gap-1 '>
+        <span class = "<%= stock[:profit_loss] >= 0  ? 'text-green-800' : 'text-red-800'%>">
+          <%= number_to_currency(stock[:profit_loss], unit: '$') %>
+        </span>
+        <span class = "text-[14px]  <%= stock[:gain_loss] >= 0  ? 'text-green-600' : 'text-red-600'%>">
+
+        (<%= format('%.2f', stock[:gain_loss]) %>%)
+        </span>
+
         </li>
         <li class = 'flex items-center  gap-2 '>
         <%= number_to_currency(stock[:latest_price]  * stock[:shares], unit: '$') %>
@@ -69,8 +80,8 @@
       </ul>
 
     <%end%>
-
   </div>
+</div>
 
 <% else %>
 
