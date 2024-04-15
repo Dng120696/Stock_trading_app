@@ -1,6 +1,7 @@
 
 <% if current_user.status == 'approved' %>
-  <h1 class = 'text-gray-800 text-4xl font-bold mt-6'>
+<div class = 'w-full'>
+    <h1 class = 'text-gray-800 text-4xl font-bold mt-6'>
     Portfolio
   </h1>
   <div class = 'grid grid-cols-[1fr,2fr] gap-10 my-8'>
@@ -41,7 +42,7 @@
   <li class = 'ml-[-4px]' >Company</li>
   <li class = 'ml-[-8px]'> Price</li>
   <li class = 'ml-[-8px]'> Profit/Loss</li>
-  <li class = 'ml-[-8px]'> Total Value</li>
+  <li class = 'ml-[-8px]'> Total</li>
   </ul>
   <div class = 'portfolio_scroll overflow-y-scroll overflow-x-hidden h-[25vh]'>
     <% @porfolio_stocks.each do |stock|%>
@@ -79,8 +80,8 @@
       </ul>
 
     <%end%>
-
   </div>
+</div>
 
 <% else %>
 

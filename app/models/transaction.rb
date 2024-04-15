@@ -9,6 +9,8 @@ class Transaction < ApplicationRecord
   def self.create_and_update_stock(user,transaction_attr)
     ActiveRecord::Base.transaction do
       @transaction = user.transactions.new(transaction_attr)
+      logo_url = Stock.fetch_logo(transaction_attr[:stock_symbol]).url
+      @transaction.logo = logo_url
       @transaction.total =(transaction_attr[:quantity].to_i * transaction_attr[:stock_price].to_f).round(2)
       @transaction.save!
 

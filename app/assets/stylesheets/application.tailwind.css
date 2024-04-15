@@ -22,12 +22,22 @@ html {
   padding: 0;
   box-sizing: inherit;
 }
-#search::placeholder{
-  @apply text-gray-400;
+
+#search::placeholder,
+#user_email::placeholder,
+#user_firstname::placeholder,
+#user_lastname::placeholder,
+#user_balance::placeholder,
+#user_password_confirmation::placeholder,
+#user_password::placeholder,
+#admin_user_email::placeholder,
+#admin_user_password::placeholder{
+  @apply text-gray-400 text-sm;
 }
 
-.link_items a.active{
-  @apply bg-blue-700 border-blue-700 text-white;
+.link_items a.active,
+.log_in .active{
+  @apply bg-blue-800  text-white;
 }
 
 .dashboard_scroll::-webkit-scrollbar,
