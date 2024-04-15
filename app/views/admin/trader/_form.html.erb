@@ -1,3 +1,4 @@
+
 <div class="p-6 bg-white shadow-md rounded-md mx-auto" style="max-width: 400px;">
   <%= form_for(@trader, url: new_admin_trader_path, data: { turbo: false }) do |f| %>
     <%= render 'shared/error_messages', object: @trader %>
@@ -9,6 +10,7 @@
       <%= f.label :lastname, class: "block text-gray-700 font-semibold mb-2" %>
       <%= f.text_field :lastname, class: "w-full rounded border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" %>
     </div>
+
     <div class="mb-4">
       <%= f.label :email, class: "block text-gray-700 font-semibold mb-2" %>
       <%= f.email_field :email, class: "w-full rounded border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50", autocomplete: "email" %>

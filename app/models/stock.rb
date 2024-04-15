@@ -1,8 +1,19 @@
 class Stock < ApplicationRecord
   belongs_to :user
 
-  validates_presence_of :symbol, :company_name, :latest_price, :shares
+  validates_presence_of :symbol, :company_name, :latest_price, :shares,:last_avg_price
   validates :shares, numericality: { greater_than_or_equal_to: 0 }
+
+
+  def self.update_latest_price(ticker_symbol)
+    begin
+      client = iex_client
+      client.price(ticker_symbol)
+    rescue IEX::Errors::SymbolNotFoundError => e
+      Rails.logger.error "Symbol not found: #{e.message}"
+      nil
+    end
+  end
 
   def self.new_lookup(ticker_symbol)
     Rails.cache.fetch("stock_lookup_#{ticker_symbol}", expires_in: 1.day) do

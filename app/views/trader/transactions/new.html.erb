@@ -63,8 +63,8 @@
 </div>
 
 
-<div class = 'flex gap-10 justify-between pt-10 h-[500px]'>
-  <div class = 'shadow-[0_0_10px_rgba(0,0,0,0.1)] px-8 py-12 flex items-center justify-center flex-col'>
+<div class = 'flex gap-10 justify-between pt-10 h-[500px] '>
+  <div class = 'shadow-[0_0_10px_rgba(0,0,0,0.1)] px-8 py-12 flex items-center justify-center flex-col bg-white'>
     <div class="text-red-400 text-sm ">
       <% if @transaction.errors.any? %>
         <h2>The following errors prevented the category from being saved:</h2>
@@ -98,7 +98,7 @@
         </div>
         <div class="mb-2">
           <%= f.label :stock_price,class: 'text-sm font-semibold mb-2 text-gray-500'%><br />
-          <%= f.text_field :stock_price, value: @transaction.stock_price, readonly: true , class: ' text-gray-400 border-gray-300 rounded-sm' %>
+          <%= f.text_field :stock_price, value:@stock[:latest_price], readonly: true , class: ' text-gray-400 border-gray-300 rounded-sm' %>
         </div>
         <div class="mb-2">
           <%= f.label :quantity ,class: 'text-sm font-semibold mb-2 text-gray-500' %><br />
@@ -126,7 +126,7 @@
         <% end %>
       <% end %>
     </div>
-    <div class = 'w-[clamp(300px,90vw,100%)] shadow-[0_0_10px_rgba(0,0,0,0.1)] p-4 '>
+    <div class = 'w-[clamp(300px,90vw,100%)] shadow-[0_0_10px_rgba(0,0,0,0.1)] p-4 bg-white'>
     <%= line_chart @historical_data,height: '420px', xtitle: 'Date', ytitle: 'Closing Price' %>
     </div>
   </div>
@@ -149,7 +149,7 @@ document.addEventListener('turbo:load', function() {
 
   const quantityInput = document.getElementById('transaction_quantity');
   const totalDisplay = document.getElementById('transaction_total');
-  const stockPrice = parseFloat('<%= @transaction.stock_price %>');
+  const stockPrice = parseFloat('<%= @stock[:latest_price] %>');
 
   function calculateTotal() {
     const quantity = parseFloat(quantityInput.value);

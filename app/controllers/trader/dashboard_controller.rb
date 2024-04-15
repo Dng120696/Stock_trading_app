@@ -1,8 +1,7 @@
 class Trader::DashboardController < ApplicationController
   before_action :authenticate_user!
+
   def index
-    p current_user
-    p current_admin_user
     @total_portfolio = 0
     current_user.stocks.each do |stock|
       total_stock = stock.shares * stock.latest_price
