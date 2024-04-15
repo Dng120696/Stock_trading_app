@@ -1,28 +1,32 @@
-<h1>All Transactions</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>User</th>
-      <th>Stock Symbol</th>
-      <th>Quantity</th>
-      <th>Stock Price</th>
-      <th>Total</th>
-      <th>Transaction Type</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @transactions.each do |transaction| %>
-      <tr>
-        <td><%= "#{transaction.user.lastname}, #{transaction.user.firstname}" %></td>
-        <td><%= transaction.stock_symbol %></td>
-        <td><%= transaction.quantity %></td>
-        <td><%= transaction.stock_price %></td>
-        <td><%= transaction.total %></td>
-        <td><%= transaction.transaction_type %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<%= link_to 'Back', admin_dashboard_index_path, class: 'button' %>
+<div class="p-6 bg-white shadow-md rounded-md">
+  <h1 class="text-3xl font-semibold mb-4">All Transactions</h1>
+  <div class="overflow-x-auto">
+    <table class="table-auto w-full">
+      <thead>
+        <tr>
+          <th class="px-4 py-2">User</th>
+          <th class="px-4 py-2">Stock Symbol</th>
+          <th class="px-4 py-2">Quantity</th>
+          <th class="px-4 py-2">Stock Price</th>
+          <th class="px-4 py-2">Total</th>
+          <th class="px-4 py-2">Transaction Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @transactions.each do |transaction| %>
+          <tr>
+            <td class="border px-4 py-2 text-center"><%= "#{transaction.user.lastname}, #{transaction.user.firstname}" %></td>
+            <td class="border px-4 py-2 text-center"><%= transaction.stock_symbol %></td>
+            <td class="border px-4 py-2 text-center"><%= transaction.quantity %></td>
+            <td class="border px-4 py-2 text-center"><%= transaction.stock_price %></td>
+            <td class="border px-4 py-2 text-center"><%= transaction.total %></td>
+            <td class="border px-4 py-2 text-center"><%= transaction.transaction_type %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="mt-6">
+  <%= link_to 'Back', admin_dashboard_index_path, class: "border bg-blue-500 hover:bg-blue-600 text-black font-bold py-2 px-4 rounded" %>
+  </div>
+</div>
