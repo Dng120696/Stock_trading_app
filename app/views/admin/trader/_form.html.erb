@@ -1,28 +1,29 @@
-<h2>Sign up</h2>
 
-<%= form_with(model: @trader,url:admin_trader_path(@trader), data:{turbo:false}) do |f| %>
+<div class="p-6 bg-white shadow-md rounded-md mx-auto" style="max-width: 400px;">
+  <%= form_for(@trader, url: new_admin_trader_path, data: { turbo: false }) do |f| %>
     <%= render 'shared/error_messages', object: @trader %>
-    <div class="field">
-      <%= f.label :firstname %><br />
-      <%= f.text_field :firstname, autofocus: true %>
+    <div class="mb-4">
+      <%= f.label :firstname, class: "block text-gray-700 font-semibold mb-2" %>
+      <%= f.text_field :firstname, class: "w-full rounded border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" %>
     </div>
-    <div class="field">
-      <%= f.label :lastname %><br />
-      <%= f.text_field :lastname %>
+    <div class="mb-4">
+      <%= f.label :lastname, class: "block text-gray-700 font-semibold mb-2" %>
+      <%= f.text_field :lastname, class: "w-full rounded border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" %>
     </div>
 
-    <div class="field">
-      <%= f.label :email %><br />
-      <%= f.email_field :email, autocomplete: "email",readonly:true,class: ' text-gray-400 border-gray-300 rounded-sm'%>
+    <div class="mb-4">
+      <%= f.label :email, class: "block text-gray-700 font-semibold mb-2" %>
+      <%= f.email_field :email, class: "w-full rounded border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50", autocomplete: "email" %>
     </div>
 
     <% if @trader.new_record? %>
-    <div class="actions">
-      <%= f.submit "Create Trader" %>
-    </div>
-  <% else %>
-    <div class="actions">
-      <%= f.submit "Update Trader" %>
-    </div>
+      <div class="text-center">
+        <%= f.submit "Create Trader", class: "bg-blue-500 hover:bg-blue-600 text-black font-bold py-2 px-4 rounded" %>
+      </div>
+    <% else %>
+      <div class="text-center">
+        <%= f.submit "Update Trader", class: "bg-blue-500 hover:bg-blue-600 text-black font-bold py-2 px-4 rounded" %>
+      </div>
+    <% end %>
   <% end %>
-<% end %>
+</div>

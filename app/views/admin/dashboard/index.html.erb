@@ -1,14 +1,28 @@
-<h1>hello admin</h1>
-<%= button_to 'Logout', destroy_admin_user_session_path, method: :delete %>
-<%= link_to 'View all traders', admin_trader_index_path %>
-<%= link_to 'View All Transactions', admin_transactions_path %>
-
-<% @users.each do |user| %>
-  <div class="grid grid-cols-3">
-  <% if user.confirmed?%>
-    <p><%= user.email %></p>
-    <p><%= user.status %></p>
-    <%= button_to "Approve", approve_admin_dashboard_path(user), method: :post %>
-  <%end%>
+<div class="p-6 bg-white shadow-md rounded-md">
+  <h1 class="text-3xl font-semibold mb-4">Hello, Admin!</h1>
+  <div class="mt-6 text-center">
+    <%= link_to 'View all Traders', admin_trader_index_path, class: "border bg-blue-500 hover:bg-blue-600 text-black font-bold py-2 px-4 rounded mr-2" %>
+    <%= link_to 'View All Transactions', admin_transactions_path, class: "border bg-gray-500 hover:bg-gray-600 text-black font-bold py-2 px-4 rounded" %>
   </div>
-<% end %>
+
+  <div class="mt-6">
+    <h2 class="text-xl font-semibold mb-4">Confirmed users pending approvals:</h2>
+    <% if @users.any? %>
+      <% @users.each do |user| %>
+        <% if user.confirmed? %>
+          <div class="flex mb-2">
+            <div class="flex-1 mr-4">
+              <p class="text-lg"><%= user.email %></p>
+              <p><strong>Status:</strong> <%= user.status %></p>
+            </div>
+            <div>
+              <%= button_to "Approve", approve_admin_dashboard_path(user), method: :post, class: "bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded" %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    <% else %>
+      <p>No confirmed users found.</p>
+    <% end %>
+  </div>
+</div>
