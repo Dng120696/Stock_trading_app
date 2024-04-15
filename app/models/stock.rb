@@ -90,6 +90,9 @@ class Stock < ApplicationRecord
   def self.fetch_news(ticker_symbol)
         iex_api_service.fetch_news(ticker_symbol)
   end
+  def self.fetch_price(ticker_symbol)
+        iex_api_service.fetch_price(ticker_symbol)
+  end
 
   private
 

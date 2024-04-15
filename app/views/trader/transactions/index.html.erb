@@ -1,16 +1,16 @@
 <div class = 'w-full'>
   <% if current_user.status == 'approved' %>
-  <h1 class = 'text-gray-700 text-4xl font-bold mt-10'>
+  <h1 class = 'text-gray-700 text-4xl font-bold'>
     Transaction History
   </h1>
   <div class = 'flex items-center h-[60vh] justify-center w-full'>
     <div class = 'w-full' >
       <ul class = 'grid grid-cols-[0.75fr,0.75fr,0.75fr,0.75fr,1.25fr,.75fr] text-lg font-bold  mt-4 mb-2 pb-2 border-b-[2px] border-b-gray-600'>
         <li>Symbol</li>
-        <li>Shares</li>
-        <li class = 'ml-[-8px]'>Price</li>
         <li class = 'ml-[-8px]'>Type</li>
         <li class = 'ml-[-8px]'>Date Created</li>
+        <li>Shares</li>
+        <li class = 'ml-[-8px]'>Price</li>
         <li class = 'ml-[-8px]'>Total</li>
       </ul>
       <div class = 'transaction_scroll overflow-y-scroll overflow-x-hidden h-[50vh]'>
@@ -46,7 +46,7 @@
   </div>
   <% else %>
   <div class = 'w-[600px] mx-auto h-[60vh] flex items-center flex-col justify-center '>
-  <div class = 'p-8 shadow-[0_0_10px_rgba(0,0,0,0.1)]'>
+  <div class = 'p-8 shadow-[0_0_10px_rgba(0,0,0,0.1)] bg-white'>
     <h1 class = 'font-bold text-2xl text-gray-800'> Account Pending Approval.</p>
     <p class = 'font-semibold text-[16px] text-gray-600'>
       " Your ability to engage in transactions like buying and selling stocks is temporarily disabled until our administrators review and approve your account. We'll notify you once your account is approved. Thank you for your cooperation."

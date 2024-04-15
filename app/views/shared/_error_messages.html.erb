@@ -1,10 +1,10 @@
-<% if object.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= pluralize(object.errors.count, "error") %> prohibited this user from being saved:</h2>
-    <ul>
-      <% object.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+<div class="text-red-400 text-sm my-4">
+  <% if obj.errors.any? %>
+    <h2>The following errors prevented the category from being saved:</h2>
+    <ul class = 'list-disc  pl-8'>
+      <% obj.errors.full_messages.each do |error| %>
+        <li class = ''><%= error %></li>
       <% end %>
     </ul>
-  </div>
-<% end %>
+  <% end %>
+</div>

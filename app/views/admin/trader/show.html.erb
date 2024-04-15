@@ -1,7 +1,6 @@
-<div class="p-6 bg-white shadow-md rounded-md mx-auto" style="max-width: 400px;">
-  <h1 class="text-2xl font-semibold mb-4 text-center"><%= "#{@trader.firstname} #{@trader.lastname}" %></h1>
-  <ul class="text-gray-700">
-    <li class="mb-2"><strong>ID:</strong> <%= @trader.id %></li>
+<div class="p-6 bg-white shadow-[0_0_10px_rgba(0,0,0,0.15)] rounded-md mx-auto w-[clamp(300px,90%,500px)]" >
+  <h1 class="text-2xl font-bold mb-4 text-center"> User Account Details</h1>
+  <ul class="text-gray-700 mb-5">
     <li class="mb-2"><strong>Firstname:</strong> <%= @trader.firstname %></li>
     <li class="mb-2"><strong>Lastname:</strong> <%= @trader.lastname %></li>
     <li class="mb-2"><strong>Email:</strong> <%= @trader.email %></li>
@@ -10,7 +9,5 @@
     <li class="mb-2"><strong>Created_at:</strong> <%= @trader.created_at.in_time_zone.strftime("%B %e, %Y %l:%M %p") %></li>
     <li class="mb-2"><strong>Updated_at:</strong> <%= @trader.updated_at.in_time_zone.strftime("%B %e, %Y %l:%M %p") %></li>
   </ul>
-  <div class="text-center">
-  <%= link_to 'Back', admin_trader_index_path, class: "bg-blue-500 hover:bg-blue-600 text-black font-bold py-2 px-4 rounded" %>
-</div>
+  <%= link_to 'Back', admin_trader_index_path, class: "bg-blue-500 hover:bg-blue-600 text-gray-100 font-bold py-2 px-4 rounded" %>
 </div>

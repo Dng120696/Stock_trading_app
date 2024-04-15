@@ -15,7 +15,7 @@ class PortfolioService
   end
 
   def calculate_total_portfolio_value
-    @user.stocks.sum { |stock| stock.shares * stock.latest_price }
+    @user.stocks.sum { |stock| stock.shares * Stock.fetch_price(stock.symbol)  }
   end
 
   def calculate_total_profit_loss_and_gain

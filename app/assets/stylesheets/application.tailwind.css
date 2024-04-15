@@ -40,6 +40,7 @@ html {
   @apply bg-blue-800  text-white;
 }
 
+.admin_transaction_scroll::-webkit-scrollbar,
 .dashboard_scroll::-webkit-scrollbar,
 .portfolio_scroll::-webkit-scrollbar,
 .transaction_scroll::-webkit-scrollbar {
@@ -47,6 +48,7 @@ html {
 }
 
 
+.admin_transaction_scroll::-webkit-scrollbar-track,
 .dashboard_scroll::-webkit-scrollbar-track,
 .portfolio_scroll::-webkit-scrollbar-track,
 .transaction_scroll::-webkit-scrollbar-track {
@@ -54,6 +56,7 @@ html {
 }
 
 
+.admin_transaction_scroll::-webkit-scrollbar-thumb,
 .dashboard_scroll::-webkit-scrollbar-thumb,
 .portfolio_scroll::-webkit-scrollbar-thumb,
 .transaction_scroll::-webkit-scrollbar-thumb {

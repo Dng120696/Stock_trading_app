@@ -8,11 +8,11 @@ class Admin::TraderController < ApplicationController
 
   def create
     @trader = User.new(trader_params)
-    @trader.password = 'password123'
-    @trader.balance = 20000
+    @trader.password = Rails.application.credentials.new_account[:password]
+    @trader.balance = Rails.application.credentials.new_account[:balance]
     @trader.skip_confirmation!
     @trader.status = 1
-    p @trader
+
     if @trader.save
       UserMailer.approved_email(@trader).deliver_now
       redirect_to admin_trader_index_path, notice: "User created successfully."
