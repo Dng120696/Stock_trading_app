@@ -48,6 +48,7 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
   gem 'rspec-rails'
+  gem 'shoulda-matchers', '~> 5.0'
 end
 
 group :development do
@@ -73,3 +74,4 @@ gem "devise", "~> 4.9"
 gem 'iex-ruby-client'
 gem "chartkick"
 gem "groupdate"
+gem 'pry'

@@ -2,7 +2,7 @@
 class Stock < ApplicationRecord
   belongs_to :user
 
-  validates_presence_of :symbol, :company_name, :latest_price, :shares
+  validates_presence_of :symbol, :company_name, :latest_price, :shares,:logo
   validates :shares, numericality: { greater_than_or_equal_to: 0 }
 
   def self.update_latest_price(ticker_symbol)

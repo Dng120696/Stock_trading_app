@@ -3,7 +3,7 @@ class Transaction < ApplicationRecord
 
   enum transaction_type: { buy: 0, sell: 1 }
 
-  validates_presence_of :quantity, :transaction_type, :stock_price, :stock_symbol,:total
+  validates_presence_of :quantity, :transaction_type, :stock_price, :stock_symbol,:total,:logo,:user_balance
 
 
   def self.create_and_update_stock(user,transaction_attr)
