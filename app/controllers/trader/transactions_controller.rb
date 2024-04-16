@@ -1,5 +1,6 @@
 class Trader::TransactionsController < ApplicationController
   before_action :authenticate_user!
+
   def index
     @transactions = current_user.transactions.order(created_at: :desc)
   end
@@ -19,7 +20,6 @@ class Trader::TransactionsController < ApplicationController
   end
 
   private
-
   def transaction_params
     params.require(:transaction).permit(:stock_symbol, :quantity, :stock_price, :transaction_type,:total)
   end

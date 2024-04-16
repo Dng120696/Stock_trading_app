@@ -20,7 +20,6 @@
       }
     </style>
   </head>
-
   <body class="bg-gray-50">
     <header class="w-full bg-white fixed top-0 left-0 shadow-[0_0_10px_rgba(0,0,0,0.15)] z-50">
       <nav class="flex items-center justify-between py-4 w-[clamp(300px,90%,1200px)] mx-auto font-bold text-lg">
@@ -50,7 +49,6 @@
             </li>
           <% end %>
         </ul>
-
         <div class="flex items-center gap-4">
           <% if !user_signed_in? && !admin_user_signed_in? %>
             <%= link_to 'Sign In', new_user_session_path, class: '' %>
@@ -70,7 +68,6 @@
         </div>
       </nav>
     </header>
-
     <div class="w-[clamp(300px,90%,1200px)] mx-auto min-h-screen grid place-items-center pt-20 pb-6 relative z-100">
       <div class="absolute top-[100px] right-0 translate-x-0 translate-y-[-40%] w-[clamp(300px,90%,550px)] z-10">
         <% unless notice.blank? %>
@@ -79,7 +76,6 @@
             <button type="button" class="close-button" onclick="this.parentNode.style.display = 'none';">×</button>
           </div>
         <% end %>
-
         <% unless alert.blank? %>
           <div class="flex justify-between items-center bg-red-200 text-red-900 px-4 py-3 rounded-md flex-grow-1 w-full self-start show">
             <p class="alert"><%= alert %></p>
@@ -87,7 +83,6 @@
           </div>
         <% end %>
       </div>
-
       <%= yield %>
     </div>
   </body>

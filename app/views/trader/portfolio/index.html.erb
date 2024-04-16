@@ -11,20 +11,20 @@
             Cash Balance
         </li>
         <li  class = ' pl-10 text-3xl font-bold text-sky-800  mb-4'>
-        <%= number_to_currency(current_user.balance, unit: '$') %>
+        <%= number_to_currency(current_user.balance) %>
 
         </li>
         <li class =' text-2xl font-bold text-gray-500 mb-2 '>
             Porfolio Value
         </li>
         <li class = ' pl-10  text-3xl font-bold text-sky-800  mb-4'>
-          <%= number_to_currency(@total_portfolio, unit: '$') %>
+          <%= number_to_currency(@total_portfolio) %>
         </li>
         <li class =' text-2xl font-bold text-gray-500 mb-2 '>
             Portfolio Profit & Loss
         </li>
         <li  class = "pl-10 text-3xl font-bold mb-4 flex items-center gap-2 <%= @total_profit_loss >= 0 ? 'text-sky-800' : 'text-red-800' %> ">
-        <%= number_to_currency(@total_profit_loss, unit: '$') %>
+        <%= number_to_currency(@total_profit_loss) %>
           <span class = "text-[14px] ">
           (<%= format('%.2f', @total_gain_loss) %>%)
           </span>
@@ -58,12 +58,12 @@
         <%= stock[:shares]%>
         </li>
         <li class = 'flex items-center  gap-2 '>
-        <%= number_to_currency(stock[:latest_price], unit: '$') %>
+        $<%= stock[:latest_price] %>
         </li>
         <li class = 'flex items-center  gap-1 '>
         <span class = "<%= stock[:profit_loss] >= 0  ? 'text-green-800' : 'text-red-800'%>">
         <%= stock[:profit_loss] >= 0 ? '+' : '' %>
-          <%= number_to_currency(stock[:profit_loss], unit: '$') %>
+          <%= number_to_currency(stock[:profit_loss]) %>
         </span>
         <span class = "text-[14px]  <%= stock[:gain_loss] >= 0  ? 'text-green-600' : 'text-red-600'%>">
 
@@ -72,7 +72,7 @@
 
         </li>
         <li class = 'flex items-center  gap-2 '>
-        <%= number_to_currency(stock[:latest_price]  * stock[:shares], unit: '$') %>
+        <%= number_to_currency(stock[:latest_price]  * stock[:shares]) %>
         </li>
         <li class = 'flex gap-2 items-center justify-center'>
         <%= link_to 'Buy', new_trader_transaction_path(transaction: { stock_symbol:stock[:symbol], stock_price: stock[:latest_price], transaction_type: :buy }) ,class: 'text-sm px-5 py-2 bg-green-600 text-white rounded-md '%>

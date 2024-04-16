@@ -21,7 +21,7 @@
             <td class="border px-4 py-2 text-center"><%= trader.status %></td>
             <td class="border px-4 py-2 text-center"><%= trader.balance %></td>
             <td class="border px-4 py-2 text-center">
-            <%= link_to 'Edit', edit_admin_trader_path(trader), class: "text-blue-500 hover:text-blue-700 mr-2", style: "color: inherit;" %> |
+              <%= link_to 'Edit', edit_admin_trader_path(trader), class: "text-blue-500 hover:text-blue-700 mr-2", style: "color: inherit;" %> |
               <%= link_to 'View', admin_trader_path(trader)%>
             </td>
           </tr>
@@ -29,7 +29,6 @@
       </tbody>
     </table>
   </div>
-
   <div class="mt-6">
     <%= link_to 'Add New Trader', new_admin_trader_path, class: "border bg-blue-500 hover:bg-gray-600 text-gray-100 font-bold py-2 px-4 rounded mr-2" %>
     <%= link_to 'Back', admin_dashboard_index_path, class: "border bg-blue-500 hover:bg-gray-600 text-gray-100 font-bold py-2 px-4 rounded" %>

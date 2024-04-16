@@ -1,62 +1,55 @@
-
-
 <div class = 'log_in flex items-center justify-center  w-full'>
   <div class = 'p-10 pt-14 shadow-[0_0_10px_rgba(0,0,0,0.1)] bg-white te rounded-sm relative w-[clamp(300px,90%,400px)] overflow-hidden'>
-  <div class='grid grid-cols-2 w-full text-center absolute top-0 left-0'>
-    <%= link_to 'User', new_user_session_path, class: "py-2 px-4  #{request.path == new_user_session_path ? 'active' : 'bg-gray-400 text-white'}" %>
-    <%= link_to 'Admin', new_admin_user_session_path, class: "py-2 px-4  #{request.path == new_admin_user_session_path ? 'active' : 'bg-gray-400 text-white'}" %>
-</div>
+    <div class='grid grid-cols-2 w-full text-center absolute top-0 left-0'>
+      <%= link_to 'User', new_user_session_path, class: "py-2 px-4  #{request.path == new_user_session_path ? 'active' : 'bg-gray-400 text-white'}" %>
+      <%= link_to 'Admin', new_admin_user_session_path, class: "py-2 px-4  #{request.path == new_admin_user_session_path ? 'active' : 'bg-gray-400 text-white'}" %>
+    </div>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="w-full my-2">
         <%= f.label :email, class: 'font-semibold text-gray-500  text-sm'%><br />
         <%= f.email_field :email, autofocus: true, autocomplete: "email" ,placeholder:'Enter your Email', class: 'w-full placeholder-shown:border-gray-400 text-base' %>
       </div>
-
       <div class="w-full mb-2">
         <%= f.label :password,class: 'font-semibold text-gray-500  text-sm' %><br />
         <div class = 'relative'>
           <%= f.password_field :password, autocomplete: "current-password" ,placeholder:'Enter your Password', class: 'w-full placeholder-shown:border-gray-400 text-base'%>
           <div class = 'show_password_menu absolute top-[50%] right-4 translate-x-[-50%] translate-y-[-50%] cursor-pointer'>
             <span class = 'open_password hidden'>
-            <i class=" fa-solid fa-eye text-sm text-gray-500"></i>
+              <i class=" fa-solid fa-eye text-sm text-gray-500"></i>
             </span>
             <span class = 'close_password'>
               <i class="fa-solid fa-eye-slash  text-sm text-gray-500"></i>
             </span>
           </div>
         </div>
-
       </div>
-
       <% if devise_mapping.rememberable? %>
         <div class="w-full mb-2">
           <%= f.check_box :remember_me %>
           <%= f.label :remember_me, class: 'font-semibold text-gray-500  text-sm' %>
         </div>
       <% end %>
-
       <div class="">
         <%= f.submit "Log in",class: 'py-2 px-6 w-full bg-blue-800  w-full text-white font-semibold' %>
       </div>
-      <% end %>
+    <% end %>
     <%= render "users/shared/links" %>
   </div>
 </div>
 <script>
-document.addEventListener('turbo:load', function() {
-  const inputPassword = document.getElementById('user_password');
-  const show_password_menu = document.querySelector('.show_password_menu')
-  const close_password = document.querySelector('.close_password')
-  const open_password = document.querySelector('.open_password')
+  document.addEventListener('turbo:load', function() {
+    const inputPassword = document.getElementById('user_password');
+    const show_password_menu = document.querySelector('.show_password_menu')
+    const close_password = document.querySelector('.close_password')
+    const open_password = document.querySelector('.open_password')
 
-  show_password_menu?.addEventListener('click', ()=> {
+    show_password_menu?.addEventListener('click', ()=> {
 
-    inputPassword.type = inputPassword.type === 'password' ? 'text' : 'password';
+      inputPassword.type = inputPassword.type === 'password' ? 'text' : 'password';
 
-    close_password.classList.toggle("hidden");
-    open_password.classList.toggle("hidden");
+      close_password.classList.toggle("hidden");
+      open_password.classList.toggle("hidden");
 
-  })
-});
-
+    })
+  });
 </script>

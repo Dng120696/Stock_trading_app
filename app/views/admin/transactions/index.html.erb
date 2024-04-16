@@ -14,30 +14,29 @@
         </tr>
       </thead>
       <div>
-      <tbody class = 'admin_transaction_scroll overflow-y-scroll overflow-x-hidden h-[5vh]'>
-      <% @transactions.reverse.each do |transaction| %>
-        <tr>
-        <% transaction_clr =  transaction.transaction_type == 'buy' ? 'text-green-700' : 'text-red-700'%>
-          <td class="border px-4 py-2 text-center"><%= "#{transaction.user.lastname}, #{transaction.user.firstname}" %></td>
-          <td class="border px-4 py-2 text-center"><%= transaction.stock_symbol %></td>
-          <td class="border px-4 py-2 text-center"><%= transaction.created_at.strftime("%B %d, %Y %H:%M:%S %p") %></td>
-          <td class="border px-4 py-2 text-center <%=transaction_clr %>"><%= transaction.transaction_type == 'buy' ? 'Buy' : 'Sell' %></td>
-          <td class="border px-4 py-2 text-center <%=transaction_clr %>">
-          <%= transaction.transaction_type == 'buy' ? '+' : '-' %>
-          <%= transaction.quantity %>
-          </td>
-          <td class="border px-4 py-2 text-center"><%= transaction.stock_price %></td>
-          <td class="border px-4 py-2 text-center <%= transaction.transaction_type == 'buy' ? 'text-red-700' : 'text-green-700' %>">
-          <%= transaction.transaction_type == 'buy' ? '-' : '+' %>
-          <%= transaction.total %></td>
-        </tr>
-      <% end %>
-    </tbody>
+        <tbody class = 'admin_transaction_scroll overflow-y-scroll overflow-x-hidden h-[5vh]'>
+          <% @transactions.reverse.each do |transaction| %>
+            <tr>
+              <% transaction_clr =  transaction.transaction_type == 'buy' ? 'text-green-700' : 'text-red-700'%>
+              <td class="border px-4 py-2 text-center"><%= "#{transaction.user.lastname}, #{transaction.user.firstname}" %></td>
+              <td class="border px-4 py-2 text-center"><%= transaction.stock_symbol %></td>
+              <td class="border px-4 py-2 text-center"><%= transaction.created_at.strftime("%B %d, %Y %H:%M:%S %p") %></td>
+              <td class="border px-4 py-2 text-center <%=transaction_clr %>"><%= transaction.transaction_type == 'buy' ? 'Buy' : 'Sell' %></td>
+              <td class="border px-4 py-2 text-center <%=transaction_clr %>">
+                <%= transaction.transaction_type == 'buy' ? '+' : '-' %>
+                <%= transaction.quantity %>
+              </td>
+              <td class="border px-4 py-2 text-center"><%= transaction.stock_price %></td>
+              <td class="border px-4 py-2 text-center <%= transaction.transaction_type == 'buy' ? 'text-red-700' : 'text-green-700' %>">
+                <%= transaction.transaction_type == 'buy' ? '-' : '+' %>
+                <%= transaction.total %></td>
+            </tr>
+          <% end %>
+        </tbody>
       </div>
-
     </table>
   </div>
   <div class="mt-6">
-  <%= link_to 'Back', admin_dashboard_index_path, class: "border bg-blue-500 hover:bg-gray-600 text-gray-100 font-bold py-2 px-4 rounded" %>
+    <%= link_to 'Back', admin_dashboard_index_path, class: "border bg-blue-500 hover:bg-gray-600 text-gray-100 font-bold py-2 px-4 rounded" %>
   </div>
 </div>

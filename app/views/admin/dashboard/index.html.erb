@@ -4,7 +4,6 @@
     <%= link_to 'View all Traders', admin_trader_index_path, class: "border bg-blue-500 hover:bg-gray-600 text-gray-100 font-bold py-2 px-4 rounded mr-2" %>
     <%= link_to 'View All Transactions', admin_transactions_path, class: "border bg-blue-500 hover:bg-gray-600 text-gray-100 font-bold py-2 px-4 rounded" %>
   </div>
-
   <div class="mt-6">
     <h2 class="text-base font-semibold mb-4">Confirmed users pending approvals:</h2>
     <ul class = 'grid grid-cols-[250px,100px,100px] text-lg font-bold items-center gap-4 mb-2 border-b-[2px] border-b-gray-600'>
@@ -15,8 +14,8 @@
       <% @users.each do |user| %>
         <% if user.confirmed? %>
           <div class="grid grid-cols-[200px,100px,100px] items-center gap-4 mb-2 border-b-[1px] border-b-gray-300 pb-2">
-              <p class="text-lg"><%= user.email %></p>
-              <p class = 'text-center'> <%= user.status %></p>
+            <p class="text-lg"><%= user.email %></p>
+            <p class = 'text-center'> <%= user.status %></p>
             <div>
               <%= button_to "Approve", approve_admin_dashboard_path(user), method: :post, class: "bg-blue-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded" %>
             </div>
