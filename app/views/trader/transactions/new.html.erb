@@ -87,16 +87,12 @@
       <div class = 'link_items grid grid-cols-2 gap-2 text-center mb-4 w-full'>
 
         <%= link_to 'Buy', new_trader_transaction_path(transaction: { stock_symbol: @stock[:symbol], stock_price: @stock[:latest_price], transaction_type: :buy }),class: " border-[1px] border-blue-300 py-1 rounded-sm font-semibold  #{@transaction.transaction_type == 'buy' ? 'active' : ''}" %>
-        <% sell_link_classes = "py-1 rounded-sm font-semibold" %>
-        <% if Stock.exists?(symbol: @stock[:symbol]) %>
-          <% sell_link_classes += " border-[1px] border-blue-300 text-blue-500" %>
-        <% else %>
-          <% sell_link_classes += " cursor-not-allowed pointer-events-none bg-gray-400 text-white" %>
-        <% end %>
-        <% sell_link_classes += " active" if @transaction.transaction_type == 'sell' %>
 
-        <%= link_to 'Sell', new_trader_transaction_path(transaction: { stock_symbol: @stock[:symbol], stock_price: @stock[:latest_price], transaction_type: :sell }), class: sell_link_classes %>
-
+        <% if current_user && current_user.stocks.exists?(symbol: @stock[:symbol]) && current_user.stocks.find_by(symbol: @stock[:symbol]).shares > 0 %>
+        <%= link_to 'Sell', new_trader_transaction_path(transaction: { stock_symbol: @stock[:symbol], stock_price: @stock[:latest_price], transaction_type: :sell }), class: "py-1 rounded-sm font-semibold border-[1px] border-blue-300 text-blue-500 #{"active" if @transaction.transaction_type == 'sell'}" %>
+      <% else %>
+        <span class='py-1 rounded-sm font-semibold cursor-not-allowed bg-gray-400 text-white'>Sell</span>
+      <% end %>
       </div>
 
       <%= form_with(model: @transaction, url:trader_transactions_path, method: :post,data:{turbo:false}) do |f| %>
@@ -111,10 +107,19 @@
           <div class="mb-2">
             <%= f.label :quantity ,class: 'text-sm font-semibold mb-2 text-gray-500' %><br />
             <%= f.number_field :quantity, id: 'transaction_quantity', value: 1, min: 1, placeholder: 'minimum: 1', class: 'w-full border-gray-400 text-gray-500' %>
-            <% stock_share = current_user.stocks.where(symbol:@transaction.stock_symbol)%>
-            <% if @transaction.transaction_type == 'sell' %>
-            <span class = 'text-sm text-gray-400 font-semibold'>shares left: <%= stock_share.first.shares %> </span>
+            <% stock_share = current_user.stocks.where(symbol:@transaction.stock_symbol)&.first %>
+            <div class = 'grid grid-cols-2 justify-between items-center mt-1'>
+
+            <span class = "text-sm text-gray-400 font-semibold <%= @transaction.transaction_type == 'sell' ? "opacity-100" : 'opacity-0'%>">shares left:
+            <%= stock_share&.shares || 0 %>
+             </span>
+            <% if @transaction.transaction_type == 'buy' %>
+            <span class = 'btn_max_buy bg-gray-400 text-white py-1 px-2 text-sm justify-self-end  rounded-sm cursor-pointer hover:bg-gray-500 '>Max </span>
+            <%else%>
+            <span class = 'btn_max_sell bg-gray-400 text-white py-1 px-2 text-sm justify-self-end  rounded-sm cursor-pointer hover:bg-gray-500 '>Max </span>
             <%end%>
+            </div>
+    
           </div>
           <%= f.hidden_field :transaction_type, value: @transaction.transaction_type %>
 
@@ -123,7 +128,7 @@
           Total Amount:
           </span>
           <span  id="transaction_total">
-
+            
           </span>
         </p>
 
@@ -155,20 +160,35 @@
 <script>
 document.addEventListener('turbo:load', function() {
 
-  const quantityInput = document.getElementById('transaction_quantity');
   const totalDisplay = document.getElementById('transaction_total');
   const stockPrice = parseFloat('<%= @stock[:latest_price] %>');
+  const transaction_quantity = document.getElementById('transaction_quantity');
+  const btnMaxBuy = document.querySelector('.btn_max_buy');
+  const btnMaxSell = document.querySelector('.btn_max_sell');
+  const userBalance = parseFloat('<%= current_user.balance %>');
+  const sharesLeft = parseFloat('<%= current_user.stocks.where(symbol:@transaction.stock_symbol)&.first&.shares || 0 %>')
 
   function calculateTotal() {
-    const quantity = parseFloat(quantityInput.value);
+    const quantity = parseFloat(transaction_quantity.value);
     if (!isNaN(quantity) && quantity >= 1) {
       const total = quantity * stockPrice;
       totalDisplay.textContent = "$" + total.toFixed(2);
     }
   }
 
+  function calculateMaxBuy(){
+      const total = userBalance / stockPrice
+      transaction_quantity.value = Math.floor(+total);
+      calculateTotal();
+  }
+  function calculateMaxSell(){
+      transaction_quantity.value = sharesLeft;
+      calculateTotal();
+  }
 
-  quantityInput.addEventListener('input', calculateTotal);
+  btnMaxBuy?.addEventListener('click', calculateMaxBuy);
+  btnMaxSell?.addEventListener('click', calculateMaxSell);
+  transaction_quantity?.addEventListener('input', calculateTotal);
   calculateTotal();
 });
 

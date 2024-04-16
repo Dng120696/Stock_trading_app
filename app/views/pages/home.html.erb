@@ -4,7 +4,7 @@
   <% @stock_news.reverse.each do |stock_new|%>
     <a href="<%=stock_new.url%>" target = '_blank' >
     <div class = 'shadow-[0_0_10px_rgba(0,0,0,0.1)] p-6 rounded-sm  mb-6 grid grid-cols-[3fr,1fr]  gap-5 bg-white' >
-      <div class = 'flex  justify-center flex-col'>
+      <div class = 'flex justify-center flex-col'>
         <h1 class = 'text-xl font-bold text-gray-700'>
         <%= stock_new.source %>
         </h1>
