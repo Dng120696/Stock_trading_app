@@ -9,5 +9,5 @@
     <li class="mb-2"><strong>Created_at:</strong> <%= @trader.created_at.in_time_zone.strftime("%B %e, %Y %l:%M %p") %></li>
     <li class="mb-2"><strong>Updated_at:</strong> <%= @trader.updated_at.in_time_zone.strftime("%B %e, %Y %l:%M %p") %></li>
   </ul>
-  <%= link_to 'Back', admin_trader_index_path, class: "bg-blue-500 hover:bg-blue-600 text-gray-100 font-bold py-2 px-4 rounded" %>
+  <%= link_to 'Back', admin_trader_index_path, class: "bg-blue-500 hover:bg-gray-600 text-gray-100 font-bold py-2 px-4 rounded" %>
 </div>

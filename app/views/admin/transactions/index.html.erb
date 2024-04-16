@@ -14,7 +14,7 @@
         </tr>
       </thead>
       <div>
-      <tbody class = 'admin_transaction_scroll overflow-y-scroll overflow-x-hidden h-[25vh]'>
+      <tbody class = 'admin_transaction_scroll overflow-y-scroll overflow-x-hidden h-[5vh]'>
       <% @transactions.reverse.each do |transaction| %>
         <tr>
         <% transaction_clr =  transaction.transaction_type == 'buy' ? 'text-green-700' : 'text-red-700'%>
@@ -38,6 +38,6 @@
     </table>
   </div>
   <div class="mt-6">
-  <%= link_to 'Back', admin_dashboard_index_path, class: "border bg-blue-500 hover:bg-blue-600 text-gray-100 font-bold py-2 px-4 rounded" %>
+  <%= link_to 'Back', admin_dashboard_index_path, class: "border bg-blue-500 hover:bg-gray-600 text-gray-100 font-bold py-2 px-4 rounded" %>
   </div>
 </div>
