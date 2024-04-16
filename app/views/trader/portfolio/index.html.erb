@@ -1,11 +1,11 @@
 
 <% if current_user.status == 'approved' %>
 <div class = 'w-full'>
-    <h1 class = 'text-gray-800 text-4xl font-bold mt-6'>
+    <h1 class = 'text-gray-800 text-4xl font-bold'>
     Portfolio
   </h1>
-  <div class = 'grid grid-cols-[1fr,2fr] gap-10 my-8'>
-    <div class = 'p-10 flex items-center justify-center'>
+  <div class = 'grid grid-cols-[1fr,2fr] gap-10 mt-6 mb-8'>
+    <div class = ' flex items-center justify-center'>
       <ul>
         <li class =' text-2xl font-bold text-gray-500 mb-2 '>
             Cash Balance
@@ -31,36 +31,38 @@
         </li>
       </ul>
     </div>
-    <%= pie_chart @pie_chart_data, height: '400px', library: { pieSliceText: 'value' } %>
+    <%= pie_chart @pie_chart_data, height: '350px', library: { pieSliceText: 'value' } %>
   </div>
 
 
 
-  <ul class = 'grid grid-cols-[0.75fr,0.75fr,1.4fr,0.75fr,1fr,0.75fr,1fr] text-lg font-bold  mt-4 mb-2 pb-2 border-b-[2px] border-b-gray-600'>
+  <ul class = 'grid grid-cols-[0.75fr,1.4fr,0.75fr,0.75fr,1fr,0.75fr,1fr] text-lg font-bold  mt-4 mb-2 pb-2 border-b-[2px] border-b-gray-600'>
   <li>Symbol</li>
-  <li>Shares</li>
   <li class = 'ml-[-4px]' >Company</li>
+  <li>Shares</li>
   <li class = 'ml-[-8px]'> Price</li>
   <li class = 'ml-[-8px]'> Profit/Loss</li>
   <li class = 'ml-[-8px]'> Total</li>
   </ul>
-  <div class = 'portfolio_scroll overflow-y-scroll overflow-x-hidden h-[25vh]'>
+  <% if @porfolio_stocks.present? %>
+    <div class = 'portfolio_scroll overflow-y-scroll overflow-x-hidden h-[32vh]'>
     <% @porfolio_stocks.each do |stock|%>
-      <ul class = 'grid  grid-cols-[0.75fr,0.75fr,1.4fr,0.75fr,1fr,0.75fr,1fr]  text-center text-md mb-2 pb-2 border-b-[1px] border-b-gray-200' >
+      <ul class = 'grid  grid-cols-[0.75fr,1.4fr,0.75fr,0.75fr,1fr,0.75fr,1fr]  text-center text-md mb-2 pb-2 border-b-[1px] border-b-gray-200' >
         <li class = 'flex items-center  gap-2 '>
         <%= image_tag(stock[:logo], alt: 'Logo',class: 'w-6 h-6  object-fit') %> <%= stock[:symbol] %>
         </li>
         <li class = 'flex items-center  gap-2 '>
-        <%= stock[:shares]%>
+        <%= stock[:company_name]%>
         </li>
         <li class = 'flex items-center  gap-2 '>
-        <%= stock[:company_name]%>
+        <%= stock[:shares]%>
         </li>
         <li class = 'flex items-center  gap-2 '>
         <%= number_to_currency(stock[:latest_price], unit: '$') %>
         </li>
         <li class = 'flex items-center  gap-1 '>
         <span class = "<%= stock[:profit_loss] >= 0  ? 'text-green-800' : 'text-red-800'%>">
+        <%= stock[:profit_loss] >= 0 ? '+' : '' %>
           <%= number_to_currency(stock[:profit_loss], unit: '$') %>
         </span>
         <span class = "text-[14px]  <%= stock[:gain_loss] >= 0  ? 'text-green-600' : 'text-red-600'%>">
@@ -74,15 +76,22 @@
         </li>
         <li class = 'flex gap-2 items-center justify-center'>
         <%= link_to 'Buy', new_trader_transaction_path(transaction: { stock_symbol:stock[:symbol], stock_price: stock[:latest_price], transaction_type: :buy }) ,class: 'text-sm px-5 py-2 bg-green-600 text-white rounded-md '%>
-        <%= link_to 'Sell', new_trader_transaction_path(transaction: { stock_symbol: stock[:symbol], stock_price: stock[:latest_price], transaction_type: :sell }), class: "text-sm px-5 py-2 bg-red-600 text-white  rounded-md" %>
+        <% if current_user && current_user.stocks.exists?(symbol: stock[:symbol]) && current_user.stocks.find_by(symbol: stock[:symbol]).shares > 0 %>
+        <%= link_to 'Sell', new_trader_transaction_path(transaction: { stock_symbol: stock[:symbol], stock_price: stock[:latest_price], transaction_type: :sell }), class: 'text-sm px-5 py-2 bg-red-600 text-white rounded-md' %>
+      <% else %>
+        <span class='text-sm px-5 py-2 bg-gray-400 text-white rounded-md cursor-not-allowed'>Sell</span>
+      <% end %>
 
         </li>
       </ul>
-
-    <%end%>
-  </div>
+      <%end%>
+     </div>
+      <% else %>
+        <div class='w-full h-[20vh] text-gray-400 flex items-center justify-center'>
+        <p>You currently have no stocks</p>
+        </div>
+      <%end%>
 </div>
-
 <% else %>
 
 <div class = 'w-[600px] mx-auto h-[60vh] flex items-center flex-col justify-center  '>

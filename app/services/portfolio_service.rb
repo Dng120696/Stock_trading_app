@@ -25,8 +25,11 @@ class PortfolioService
     @user.stocks.each do |stock|
       total_purchase = @user.transactions.where(stock_symbol: stock.symbol, transaction_type: :buy).sum(:total) || 0
       total_sales = @user.transactions.where(stock_symbol: stock.symbol, transaction_type: :sell).sum(:total) || 0
+      latest_stock_price = Stock.update_latest_price(stock.symbol)
 
-      profit_loss_total, gain_loss_total = calculate_profit_loss_and_gain(total_purchase, total_sales)
+
+      portfolio_stock_total = stock.shares * latest_stock_price
+      profit_loss_total, gain_loss_total = calculate_profit_loss_and_gain(total_purchase, total_sales,portfolio_stock_total)
 
       total_profit_loss += profit_loss_total
       total_gain_loss += gain_loss_total
@@ -38,18 +41,20 @@ class PortfolioService
   def get_portfolio_stocks
     @user.stocks.select(:symbol).distinct.map do |stock|
       latest_stock = @user.stocks.where(symbol: stock.symbol).order(created_at: :desc).first
-      next unless latest_stock.shares.positive?
+      latest_stock_price = Stock.update_latest_price(stock.symbol)
+
 
       total_purchase = @user.transactions.where(stock_symbol: stock.symbol, transaction_type: :buy).sum(:total) || 0
       total_sales = @user.transactions.where(stock_symbol: stock.symbol, transaction_type: :sell).sum(:total) || 0
 
-      profit_loss_total, gain_loss_total = calculate_profit_loss_and_gain(total_purchase, total_sales)
+      portfolio_stock_total = latest_stock.shares * latest_stock_price
+      profit_loss_total, gain_loss_total = calculate_profit_loss_and_gain(total_purchase, total_sales,portfolio_stock_total)
 
       {
         symbol: stock.symbol,
         shares: latest_stock.shares,
         company_name: latest_stock.company_name,
-        latest_price: Stock.update_latest_price(stock.symbol),
+        latest_price: latest_stock_price,
         logo: latest_stock.logo,
         profit_loss: profit_loss_total,
         gain_loss: gain_loss_total,
@@ -60,10 +65,11 @@ class PortfolioService
 
   private
 
-  def calculate_profit_loss_and_gain(total_purchase, total_sales)
+  def calculate_profit_loss_and_gain(total_purchase, total_sales,portfolio_stock_total)
     if total_purchase != 0 && total_sales != 0
-      profit_loss_total = total_sales - total_purchase
-      gain_loss_total = (profit_loss_total.to_f / total_purchase.to_f) * 100
+      total = total_sales - total_purchase
+      profit_loss_total = total + portfolio_stock_total
+      gain_loss_total = (profit_loss_total / total_purchase.to_f) * 100
     else
       profit_loss_total = 0
       gain_loss_total = 0

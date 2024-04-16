@@ -3,8 +3,8 @@
 <div class = 'log_in flex items-center justify-center  w-full'>
   <div class = 'p-10 pt-14 shadow-[0_0_10px_rgba(0,0,0,0.1)] bg-white te rounded-sm relative w-[clamp(300px,90%,400px)] overflow-hidden'>
   <div class='grid grid-cols-2 w-full text-center absolute top-0 left-0'>
-    <%= link_to 'User', new_user_session_path, class: "py-2 px-4  #{current_page?(new_user_session_path) ? 'active' : 'bg-gray-400 text-white'}" %>
-    <%= link_to 'Admin', new_admin_user_session_path, class: "py-2 px-4  #{current_page?(new_admin_user_session_path) ? 'active' : 'bg-gray-400 text-white'}" %>
+    <%= link_to 'User', new_user_session_path, class: "py-2 px-4  #{request.path == new_user_session_path ? 'active' : 'bg-gray-400 text-white'}" %>
+    <%= link_to 'Admin', new_admin_user_session_path, class: "py-2 px-4  #{request.path == new_admin_user_session_path ? 'active' : 'bg-gray-400 text-white'}" %>
 </div>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="w-full my-2">
