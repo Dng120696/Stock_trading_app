@@ -1,8 +1,8 @@
 <div class="p-6 bg-white shadow-[0_0_10px_rgba(0,0,0,0.15)] rounded-md">
   <h1 class="text-3xl font-semibold mb-4">Hello, <%= current_admin_user.firstname%>!</h1>
-  <div class="mt-6">
-    <%= link_to 'View all Traders', admin_trader_index_path, class: "border bg-blue-500 hover:bg-blue-600 text-gray-100 font-bold py-2 px-4 rounded mr-2" %>
-    <%= link_to 'View All Transactions', admin_transactions_path, class: "border bg-gray-500 hover:bg-gray-600 text-gray-100 font-bold py-2 px-4 rounded" %>
+  <div class="mt-6 text-center">
+    <%= link_to 'View all Traders', admin_trader_index_path, class: "border bg-blue-500 hover:bg-gray-600 text-gray-100 font-bold py-2 px-4 rounded mr-2" %>
+    <%= link_to 'View All Transactions', admin_transactions_path, class: "border bg-blue-500 hover:bg-gray-600 text-gray-100 font-bold py-2 px-4 rounded" %>
   </div>
 
   <div class="mt-6">
@@ -18,7 +18,7 @@
               <p class="text-lg"><%= user.email %></p>
               <p class = 'text-center'> <%= user.status %></p>
             <div>
-              <%= button_to "Approve", approve_admin_dashboard_path(user), method: :post, class: "bg-green-600 hover:bg-green-600 text-white font-bold py-2 px-4 rounded" %>
+              <%= button_to "Approve", approve_admin_dashboard_path(user), method: :post, class: "bg-blue-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded" %>
             </div>
           </div>
         <% end %>
