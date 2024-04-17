@@ -9,7 +9,7 @@ devise_for :admin_users, controllers: {
 }
 
   namespace :admin do
-    resources :trader, only: [:new, :create, :index, :show, :edit, :update]
+    resources :trader
     resources :transactions, only: [:index]
     resources :dashboard do
       post 'approve', on: :member

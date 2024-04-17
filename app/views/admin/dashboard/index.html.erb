@@ -6,21 +6,19 @@
   </div>
   <div class="mt-6">
     <h2 class="text-base font-semibold mb-4">Confirmed users pending approvals:</h2>
-    <ul class = 'grid grid-cols-[250px,100px,100px] text-lg font-bold items-center gap-4 mb-2 border-b-[2px] border-b-gray-600'>
+    <ul class = 'grid grid-cols-[300px,100px,100px] text-lg font-bold items-center gap-4 mb-2 border-b-[2px] border-b-gray-600'>
       <li class = 'text-center'>Accounts</li>
       <li class = 'text-center'>Status</li>
     </ul>
     <% if @users.any? %>
       <% @users.each do |user| %>
-        <% if user.confirmed? %>
-          <div class="grid grid-cols-[200px,100px,100px] items-center gap-4 mb-2 border-b-[1px] border-b-gray-300 pb-2">
-            <p class="text-lg"><%= user.email %></p>
-            <p class = 'text-center'> <%= user.status %></p>
-            <div>
-              <%= button_to "Approve", approve_admin_dashboard_path(user), method: :post, class: "bg-blue-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded" %>
-            </div>
+        <div class="grid grid-cols-[300px,100px,100px] items-center gap-4 mb-2 border-b-[1px] border-b-gray-300 pb-2">
+          <p class="text-lg"><%= user.email %></p>
+          <p class = 'text-center'> <%= user.status %></p>
+          <div>
+            <%= button_to "Approve", approve_admin_dashboard_path(user), method: :post, class: "bg-blue-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded" %>
           </div>
-        <% end %>
+        </div>
       <% end %>
     <% else %>
       <p class = 'h-[10vh] flex items-center justify-center text-gray-400 '>No confirmed users found.</p>

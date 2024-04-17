@@ -22,29 +22,29 @@
   </head>
   <body class="bg-gray-50">
     <header class="w-full bg-white fixed top-0 left-0 shadow-[0_0_10px_rgba(0,0,0,0.15)] z-50">
-      <nav class="flex items-center justify-between py-4 w-[clamp(300px,90%,1200px)] mx-auto font-bold text-lg">
-        <ul class="flex gap-10">
-          <li>
-            <%= link_to 'News', root_path %>
+      <nav class="flex items-center justify-between w-[clamp(300px,90%,1200px)] mx-auto font-bold text-lg">
+        <ul class="flex">
+          <li class = "py-4 px-6 <%=current_page?(root_path) ? 'bg-[#001F3F] text-white' : ''%>">
+            <%= link_to 'News', root_path%>
           </li>
           <% if current_admin_user %>
-            <li>
+            <li class = "py-4 px-6 <%= current_page?(admin_dashboard_index_path) ? 'bg-[#001F3F] text-white' : ''%>">
               <%= link_to 'Dashboard', admin_dashboard_index_path %>
             </li>
-            <li>
-              <%= link_to 'Accounts', admin_trader_index_path %>
+            <li class = "py-4 px-6 <%= current_page?(admin_trader_index_path) ? 'bg-[#001F3F] text-white' : '' %>">
+              <%= link_to 'Accounts', admin_trader_index_path%>
             </li>
-            <li>
+            <li class = "py-4 px-6 <%=current_page?(admin_transactions_path) ? 'bg-[#001F3F] text-white' : '' %>">
               <%= link_to 'Transactions', admin_transactions_path %>
             </li>
           <% else %>
-            <li>
+            <li class = "py-4 px-6 <%= current_page?(trader_dashboard_index_path) ? 'bg-[#001F3F] text-white' : '' %>">
               <%= link_to 'Dashboard', trader_dashboard_index_path %>
             </li>
-            <li>
-              <%= link_to 'Portfolio', trader_portfolio_index_path %>
+            <li class = "py-4 px-6 <%= current_page?(trader_portfolio_index_path) ? 'bg-[#001F3F] text-white' : '' %>">
+              <%= link_to 'Portfolio', trader_portfolio_index_path  %>
             </li>
-            <li>
+            <li class = "py-4 px-6 <%= current_page?(trader_transactions_path) ? 'bg-[#001F3F] text-white' : ''%>">
               <%= link_to 'Transaction History', trader_transactions_path %>
             </li>
           <% end %>
