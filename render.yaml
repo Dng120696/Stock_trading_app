@@ -1,7 +1,7 @@
 databases:
   - name: "stock_trading_app"
     databaseName: stock_trading_app_development
-    user: mysite
+    user: "patrick"
     plan: free
 
 services:
