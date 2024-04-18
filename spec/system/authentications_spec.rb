@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "Authentication", type: :system do
   it "allows a user to register and confirms the email" do
     sign_up('newuser@example.com', 'password', 'Patrick', 'Nebab', 100000)
-    expect(page).to have_content('A message with a confirmation link has been sent to your email address. Please follow the link to activate your account.')
+    expect(page).to have_content('A message with a confirmation link has been sent to your email address. Please follow the link to activate your account.',wait: 10)
 
     confirmation_email = ActionMailer::Base.deliveries.last
     confirmation_link = extract_confirmation_link(confirmation_email)
@@ -25,7 +25,7 @@ RSpec.describe "Authentication", type: :system do
     fill_in 'Email', with: email
     fill_in 'Password', with: password
     fill_in 'Password confirmation', with: password
-    click_button 'Sign up'
+    click_button 'Create Account'
   end
 
   def log_in(email, password)

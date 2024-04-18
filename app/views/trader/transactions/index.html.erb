@@ -1,11 +1,11 @@
-<div class = 'w-full'>
+<div class = 'w-full p-6 rounded-sm  shadow-[0_0_10px_rgba(0,0,0,0.15)] dark:shadow-[0_0_10px_rgba(0,0,0,0.55)] dark:bg-gray-700'>
   <% if current_user.status == 'approved' %>
-    <h1 class = 'text-gray-700 text-4xl font-bold'>
+    <h1 class = 'text-gray-700 dark:text-gray-100 text-4xl font-bold'>
       Transaction History
     </h1>
     <div class = 'flex items-center h-[60vh] justify-center w-full'>
       <div class = 'w-full' >
-        <ul class = 'grid grid-cols-[0.75fr,0.75fr,1.25fr,0.75fr,0.75fr,.75fr,0.75fr] text-lg font-bold  mt-4 mb-2 pb-2 border-b-[2px] border-b-gray-600'>
+        <ul class = 'grid grid-cols-[0.75fr,0.75fr,1.25fr,0.75fr,0.75fr,.75fr,0.75fr] text-lg font-bold  mt-4 mb-2 pb-2 border-b-[2px] border-b-gray-600 dark:text-gray-200 dark:border-b-gray-600'>
           <li>Symbol</li>
           <li class = 'ml-[-8px]'>Type</li>
           <li class = 'ml-[-8px]'>Date Created</li>
@@ -17,11 +17,11 @@
         <% if @transactions.present?%>
           <div class = 'transaction_scroll overflow-y-scroll overflow-x-hidden h-[50vh]'>
             <% @transactions.each do |transaction|%>
-              <ul class = 'grid  grid-cols-[0.75fr,0.75fr,1.25fr,0.75fr,0.75fr,.75fr,0.75fr] text-center text-md mb-2 pb-2 border-b-[1px] border-b-gray-200 ' >
+              <ul class = 'grid  grid-cols-[0.75fr,0.75fr,1.25fr,0.75fr,0.75fr,.75fr,0.75fr] text-center text-md mb-2 pb-2 border-b-[1px] border-b-gray-200 dark:text-gray-200 dark:border-b-gray-600 ' >
                 <li class = 'flex items-center  gap-2 '>
                   <%= image_tag(transaction[:logo], alt: 'Logo',class: 'w-6 h-6  object-fit') %> <%= transaction[:stock_symbol] %>
                 </li>
-                <li class = "flex items-center  gap-2 <%= transaction[:transaction_type] == 'buy' ? 'text-green-700' : 'text-red-700' %>">
+                <li class = "flex items-center  gap-2 <%= transaction[:transaction_type] == 'buy' ? 'text-green-700 dark:text-green-500' : 'text-red-700 dark:text-red-500' %>">
                   <%= transaction[:transaction_type] == 'buy' ? 'Buy' : 'Sell' %>
                 </li>
                 <li class = 'flex items-center  gap-2 '>
@@ -31,15 +31,15 @@
                 <li class = 'flex items-center  gap-2 '>
                   <%= number_to_currency(transaction[:stock_price]) %>
                 </li>
-                <li class = 'flex items-center pl-4  gap-2 <%= transaction[:transaction_type] == 'buy' ? 'text-green-700' : 'text-red-700' %>'>
+                <li class = 'flex items-center pl-4  gap-2 <%= transaction[:transaction_type] == 'buy' ? 'text-green-700 dark:text-green-500' : 'text-red-700 dark:text-red-500' %>'>
                   <%= transaction[:transaction_type] == 'buy' ? '+' : '-' %>
                   <%= transaction[:quantity]%>
                 </li>
-                <li class = "flex items-center  gap-2  <%= transaction[:transaction_type] == 'buy' ? 'text-red-700' : 'text-green-700' %>">
+                <li class = "flex items-center  gap-2  <%= transaction[:transaction_type] == 'buy' ? 'text-red-700 dark:text-red-500' : 'text-green-700 dark:text-green-500' %>">
                   <%= transaction[:transaction_type] == 'buy' ? '-' : '+' %>
                   <%= number_to_currency(transaction[:total]) %>
                 </li>
-                <li class = "flex items-center  gap-2  <%= transaction[:transaction_type] == 'buy' ? 'text-red-700' : 'text-green-700' %>">
+                <li class = "flex items-center  gap-2  <%= transaction[:transaction_type] == 'buy' ? 'text-red-700  dark:text-red-500' : 'text-green-700  dark:text-green-500' %>">
                   <%= transaction[:transaction_type] == 'buy' ? '-' : '+' %>
                   <%= number_to_currency(transaction[:user_balance]) %>
                 </li>

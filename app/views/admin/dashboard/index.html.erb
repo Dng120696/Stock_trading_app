@@ -1,12 +1,12 @@
-<div class="p-6 bg-white shadow-[0_0_10px_rgba(0,0,0,0.15)] rounded-md">
-  <h1 class="text-3xl font-semibold mb-4">Hello, <%= current_admin_user.firstname%>!</h1>
+<div class="p-6 bg-white dark:bg-gray-700 shadow-[0_0_10px_rgba(0,0,0,0.15)] dark:shadow-[0_0_10px_rgba(0,0,0,0.35)] rounded-md">
+  <h1 class="text-3xl font-semibold mb-4 text-gray-800 dark:text-gray-100">Hello, <%= current_admin_user.firstname%>!</h1>
   <div class="mt-6 text-center">
-    <%= link_to 'View all Traders', admin_trader_index_path, class: "border bg-blue-500 hover:bg-gray-600 text-gray-100 font-bold py-2 px-4 rounded mr-2" %>
-    <%= link_to 'View All Transactions', admin_transactions_path, class: "border bg-blue-500 hover:bg-gray-600 text-gray-100 font-bold py-2 px-4 rounded" %>
+    <%= link_to 'View all Traders', admin_trader_index_path, class: " bg-blue-500 hover:bg-gray-600 text-gray-100 font-bold py-2 px-6 rounded mr-2" %>
+    <%= link_to 'View All Transactions', admin_transactions_path, class: "bg-blue-500 hover:bg-gray-600 text-gray-100 font-bold py-2 px-6 rounded" %>
   </div>
-  <div class="mt-6">
+  <div class="mt-6 dark:text-gray-50">
     <h2 class="text-base font-semibold mb-4">Confirmed users pending approvals:</h2>
-    <ul class = 'grid grid-cols-[300px,100px,100px] text-lg font-bold items-center gap-4 mb-2 border-b-[2px] border-b-gray-600'>
+    <ul class = 'grid grid-cols-[300px,100px,100px] text-lg font-bold items-center gap-4 mb-2 pb-2s border-b-[2px] border-b-gray-600'>
       <li class = 'text-center'>Accounts</li>
       <li class = 'text-center'>Status</li>
     </ul>

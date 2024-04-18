@@ -1,26 +1,26 @@
-<div class="p-6 bg-white shadow-md rounded-md">
+<div class="p-6 bg-white dark:bg-gray-700 dark:text-gray-50 shadow-md rounded-md">
   <h1 class="text-3xl font-semibold mb-4">All Traders</h1>
   <div class="overflow-x-auto">
     <table class="table-auto border-collapse w-full">
       <thead>
         <tr>
-          <th class="px-4 py-2 bg-gray-200 text-left">Last Name</th>
-          <th class="px-4 py-2 bg-gray-200 text-left">First Name</th>
-          <th class="px-4 py-2 bg-gray-200 text-left">Email</th>
-          <th class="px-4 py-2 bg-gray-200 text-left">Status</th>
-          <th class="px-4 py-2 bg-gray-200 text-left">Current Balance</th>
-          <th class="px-4 py-2 bg-gray-200 text-left">Action</th>
+          <th class="px-4 py-2 bg-gray-200  border dark:border-gray-400 dark:bg-gray-500 text-left">Last Name</th>
+          <th class="px-4 py-2 bg-gray-200 text-left border dark:border-gray-400 dark:bg-gray-500">First Name</th>
+          <th class="px-4 py-2 bg-gray-200 text-left border dark:border-gray-400 dark:bg-gray-500">Email</th>
+          <th class="px-4 py-2 bg-gray-200 text-left border dark:border-gray-400 dark:bg-gray-500">Status</th>
+          <th class="px-4 py-2 bg-gray-200 text-left border dark:border-gray-400 dark:bg-gray-500">Current Balance</th>
+          <th class="px-4 py-2 bg-gray-200 text-left border dark:border-gray-400 dark:bg-gray-500">Action</th>
         </tr>
       </thead>
       <tbody>
         <% @traders.each do |trader| %>
           <tr>
-            <td class="border px-4 py-2 text-center"><%= trader.lastname %></td>
-            <td class="border px-4 py-2 text-center"><%= trader.firstname %></td>
-            <td class="border px-4 py-2 text-center"><%= trader.email %></td>
-            <td class="border px-4 py-2 text-center"><%= trader.status %></td>
-            <td class="border px-4 py-2 text-center"><%= trader.balance %></td>
-            <td class="border px-4 py-2 text-center">
+            <td class="border dark:border-gray-400 px-4 py-2 text-center"><%= trader.lastname %></td>
+            <td class="border dark:border-gray-400 px-4 py-2 text-center"><%= trader.firstname %></td>
+            <td class="border dark:border-gray-400 px-4 py-2 text-center"><%= trader.email %></td>
+            <td class="border dark:border-gray-400 px-4 py-2 text-center"><%= trader.status %></td>
+            <td class="border dark:border-gray-400 px-4 py-2 text-center"><%= trader.balance %></td>
+            <td class="border dark:border-gray-400 px-4 py-2 text-center">
               <%= link_to 'Edit', edit_admin_trader_path(trader), class: "text-blue-500 hover:text-blue-700 mr-2", style: "color: inherit;" %> |
               <%= link_to 'View', admin_trader_path(trader)%>
             </td>
@@ -30,7 +30,7 @@
     </table>
   </div>
   <div class="mt-6">
-    <%= link_to 'Add New Trader', new_admin_trader_path, class: "border bg-blue-500 hover:bg-gray-600 text-gray-100 font-bold py-2 px-4 rounded mr-2" %>
-    <%= link_to 'Back', admin_dashboard_index_path, class: "border bg-blue-500 hover:bg-gray-600 text-gray-100 font-bold py-2 px-4 rounded" %>
+    <%= link_to 'Add New Trader', new_admin_trader_path, class: " bg-blue-500 hover:bg-gray-600 text-gray-100 font-bold py-2 px-4 rounded mr-2" %>
+    <%= link_to 'Back', admin_dashboard_index_path, class: " bg-blue-500 hover:bg-gray-600 text-gray-100 font-bold py-2 px-4 rounded" %>
   </div>
 </div>

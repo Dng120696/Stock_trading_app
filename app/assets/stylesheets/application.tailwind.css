@@ -22,6 +22,19 @@ html {
   padding: 0;
   box-sizing: inherit;
 }
+.backgound__video {
+  min-height: 100vh;
+  position: absolute;
+  inset: 0;
+  overflow-y: hidden;
+  z-index: -1;
+}
+
+#video {
+  width: 100%;
+  min-height: 100vh;
+  object-fit: cover;
+}
 
 #search::placeholder,
 #user_email::placeholder,
@@ -32,12 +45,12 @@ html {
 #user_password::placeholder,
 #admin_user_email::placeholder,
 #admin_user_password::placeholder{
-  @apply text-gray-400 text-sm;
+  @apply text-gray-400 dark:text-gray-200  text-sm;
 }
 
 .link_items a.active,
 .log_in .active{
-  @apply bg-blue-800  text-white;
+  @apply bg-blue-800 dark:bg-blue-600 dark:bg-opacity-70 text-white;
 }
 
 .admin_transaction_scroll::-webkit-scrollbar,
@@ -60,7 +73,14 @@ html {
 .dashboard_scroll::-webkit-scrollbar-thumb,
 .portfolio_scroll::-webkit-scrollbar-thumb,
 .transaction_scroll::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2);
+  @apply bg-gray-200;
+  border-radius: 6px;
+}
+.dark .admin_transaction_scroll::-webkit-scrollbar-thumb,
+.dark .dashboard_scroll::-webkit-scrollbar-thumb,
+.dark .portfolio_scroll::-webkit-scrollbar-thumb,
+.dark .transaction_scroll::-webkit-scrollbar-thumb {
+ @apply bg-gray-500;
   border-radius: 6px;
 }
 

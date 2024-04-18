@@ -1,57 +1,57 @@
 <div class = 'log_in flex items-center justify-center w-full'>
-  <div class = 'p-10 shadow-[0_0_10px_rgba(0,0,0,0.1)] bg-white rounded-sm relative w-[clamp(300px,90%,400px)] overflow-hidden'>
-    <h2 class = 'text-2xl font-bold text-center mb-2'>Sign up</h2>
+  <div class = 'py-8 px-10 shadow-[0_0_10px_rgba(0,0,0,0.1)] bg-white rounded-sm relative w-[clamp(300px,90%,400px)] overflow-hidden dark:bg-[rgba(0,0,0,0.5)]'>
+    <h2 class = 'text-2xl font-bold text-center mb-2 dark:text-gray-50'>Sign up</h2>
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <%= render "users/shared/error_messages", resource: resource %>
       <div class="w-full mb-2">
-        <%= f.label :firstname  , class: 'font-semibold text-gray-500  text-sm'%><br />
-        <%= f.text_field :firstname ,autofocus: true ,placeholder:'Enter your Firstname', class: 'w-full placeholder-shown:border-gray-400 text-base'%>
+        <%= f.label :firstname  , class: 'font-semibold text-gray-500  text-sm dark:text-gray-200'%><br />
+        <%= f.text_field :firstname ,autofocus: true ,placeholder:'Enter your Firstname', class: 'w-full placeholder-shown:border-gray-400 text-base dark:bg-[rgba(0,0,0,0.6)] dark:placeholder-shown:border-gray-700   dark:text-gray-50'%>
       </div>
       <div class="w-full mb-2">
-        <%= f.label :lastname , class: 'font-semibold text-gray-500  text-sm' %><br />
-        <%= f.text_field :lastname ,placeholder:'Enter your Lastname', class: 'w-full placeholder-shown:border-gray-400 text-base' %>
+        <%= f.label :lastname , class: 'font-semibold text-gray-500  text-sm dark:text-gray-200' %><br />
+        <%= f.text_field :lastname ,placeholder:'Enter your Lastname', class: 'w-full placeholder-shown:border-gray-400 text-bas dark:bg-[rgba(0,0,0,0.6)] dark:placeholder-shown:border-gray-700   dark:text-gray-50' %>
       </div>
       <div class="w-full mb-2">
-        <%= f.label :balance , class: 'font-semibold text-gray-500  text-sm' %><br />
-        <%= f.text_field :balance  ,placeholder:'Enter your Balance', class: 'w-full placeholder-shown:border-gray-400 text-base'%>
+        <%= f.label :balance , class: 'font-semibold text-gray-500  text-sm dark:text-gray-200' %><br />
+        <%= f.text_field :balance  ,placeholder:'Enter your Balance', class: 'w-full placeholder-shown:border-gray-400 text-base dark:bg-[rgba(0,0,0,0.6)] dark:placeholder-shown:border-gray-700   dark:text-gray-50'%>
       </div>
       <div class="w-full mb-2">
-        <%= f.label :email , class: 'font-semibold text-gray-500  text-sm' %><br />
-        <%= f.email_field :email, autocomplete: "email"  ,placeholder:'Enter your Email', class: 'w-full placeholder-shown:border-gray-400 text-base'%>
+        <%= f.label :email , class: 'font-semibold text-gray-500  text-sm dark:text-gray-200' %><br />
+        <%= f.email_field :email, autocomplete: "email"  ,placeholder:'Enter your Email', class: 'w-full placeholder-shown:border-gray-400 text-base dark:bg-[rgba(0,0,0,0.6)] dark:placeholder-shown:border-gray-700   dark:text-gray-50'%>
       </div>
       <div class="w-full mb-2">
-        <%= f.label :password , class: 'font-semibold text-gray-500  text-sm' %>
+        <%= f.label :password , class: 'font-semibold text-gray-500  text-sm dark:text-gray-200 ' %>
         <% if @minimum_password_length %>
-          <em>(<%= @minimum_password_length %> characters minimum)</em>
+          <em class = 'dark:text-gray-200'>(<%= @minimum_password_length %> characters minimum)</em>
         <% end %><br />
         <div class = 'relative'>
-          <%= f.password_field :password, autocomplete: "new-password" ,placeholder:'Enter your Password', class: 'w-full placeholder-shown:border-gray-400 text-base' %>
+          <%= f.password_field :password, autocomplete: "new-password" ,placeholder:'Enter your Password', class: 'w-full placeholder-shown:border-gray-400 text-base dark:bg-[rgba(0,0,0,0.6)] dark:placeholder-shown:border-gray-700   dark:text-gray-50' %>
           <div class = 'show_password_menu absolute top-[50%] right-4 translate-x-[-50%] translate-y-[-50%] cursor-pointer'>
             <span class = 'open_password hidden'>
-              <i class=" fa-solid fa-eye text-sm text-gray-500"></i>
+              <i class=" fa-solid fa-eye text-sm text-gray-500 dark:text-gray-200"></i>
             </span>
             <span class = 'close_password'>
-              <i class="fa-solid fa-eye-slash  text-sm text-gray-500"></i>
+              <i class="fa-solid fa-eye-slash  text-sm text-gray-500 dark:text-gray-200"></i>
             </span>
           </div>
         </div>
       </div>
-      <div class="w-full mb-2">
-        <%= f.label :password_confirmation , class: 'font-semibold text-gray-500  text-sm' %><br />
+      <div class="w-full mb-4">
+        <%= f.label :password_confirmation , class: 'font-semibold text-gray-500  text-sm dark:text-gray-200' %><br />
         <div class = 'relative'>
-          <%= f.password_field :password_confirmation, autocomplete: "new-password" ,placeholder:'Confirm your Password', class: 'w-full placeholder-shown:border-gray-400 text-base' %>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password" ,placeholder:'Confirm your Password', class: 'w-full placeholder-shown:border-gray-400 text-base dark:bg-[rgba(0,0,0,0.6)] dark:placeholder-shown:border-gray-700   dark:text-gray-50' %>
           <div class = 'show_confirm_password_menu absolute top-[50%] right-4 translate-x-[-50%] translate-y-[-50%] cursor-pointer'>
             <span class = 'open_confirm_password hidden'>
-              <i class=" fa-solid fa-eye text-sm text-gray-500"></i>
+              <i class=" fa-solid fa-eye text-sm text-gray-500  dark:text-gray-200"></i>
             </span>
             <span class = 'close_confirm_password'>
-              <i class="fa-solid fa-eye-slash  text-sm text-gray-500"></i>
+              <i class="fa-solid fa-eye-slash  text-sm text-gray-500  dark:text-gray-200"></i>
             </span>
           </div>
         </div>
       </div>
       <div class="actions">
-        <%= f.submit "Sign up",class: 'py-2 px-6 w-full bg-blue-800  w-full text-white font-semibold' %>
+        <%= f.submit "Create Account",class: 'py-2 px-6 w-full bg-blue-800 dark:bg-blue-600  dark:bg-opacity-70 w-full text-white font-semibold mb-1' %>
       </div>
     <% end %>
     <%= render "users/shared/links" %>

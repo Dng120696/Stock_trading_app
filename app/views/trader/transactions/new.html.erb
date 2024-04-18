@@ -7,25 +7,25 @@
         </p>
         <div>
           <p>
-            <span class = 'font-bold text-2xl text-gray-700'>
+            <span class = 'font-bold text-2xl text-gray-700 dark:text-gray-100'>
               <%= @stock[:symbol] %>
             </span>
-            <span class = 'font-bold text-xl text-gray-400'>
+            <span class = 'font-bold text-xl text-gray-400 '>
               <%= @stock[:company_name] %>
             </span>
           </p>
           <p  class = 'text-2xl'>
-            <span class = 'font-bold'>
+            <span class = 'font-bold dark:text-gray-200'>
               <%= number_to_currency(@stock[:latest_price])   %>
             </span>
-            <span class = 'text-red-400 text-lg'>
+            <span class = 'text-red-400 dark:text-red-500 text-lg'>
               (<%= @stock[:change_percent] %>%)
             </span>
           </p>
         </div>
       </div>
       <div class = 'grid content-end'>
-        <ul class = 'grid grid-cols-[1.25fr,1fr,0.75fr,0.75fr,1fr] font-bold  text-center my-2 pb-2 border-b-[2px] gap-4 border-b-gray-600 text-md'  >
+        <ul class = 'grid grid-cols-[1.25fr,1fr,0.75fr,0.75fr,1fr] font-bold  text-center my-2 pb-2 border-b-[2px] gap-4 border-b-gray-600 text-md dark:text-gray-100'  >
           <li >
             Market Cap
           </li>
@@ -42,7 +42,7 @@
             All-time High
           </li>
         </ul>
-        <ul class = 'grid grid-cols-[1.25fr,1fr,0.75fr,0.75fr,1fr]  text-lg font-bold  text-sm text-gray-500 text-center mt-2 pb-2 border-b-[1px] gap-4 border-b-gray-300'  >
+        <ul class = 'grid grid-cols-[1.25fr,1fr,0.75fr,0.75fr,1fr]  text-lg font-bold  text-sm text-gray-500 dark:text-gray-300 text-center mt-2 pb-2 border-b-[1px] gap-4 border-b-gray-300 dark:border-b-gray-600'  >
           <li>
             <%= number_to_currency(@stock[:market_cap])   %>
           </li>
@@ -62,7 +62,7 @@
       </div>
     </div>
     <div class = 'flex gap-10 justify-between pt-10 h-[500px] '>
-      <div class = 'shadow-[0_0_10px_rgba(0,0,0,0.1)] px-8 py-12 flex items-center justify-center flex-col bg-white'>
+      <div class = 'shadow-[0_0_10px_rgba(0,0,0,0.1)] dark:shadow-[0_0_10px_rgba(0,0,0,0.4)] px-8 py-12 flex items-center justify-center flex-col bg-white dark:bg-gray-700 dark:text-gray-200'>
         <div class="text-red-400 text-sm ">
           <% if @transaction.errors.any? %>
             <h2>The following errors prevented the category from being saved:</h2>
@@ -73,7 +73,15 @@
             </ul>
           <% end %>
         </div>
-        <p class='w-full text-sm font-semibold mb-4 text-gray-500 flex justify-between items-center'>
+        <div class = 'link_items grid grid-cols-2 gap-2 text-center mb-4 w-full'>
+          <%= link_to 'Buy', new_trader_transaction_path(transaction: { stock_symbol: @stock[:symbol], stock_price: @stock[:latest_price], transaction_type: :buy }),class: " border-[1px] border-blue-300 dark:border-blue-800 py-1 rounded-sm font-semibold  #{@transaction.transaction_type == 'buy' ? 'active' : ''}" %>
+          <% if current_user && current_user.stocks.exists?(symbol: @stock[:symbol]) && current_user.stocks.find_by(symbol: @stock[:symbol]).shares > 0 %>
+            <%= link_to 'Sell', new_trader_transaction_path(transaction: { stock_symbol: @stock[:symbol], stock_price: @stock[:latest_price], transaction_type: :sell }), class: "py-1 rounded-sm font-semibold border-[1px] border-blue-300 dark:border-blue-500 text-blue-500 dark:text-gray-100 #{"active" if @transaction.transaction_type == 'sell'}" %>
+          <% else %>
+            <span class='py-1 rounded-sm font-semibold cursor-not-allowed bg-gray-400 text-white'>Sell</span>
+          <% end %>
+        </div>
+        <p class='w-full text-sm font-semibold text-gray-500 dark:text-gray-200 flex justify-between items-center'>
           <span>
             Available Balance:
           </span>
@@ -81,40 +89,32 @@
             <%= number_to_currency(current_user.balance)   %>
           </span>
         </p>
-        <div class = 'link_items grid grid-cols-2 gap-2 text-center mb-4 w-full'>
-          <%= link_to 'Buy', new_trader_transaction_path(transaction: { stock_symbol: @stock[:symbol], stock_price: @stock[:latest_price], transaction_type: :buy }),class: " border-[1px] border-blue-300 py-1 rounded-sm font-semibold  #{@transaction.transaction_type == 'buy' ? 'active' : ''}" %>
-          <% if current_user && current_user.stocks.exists?(symbol: @stock[:symbol]) && current_user.stocks.find_by(symbol: @stock[:symbol]).shares > 0 %>
-            <%= link_to 'Sell', new_trader_transaction_path(transaction: { stock_symbol: @stock[:symbol], stock_price: @stock[:latest_price], transaction_type: :sell }), class: "py-1 rounded-sm font-semibold border-[1px] border-blue-300 text-blue-500 #{"active" if @transaction.transaction_type == 'sell'}" %>
-          <% else %>
-            <span class='py-1 rounded-sm font-semibold cursor-not-allowed bg-gray-400 text-white'>Sell</span>
-          <% end %>
-        </div>
         <%= form_with(model: @transaction, url:trader_transactions_path, method: :post,data:{turbo:false}) do |f| %>
           <div class="mb-2">
-            <%= f.label :stock_symbol ,class: 'text-sm font-semibold mb-2 text-gray-500' %><br />
-            <%= f.text_field :stock_symbol, value: @transaction.stock_symbol, readonly: true, class: ' text-gray-400 border-gray-300 rounded-sm'%>
+            <%= f.label :stock_symbol ,class: 'text-sm font-semibold mb-2 text-gray-500 dark:text-gray-200' %><br />
+            <%= f.text_field :stock_symbol, value: @transaction.stock_symbol, readonly: true, class: ' text-gray-400 border-gray-300 rounded-sm dark:bg-gray-600 dark:border-gray-700   dark:text-gray-300'%>
           </div>
           <div class="mb-2">
-            <%= f.label :stock_price,class: 'text-sm font-semibold mb-2 text-gray-500'%><br />
-            <%= f.text_field :stock_price, value:@stock[:latest_price], readonly: true , class: ' text-gray-400 border-gray-300 rounded-sm' %>
+            <%= f.label :stock_price,class: 'text-sm font-semibold mb-2 text-gray-500 dark:text-gray-200'%><br />
+            <%= f.text_field :stock_price, value:@stock[:latest_price], readonly: true , class: ' text-gray-400 border-gray-300 rounded-sm dark:bg-gray-600 dark:border-gray-700   dark:text-gray-300' %>
           </div>
           <div class="mb-2">
-            <%= f.label :quantity ,class: 'text-sm font-semibold mb-2 text-gray-500' %><br />
-            <%= f.number_field :quantity, id: 'transaction_quantity', value: 1, min: 1, placeholder: 'minimum: 1', class: 'w-full border-gray-400 text-gray-500' %>
+            <%= f.label :quantity ,class: 'text-sm font-semibold mb-2 text-gray-500 dark:text-gray-200' %><br />
+            <%= f.number_field :quantity, id: 'transaction_quantity', value: 1, min: 1, placeholder: 'minimum: 1', class: 'w-full border-gray-400 text-gray-500 dark:bg-gray-600 dark:placeholder-shown:border-gray-700   dark:text-gray-50' %>
             <% stock_share = current_user.stocks.where(symbol:@transaction.stock_symbol)&.first %>
             <div class = 'grid grid-cols-2 justify-between items-center mt-1'>
-              <span class = "text-sm text-gray-400 font-semibold <%= @transaction.transaction_type == 'sell' ? "opacity-100" : 'opacity-0'%>">shares left:
+              <span class = "text-sm text-gray-400 dark:text-gray-200 font-semibold <%= @transaction.transaction_type == 'sell' ? "opacity-100" : 'opacity-0'%>">shares left:
                 <%= stock_share&.shares || 0 %>
               </span>
               <% if @transaction.transaction_type == 'buy' %>
-                <span class = 'btn_max_buy bg-gray-400 text-white py-1 px-2 text-sm justify-self-end  rounded-sm cursor-pointer hover:bg-gray-500 '>Max </span>
+                <span class = 'btn_max_buy bg-gray-400 dark:bg-gray-500 dark:hover:bg-gray-600 text-white py-1 px-2 text-sm justify-self-end  rounded-sm cursor-pointer hover:bg-gray-500 '>Max </span>
               <%else%>
-                <span class = 'btn_max_sell bg-gray-400 text-white py-1 px-2 text-sm justify-self-end  rounded-sm cursor-pointer hover:bg-gray-500 '>Max </span>
+                <span class = 'btn_max_sell bg-gray-400 dark:bg-gray-500 dark:hover:bg-gray-600 text-white py-1 px-2 text-sm justify-self-end  rounded-sm cursor-pointer hover:bg-gray-500 '>Max </span>
               <%end%>
             </div>
           </div>
           <%= f.hidden_field :transaction_type, value: @transaction.transaction_type %>
-          <p class='text-sm font-semibold mt-4 mb-2 text-gray-500 flex justify-between items-center'>
+          <p class='text-sm font-semibold mt-4 mb-2 text-gray-500 dark:text-gray-200 flex justify-between items-center'>
             <span>
               Total Amount:
             </span>
@@ -122,22 +122,22 @@
             </span>
           </p>
           <% if params[:transaction][:transaction_type] == 'buy' %>
-            <%= f.submit "Buy", class: ' w-full text-white bg-green-700 text-center rounded-sm py-2 font-bold' %>
+            <%= f.submit "Buy", class: ' w-full text-white bg-green-700 dark:bg-green-600 text-center rounded-sm py-2 font-bold' %>
           <% else %>
-            <%= f.submit "Sell", class: ' w-full  text-white  bg-red-700 text-center rounded-sm py-2 font-bold'  %>
+            <%= f.submit "Sell", class: ' w-full  text-white  bg-red-700 dark:bg-red-600 text-center rounded-sm py-2 font-bold'  %>
           <% end %>
         <% end %>
       </div>
-      <div class = 'w-[clamp(300px,90vw,100%)] shadow-[0_0_10px_rgba(0,0,0,0.1)] p-4 bg-white'>
-        <%= line_chart @chart_data,height: '420px', xtitle: 'Date', ytitle: 'Closing Price' %>
+      <div class = 'w-[clamp(300px,90vw,100%)] shadow-[0_0_10px_rgba(0,0,0,0.1)] dark:hadow-[0_0_10px_rgba(0,0,0,0.1)] p-4 bg-white dark:bg-gray-200'>
+        <%= line_chart @chart_data,height: '420px', xtitle: 'Date', ytitle: 'Latest Price', loading: "Loading..."%>
       </div>
     </div>
   </div>
 <% else %>
   <div class = 'w-[600px] mx-auto h-[60vh] flex items-center flex-col justify-center '>
-    <div class = 'p-8 shadow-[0_0_10px_rgba(0,0,0,0.1)] bg-white'>
-      <h1 class = 'font-bold text-2xl text-gray-800'> Account Pending Approval.</p>
-      <p class = 'font-semibold text-[16px] text-gray-600'>
+    <div class = 'p-8 shadow-[0_0_10px_rgba(0,0,0,0.1)] dark:shadow-[0_0_10px_rgba(0,0,0,0.5)] bg-white dark:bg-gray-600  '>
+      <h1 class = 'font-bold text-2xl text-gray-800 dark:text-gray-100'> Account Pending Approval.</p>
+      <p class = 'font-semibold text-[16px] text-gray-600 dark:text-gray-200'>
         " Your ability to engage in transactions like buying and selling stocks is temporarily disabled until our administrators review and approve your account. We'll notify you once your account is approved. Thank you for your cooperation."
       </p>
     </div>

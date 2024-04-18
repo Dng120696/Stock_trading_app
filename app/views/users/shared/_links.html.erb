@@ -1,29 +1,22 @@
-
 <div class = 'my-2 text-center'>
-<%- if controller_name != 'sessions' %>
-  <%= link_to "Log in", new_session_path(resource_name), class: ' py-2 block bg-blue-800  w-full text-white font-semibold'%>
-<% end %>
+  <%- if controller_name != 'sessions' %>
+    <%= link_to "Log in", new_session_path(resource_name), class: ' py-2 block bg-blue-800 dark:bg-blue-600 dark:bg-opacity-70   w-full text-white font-semibold'%>
+  <% end %>
 </div>
-
 <div class = 'mt-2'>
-<%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-  <span class = 'text-sm font-semibold text-gray-600'>Dont have Account?</span> <%= link_to "Create Account", new_registration_path(resource_name), class: 'underline text-blue-600 font-semibold text-sm'%>
-<% end %>
-
+  <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+    <span class = 'text-sm font-semibold text-gray-600 dark:text-gray-200'>Dont have Account?</span> <%= link_to "Create Account", new_registration_path(resource_name), class: 'underline text-blue-700 dark:text-blue-500  font-semibold text-sm dark:text-blue-500'%>
+  <% end %>
 </div>
-
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-  <%= link_to "Forgot your password?", new_password_path(resource_name),class: 'font-semibold text-gray-500  text-sm underline' %><br />
+  <%= link_to "Forgot your password?", new_password_path(resource_name),class: 'font-semibold text-gray-500  text-sm underline dark:text-gray-200' %><br />
 <% end %>
-
 <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
-  <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name),class: 'font-semibold text-gray-500  text-sm underline' %><br />
+  <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name),class: 'font-semibold text-gray-500  text-sm underline dark:text-gray-200' %><br />
 <% end %>
-
 <%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
   <%= link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name) %><br />
 <% end %>
-
 <%- if devise_mapping.omniauthable? %>
   <%- resource_class.omniauth_providers.each do |provider| %>
     <%= button_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), data: { turbo: false } %><br />
