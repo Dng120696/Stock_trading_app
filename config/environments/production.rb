@@ -12,8 +12,9 @@ Rails.application.configure do
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
   # Rails.application.routes.default_url_options[:host] = 'localhost'
-  config.action_mailer.default_url_options = { host: 'https://mysite-jjbq.onrender.com/', port: 443 }
 
+   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "debug")
+  config.action_mailer.default_url_options = { host: 'mysite-jjbq.onrender.com', protocol: 'https' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address: 'smtp.gmail.com',
