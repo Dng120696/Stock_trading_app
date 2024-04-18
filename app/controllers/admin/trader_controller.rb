@@ -1,6 +1,6 @@
 class Admin::TraderController < ApplicationController
   before_action :authenticate_admin_user!
-  before_action :find_trader, only: [:show, :edit, :update]
+  before_action :find_trader, only: [:show, :edit, :update,:destroy]
 
   def new
     @trader = User.new
@@ -38,7 +38,10 @@ class Admin::TraderController < ApplicationController
       render :edit
     end
   end
-
+  def destroy
+    @trader.destroy
+    redirect_to admin_trader_index_path, notice: "User deleted successfully."
+  end
   private
 
   def find_trader

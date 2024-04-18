@@ -13,7 +13,7 @@ Rails.application.configure do
   config.eager_load = true
   # Rails.application.routes.default_url_options[:host] = 'localhost'
 
-   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "debug")
+
   config.action_mailer.default_url_options = { host: 'mysite-jjbq.onrender.com', protocol: 'https' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
