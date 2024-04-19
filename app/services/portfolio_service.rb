@@ -43,8 +43,8 @@ class PortfolioService
       latest_stock = @user.stocks.where(symbol: stock.symbol).order(created_at: :desc).first
       latest_stock_price = Stock.update_latest_price(stock.symbol)
 
-
       total_purchase = @user.transactions.where(stock_symbol: stock.symbol, transaction_type: :buy).sum(:total) || 0
+
       total_sales = @user.transactions.where(stock_symbol: stock.symbol, transaction_type: :sell).sum(:total) || 0
 
       portfolio_stock_total = latest_stock.shares * latest_stock_price
@@ -66,14 +66,9 @@ class PortfolioService
   private
 
   def calculate_profit_loss_and_gain(total_purchase, total_sales,portfolio_stock_total)
-    if total_purchase != 0 && total_sales != 0
       total = total_sales - total_purchase
       profit_loss_total = total + portfolio_stock_total
       gain_loss_total = (profit_loss_total / total_purchase.to_f) * 100
-    else
-      profit_loss_total = 0
-      gain_loss_total = 0
-    end
 
     [profit_loss_total, gain_loss_total]
   end
