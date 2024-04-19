@@ -10,7 +10,6 @@ document.addEventListener("turbo:load", function() {
 
   const savedMode = localStorage.getItem("theme-toggle");
 
-  // Set theme mode based on local storage or default to 'light'
   if (savedMode === "dark") {
     htmlTag.classList.add("dark");
     themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
@@ -25,7 +24,7 @@ document.addEventListener("turbo:load", function() {
     if (htmlTag.classList.contains('dark')) {
       themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
     } else {
-      themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>'; // Change button icon to moon
+      themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>'; 
     }
   });
 });
