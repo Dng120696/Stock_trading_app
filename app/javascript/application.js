@@ -3,7 +3,10 @@ import "@hotwired/turbo-rails"
 import "controllers"
 import "chartkick"
 import "Chart.bundle"
+import { createConsumer } from '@rails/actioncable';
+import './trader_dashboard.js'
 
+export const cable = createConsumer();
 document.addEventListener("turbo:load", function() {
   const themeToggle = document.getElementById("theme-toggle");
   const htmlTag = document.documentElement;
@@ -28,3 +31,4 @@ document.addEventListener("turbo:load", function() {
     }
   });
 });
+import "channels"

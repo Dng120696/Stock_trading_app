@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'notification/index'
 
   root 'pages#home'
 devise_for :users, controllers: {
@@ -11,17 +12,20 @@ devise_for :admin_users, controllers: {
   namespace :admin do
     resources :trader
     resources :transactions, only: [:index]
-    resources :dashboard do
+    resources :dashboard, only: [:index] do
       post 'approve', on: :member
     end
   end
 
   namespace :trader do
+    get 'trader_dashboard', to: 'trader_dashboard#index'
    resources :transactions, only: [:index,:new, :create ]
     resources :dashboard,only:[:index]
     resources :stocks,only: [:create]
     resources :portfolio,only: [:index]
   end
+
+  mount ActionCable.server, at: '/cable'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

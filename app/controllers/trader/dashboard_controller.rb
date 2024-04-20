@@ -2,6 +2,8 @@ class Trader::DashboardController < ApplicationController
 
   def index
     if user_signed_in?
+      @notifications = current_user.notifications.unread
+      p @notifications
       portfolio_service = PortfolioService.new(current_user)
       @total_profit_loss, @total_gain_loss = portfolio_service.calculate_total_profit_loss_and_gain
       @total_portfolio = portfolio_service.calculate_total_portfolio_value

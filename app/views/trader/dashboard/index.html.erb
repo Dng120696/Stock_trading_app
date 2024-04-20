@@ -16,6 +16,11 @@
     <% end %>
     <h1 class = ' pb-8 text-gray-600 text-3xl dark:text-gray-50' >Hello <%= current_user.firstname%>👋</h1>
     <div class = 'flex items-center justify-between mb-10'>
+      <%if current_user.notifications.present?%>
+        <div id="notifications"  class = 'dark:text-gray-100'>
+          <%= render 'admin/dashboard/notification' %>
+        </div>
+      <%end%>
       <div class = 'shadow-[0_0_10px_rgba(0,0,0,0.15)] dark:shadow-[0_0_10px_rgba(0,0,0,0.3)] p-8 w-[350px] h-[150px]  bg-white dark:bg-gray-700  rounded-sm'>
         <h1 class =' text-2xl font-bold text-gray-500 dark:text-gray-100 mb-2 '>Cash balance</h1>
         <p class = 'text-center text-3xl font-bold text-sky-800 dark:text-blue-500 '><%= number_to_currency(current_user.balance)   %></p>
@@ -46,7 +51,7 @@
     <% end %>
   </div>
   <% if @stock %>
-    <ul class = 'grid grid grid-cols-[0.75fr,1.75fr,0.75fr,0.75fr,1fr,1fr,1fr] text-lg font-bold mt-4 mb-2 pb-2 border-b-[2px] border-b-gray-600 dark:text-gray-200 dark:border-b-gray-600'>
+    <ul class = 'grid  grid-cols-[0.75fr,1.75fr,0.75fr,0.75fr,1fr,1fr,1fr] text-lg font-bold mt-4 mb-2 pb-2 border-b-[2px] border-b-gray-600 dark:text-gray-200 dark:border-b-gray-600'>
       <li>Symbol</li>
       <li>Company</li>
       <li> Price</li>
@@ -54,7 +59,7 @@
       <li class = 'text-sm flex items-center justify-center'> All-time High Price</li>
       <li class = 'text-sm flex items-center justify-center'> All-time Low Price</li>
     </ul>
-    <div class = 'grid grid grid-cols-[0.75fr,1.75fr,0.75fr,0.75fr,1fr,1fr,1fr] text-center text-md mb-2 pb-2 border-b-[1px] border-b-gray-300 dark:text-gray-200 dark:border-b-gray-600 '>
+    <div class = 'grid grid-cols-[0.75fr,1.75fr,0.75fr,0.75fr,1fr,1fr,1fr] text-center text-md mb-2 pb-2 border-b-[1px] border-b-gray-300 dark:text-gray-200 dark:border-b-gray-600 '>
       <p class = 'flex items-center gap-2 '>
         <%= image_tag(@stock[:logo], alt: 'Logo',class: 'w-6 h-6  object-fit') %> <%= @stock[:symbol] %></p>
       <p  class = 'flex items-center gap-2 '><%= @stock[:company_name] %></p>
@@ -109,3 +114,4 @@
       </div>
     <%end%>
   </div>
+  <script src="/trader_dashboard.js" type="module"></script>
