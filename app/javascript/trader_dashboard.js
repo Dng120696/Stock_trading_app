@@ -12,14 +12,14 @@ document.addEventListener('turbo:load', () => {
     },
 
     received(data) {
-      console.log('Received data from NotificationChannel:', data);
+      console.log('Received data from NotificationChannel:', data.notification);
       // Handle incoming message, update UI, etc.
-      if (data.message === "Your account has been approved") {  
+      if (data.notification === "Your account has been approved") {  
         // Display a notification to the user
         const notificationContainer = document.getElementById('notifications');
         const notificationElement = document.createElement('div');
         notificationElement.classList.add('notification');
-        notificationElement.textContent = data.message;
+        notificationElement.textContent = data.notification;
         notificationContainer.appendChild(notificationElement);
       }
     }

@@ -13,14 +13,14 @@ consumer.subscriptions.create("NotificationChannel", {
 
   received(data) {
     // Called when there's incoming data on the websocket for this channel
-    console.log('received', data.message);
+    console.log('received', data.notification);
 
-    if (data.message === "Your account has been approved") {  
+    if (data.notification === "Your account has been approved") {  
       // Display a notification to the user
       const notificationContainer = document.getElementById('notifications');
       const notificationElement = document.createElement('div');
       notificationElement.classList.add('notification');
-      notificationElement.textContent = data.message;
+      notificationElement.textContent = data.notification;
       notificationContainer.appendChild(notificationElement);
     }
   }

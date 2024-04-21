@@ -9,9 +9,9 @@ class Admin::DashboardController < ApplicationController
 
     if @trader&.update(status: :approved)
       UserMailer.approved_email(@trader).deliver_now
-      Notification.create(user: @trader, message: "Your account has been approved")
-      ActionCable.server.broadcast "notifications_channel",{message: message_render(@trader)}
-      redirect_to admin_dashboard_index_path, notice: "Trader account approved successfully"
+      @notifications = Notification.create(user: @trader, message: "Your account has been approved")
+      ActionCable.server.broadcast "notifications_channel",{notification: message_render(@notifications)}
+
     else
       redirect_to admin_dashboard_index_path, alert: "Failed to approve trader account"
     end
@@ -19,7 +19,7 @@ class Admin::DashboardController < ApplicationController
   end
 
   private
-  def message_render(trader)
-    render(partial:'notification',locals:{message: trader})
+  def message_render( notification)
+    render(partial:'notifications/notification',locals:{notification:  notification})
 end
 end
