@@ -22,7 +22,7 @@ class Admin::TraderController < ApplicationController
   end
 
   def index
-    @traders = User.all
+    @traders = User.where(status: :approved)
   end
 
   def show

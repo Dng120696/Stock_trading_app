@@ -1,8 +1,13 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
+//= require actioncable  
+//= require_tree .
+//= require trader_channel
+
 import "@hotwired/turbo-rails"
 import "controllers"
 import "chartkick"
 import "Chart.bundle"
+import './channels/trader_channel.js'
 
 document.addEventListener("turbo:load", function() {
   const themeToggle = document.getElementById("theme-toggle");
@@ -28,3 +33,4 @@ document.addEventListener("turbo:load", function() {
     }
   });
 });
+import "channels"

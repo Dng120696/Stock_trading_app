@@ -46,7 +46,7 @@
     <% end %>
   </div>
   <% if @stock %>
-    <ul class = 'grid grid grid-cols-[0.75fr,1.75fr,0.75fr,0.75fr,1fr,1fr,1fr] text-lg font-bold mt-4 mb-2 pb-2 border-b-[2px] border-b-gray-600 dark:text-gray-200 dark:border-b-gray-600'>
+    <ul class = 'grid grid-cols-[0.75fr,1.75fr,0.75fr,0.75fr,1fr,1fr,1fr] text-lg font-bold mt-4 mb-2 pb-2 border-b-[2px] border-b-gray-600 dark:text-gray-200 dark:border-b-gray-600'>
       <li>Symbol</li>
       <li>Company</li>
       <li> Price</li>
@@ -54,7 +54,7 @@
       <li class = 'text-sm flex items-center justify-center'> All-time High Price</li>
       <li class = 'text-sm flex items-center justify-center'> All-time Low Price</li>
     </ul>
-    <div class = 'grid grid grid-cols-[0.75fr,1.75fr,0.75fr,0.75fr,1fr,1fr,1fr] text-center text-md mb-2 pb-2 border-b-[1px] border-b-gray-300 dark:text-gray-200 dark:border-b-gray-600 '>
+    <div class = 'grid grid-cols-[0.75fr,1.75fr,0.75fr,0.75fr,1fr,1fr,1fr] text-center text-md mb-2 pb-2 border-b-[1px] border-b-gray-300 dark:text-gray-200 dark:border-b-gray-600 '>
       <p class = 'flex items-center gap-2 '>
         <%= image_tag(@stock[:logo], alt: 'Logo',class: 'w-6 h-6  object-fit') %> <%= @stock[:symbol] %></p>
       <p  class = 'flex items-center gap-2 '><%= @stock[:company_name] %></p>
