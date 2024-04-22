@@ -1,24 +1,24 @@
 <div class = 'log_in flex items-center justify-center w-full'>
-  <div class = 'p-10  pt-14 shadow-[0_0_10px_rgba(0,0,0,0.1)] bg-white  dark:bg-[rgba(0,0,0,0.5)]  dark:bg-[rgba(0,0,0,0.5)] dark:placeholder-shown:border-gray-700   dark:text-gray-50 rounded-sm relative w-[clamp(300px,90%,400px)] overflow-hidden'>
+  <div class = 'p-10  pt-14 shadow-[0_0_10px_rgba(0,0,0,0.1)] bg-[rgba(0,0,0,0.5)] placeholder-shown:border-gray-700   text-gray-50 rounded-sm relative w-[clamp(300px,90%,400px)] overflow-hidden'>
     <div class='grid grid-cols-2 w-full text-center absolute top-0 left-0'>
-      <%= link_to 'User', new_user_session_path, class: "py-2 px-4  #{request.path == new_user_session_path ? 'active' : 'bg-gray-400 text-white dark:bg-gray-600 dark:bg-opacity-70 dark:text-gray-200'}" %>
+      <%= link_to 'User', new_user_session_path, class: "py-2 px-4  #{request.path == new_user_session_path ? 'active' : 'bg-gray-600 bg-opacity-70 text-gray-200'}" %>
       <%= link_to 'Admin', new_admin_user_session_path, class: "py-2 px-4 #{request.path == new_admin_user_session_path ? 'active' : 'bg-gray-400 text-white'}" %>
     </div>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="my-2">
-        <%= f.label :email, class: 'font-semibold text-gray-500  text-sm dark:text-gray-200' %><br />
-        <%= f.email_field :email, autofocus: true, autocomplete: "email",placeholder:'Enter your Email', class: 'w-full placeholder-shown:border-gray-400 text-base dark:bg-[rgba(0,0,0,0.6)] dark:placeholder-shown:border-gray-700   dark:text-gray-50' %>
+        <%= f.label :email, class: 'font-semibold   text-sm text-gray-200' %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email",placeholder:'Enter your Email', class: 'w-full placeholder-shown:border-gray-400 text-base bg-[rgba(0,0,0,0.6)] placeholder-shown:border-gray-700   text-gray-50' %>
       </div>
       <div class="mb-2 ">
-        <%= f.label :password, class: 'font-semibold text-gray-500  text-sm dark:text-gray-200' %><br />
+        <%= f.label :password, class: 'font-semibold   text-sm text-gray-200' %><br />
         <div class = 'relative'>
-          <%= f.password_field :password, autocomplete: "current-password",placeholder:'Enter your Password', class: 'w-full placeholder-shown:border-gray-400 text-base dark:bg-[rgba(0,0,0,0.6)] dark:placeholder-shown:border-gray-700   dark:text-gray-50' %>
+          <%= f.password_field :password, autocomplete: "current-password",placeholder:'Enter your Password', class: 'w-full placeholder-shown:border-gray-400 text-base bg-[rgba(0,0,0,0.6)] placeholder-shown:border-gray-700   text-gray-50' %>
           <div class = 'show_password_menu absolute top-[50%] right-4 translate-x-[-50%] translate-y-[-50%] cursor-pointer'>
             <span class = 'open_password hidden'>
-              <i class=" fa-solid fa-eye text-sm text-gray-500 dark:text-gray-200"></i>
+              <i class=" fa-solid fa-eye text-sm  text-gray-200"></i>
             </span>
             <span class = 'close_password'>
-              <i class="fa-solid fa-eye-slash  text-sm text-gray-500 dark:text-gray-200"></i>
+              <i class="fa-solid fa-eye-slash  text-sm  text-gray-200"></i>
             </span>
           </div>
         </div>
@@ -26,11 +26,11 @@
       <% if devise_mapping.rememberable? %>
         <div class="mb-2">
           <%= f.check_box :remember_me %>
-          <%= f.label :remember_me,class: 'font-semibold text-gray-500  text-sm dark:text-gray-200' %>
+          <%= f.label :remember_me,class: 'font-semibold   text-sm text-gray-200' %>
         </div>
       <% end %>
       <div class="mb-2">
-        <%= f.submit "Log in",class: 'py-2 px-6  bg-blue-800 dark:bg-blue-600 dark:bg-opacity-70 w-full text-white font-semibold' %>
+        <%= f.submit "Log in",class: 'py-2 px-6   bg-blue-600 bg-opacity-70 w-full text-white font-semibold' %>
       </div>
     <% end %>
     <%= render "admin_users/shared/links" %>

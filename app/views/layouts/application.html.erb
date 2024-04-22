@@ -20,7 +20,7 @@
       }
     </style>
   </head>
-  <% if current_page?(new_user_session_path) ||  current_page?(new_admin_user_session_path) || current_page?(new_user_registration_path) || current_page?(new_user_confirmation_path)  ||  current_page?(new_user_password_path)  ||  current_page?(new_admin_user_password_path) %>
+  <% if request.path == new_user_session_path ||  request.path == new_admin_user_session_path || request.path == new_user_registration_path || request.path == new_user_confirmation_path  ||  request.path == new_user_password_path  ||  request.path == new_admin_user_password_path || request.path == root_path %>
     <section class="backgound__video">
       <video id="video" autoplay loop muted>
         <source src="<%= asset_path('bg-video.mp4') %>" type="video/mp4" />
@@ -29,57 +29,68 @@
     </section>
   <%end%>
   <body class="bg-gray-50 dark:bg-gray-800">
-    <% unless current_page?(new_user_session_path) || current_page?(new_admin_user_session_path) || current_page?(new_user_registration_path) || current_page?(new_user_confirmation_path)  ||  current_page?(new_user_password_path)  ||  current_page?(new_admin_user_password_path)  %>
-      <header class="w-full bg-white fixed top-0 left-0 shadow-[0_0_10px_rgba(0,0,0,0.15)] dark:shadow-[0_0_10px_rgba(0,0,0,0.80)]  z-50 dark:bg-gray-700 dark:text-gray-50">
-        <nav class="flex items-center justify-between w-[clamp(300px,90%,1200px)] mx-auto font-bold text-lg">
-          <ul class="flex">
-            <li class = "py-4 px-6 <%=current_page?(root_path) ? 'bg-[#001F3F] text-white dark:bg-gray-600 dark:text-gray-100' : ''%>">
-              <%= link_to 'News', root_path%>
+    <header class="w-full  fixed top-0 left-0   z-50 <%= request.path == new_user_session_path || request.path == new_admin_user_session_path || request.path == new_user_registration_path || request.path == new_user_confirmation_path  ||  request.path == new_user_password_path  ||  request.path == new_admin_user_password_path || request.path == root_path  ? 'bg-transparent dark:bg-transparent  dark:shadow-none py-2  ': 'shadow-[0_0_10px_rgba(0,0,0,0.15)] dark:bg-gray-700 text-gray-800 dark:text-gray-100 '%>">
+      <nav class="flex items-center justify-between w-[clamp(300px,90%,1300px)] mx-auto font-bold text-lg">
+        <ul class="flex">
+          <% unless   user_signed_in? || admin_user_signed_in?%>
+            <li class = " flex items-center gap-2 relative w-[200px]"  >
+              <%= image_tag 'stock_logo.png',class: 'w-24 h-16' %>
+              <span class = 'w-full absolute top-1/2 left-[180px] translate-x-[-50%] translate-y-[-50%] text-gray-300 text-lg'>
+                <%= link_to ' Trading App', root_path
+                %>
+              </span>
+            </li>
+          <%end%>
+          <% if user_signed_in? || admin_user_signed_in?%>
+            <li class = "py-4 px-6 <%=request.path == news_path ? 'bg-[#001F3F] text-white dark:bg-gray-600 dark:text-gray-100' : ''%>">
+              <%= link_to 'News', news_path %>
             </li>
             <% if current_admin_user %>
-              <li class = "py-4 px-6 <%= current_page?(admin_dashboard_index_path) ? 'bg-[#001F3F] text-white dark:bg-gray-600 dark:text-gray-100' : ''%>">
+              <li class = "py-4 px-6 <%= request.path == admin_dashboard_index_path ? 'bg-[#001F3F] text-white dark:bg-gray-600 dark:text-gray-100' : ''%>">
                 <%= link_to 'Dashboard', admin_dashboard_index_path %>
               </li>
-              <li class = "py-4 px-6 <%= current_page?(admin_trader_index_path) ? 'bg-[#001F3F] text-white dark:bg-gray-600 dark:text-gray-100' : '' %>">
+              <li class = "py-4 px-6 <%= request.path == admin_trader_index_path ? 'bg-[#001F3F] text-white dark:bg-gray-600 dark:text-gray-100' : '' %>">
                 <%= link_to 'Accounts', admin_trader_index_path%>
               </li>
-              <li class = "py-4 px-6 <%=current_page?(admin_transactions_path) ? 'bg-[#001F3F] text-white dark:bg-gray-600 dark:text-gray-100' : '' %>">
+              <li class = "py-4 px-6 <%=request.path == admin_transactions_path ? 'bg-[#001F3F] text-white dark:bg-gray-600 dark:text-gray-100' : '' %>">
                 <%= link_to 'Transactions', admin_transactions_path %>
               </li>
             <% else %>
-              <li class = "py-4 px-6 <%= current_page?(trader_dashboard_index_path) ? 'bg-[#001F3F] text-white dark:bg-gray-600 dark:text-gray-100' : '' %>">
+              <li class = "py-4 px-6 <%= request.path == trader_dashboard_index_path ? 'bg-[#001F3F] text-white dark:bg-gray-600 dark:text-gray-100' : '' %>">
                 <%= link_to 'Dashboard', trader_dashboard_index_path %>
               </li>
-              <li class = "py-4 px-6 <%= current_page?(trader_portfolio_index_path) ? 'bg-[#001F3F] text-white dark:bg-gray-600 dark:text-gray-100' : '' %>">
+              <li class = "py-4 px-6 <%= request.path == trader_portfolio_index_path ? 'bg-[#001F3F] text-white dark:bg-gray-600 dark:text-gray-100' : '' %>">
                 <%= link_to 'Portfolio', trader_portfolio_index_path  %>
               </li>
-              <li class = "py-4 px-6 <%= current_page?(trader_transactions_path) ? 'bg-[#001F3F] text-white dark:bg-gray-600 dark:text-gray-100' : ''%>">
+              <li class = "py-4 px-6 <%= request.path == trader_transactions_path ? 'bg-[#001F3F] text-white dark:bg-gray-600 dark:text-gray-100' : ''%>">
                 <%= link_to 'Transaction History', trader_transactions_path %>
               </li>
             <% end %>
-          </ul>
-          <div class="flex items-center gap-4">
-            <% if !user_signed_in? && !admin_user_signed_in? %>
-              <%= link_to 'Sign In', new_user_session_path, class: '' %>
-            <% else %>
-              <% if current_user %>
-                <%= link_to "Logout", destroy_user_session_path, data: {
+          <% end %>
+        </ul>
+        <div class="flex items-center gap-4">
+          <% if !user_signed_in? && !admin_user_signed_in? %>
+            <%= link_to 'Sign In', new_user_session_path, class: '' %>
+          <% else %>
+            <% if current_user %>
+              <%= link_to "Logout", destroy_user_session_path, data: {
                 turbo_method: :delete,
                 turbo_confirm: "Are you sure?"
               } %>
-              <% elsif current_admin_user %>
-                <%= link_to "Logout", destroy_admin_user_session_path, data: {
+            <% elsif current_admin_user %>
+              <%= link_to "Logout", destroy_admin_user_session_path, data: {
                 turbo_method: :delete,
                 turbo_confirm: "Are you sure?"
               } %>
-              <% end %>
             <% end %>
+          <% end %>
+          <% unless  request.path == new_user_session_path || request.path == new_admin_user_session_path || request.path == new_user_registration_path || request.path == root_path %>
             <button id="theme-toggle" class=""></button>
-          </div>
-        </nav>
-      </header>
-    <%end%>
-    <div class="w-[clamp(300px,90%,1200px)] mx-auto min-h-screen grid place-items-center <%= current_page?(new_user_session_path) || current_page?(new_admin_user_session_path) ? '' : (current_page?(new_user_registration_path) ? 'pt-0 pb-0' : 'pt-20 pb-6') %>
+          <%end%>
+        </div>
+      </nav>
+    </header>
+    <div class="w-[clamp(300px,90%,1300px)] mx-auto min-h-screen grid place-items-center <%= request.path == new_user_session_path || request.path == new_admin_user_session_path ? '' : (request.path == new_user_registration_path || request.path == root_path  ? 'pt-0 pb-0' : 'pt-20 pb-6') %>
 relative z-100">
       <div class="absolute top-[100px] right-0 translate-x-0 translate-y-[-40%] w-[clamp(300px,90%,550px)] z-10">
         <% unless notice.blank? %>

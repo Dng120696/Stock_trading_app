@@ -12,6 +12,7 @@
 
 */
 
+
 html {
   box-sizing: border-box;
   scroll-behavior: smooth;
@@ -22,6 +23,7 @@ html {
   padding: 0;
   box-sizing: inherit;
 }
+
 .backgound__video {
   min-height: 100vh;
   position: absolute;
@@ -50,7 +52,7 @@ html {
 
 .link_items a.active,
 .log_in .active{
-  @apply bg-blue-800 dark:bg-blue-600 dark:bg-opacity-70 text-white;
+  @apply bg-blue-600 bg-opacity-70 text-white;
 }
 
 .admin_transaction_scroll::-webkit-scrollbar,

@@ -2,7 +2,7 @@ class Admin::DashboardController < ApplicationController
   before_action :authenticate_admin_user!
 
   def index
-    @users = User.where(status: :pending).all.order(:id)
+    @users = User.where(status: :pending).order(:id)
   end
   def approve
     trader = User.find(params[:id])

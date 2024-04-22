@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-
   root 'pages#home'
+  get 'news', to: 'pages#news'
+
 devise_for :users, controllers: {
   sessions: 'users/sessions'
 }

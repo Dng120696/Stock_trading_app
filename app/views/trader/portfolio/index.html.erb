@@ -60,7 +60,7 @@
                 $<%= stock[:latest_price] %>
               </li>
               <li class = 'flex items-center  gap-2 '>
-                <%= sprintf("%.2f", stock[:avg_price]) %>
+                $<%= sprintf("%.2f", stock[:avg_price]) %>
               </li>
               <li class = 'flex items-center  gap-1 '>
                 <span class = "<%= stock[:profit_loss] >= 0  ? 'text-green-700 dark:text-green-500' : 'text-red-700 dark:text-red-500'%>">
