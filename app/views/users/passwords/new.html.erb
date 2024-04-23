@@ -1,14 +1,14 @@
 <div class = ' flex items-center justify-center  w-full'>
-  <div class = 'p-10 pt-14 shadow-[0_0_10px_rgba(0,0,0,0.1)] bg-white dark:bg-[rgba(0,0,0,0.5)] rounded-sm relative w-[clamp(300px,90%,400px)] overflow-hidden'>
-    <h2 class = 'text-xl text-gray-800 dark:text-gray-100 '>Forgot your password?</h2>
+  <div class = 'p-10 pt-14 shadow-[0_0_10px_rgba(0,0,0,0.1)]  bg-[rgba(0,0,0,0.5)] rounded-sm relative w-[clamp(300px,90%,400px)] overflow-hidden'>
+    <h2 class = 'text-xl text-gray-100 '>Forgot your password?</h2>
     <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
       <%= render "users/shared/error_messages", resource: resource %>
       <div class="w-full my-2">
-        <%= f.label :email, class: 'font-semibold text-gray-500  text-sm dark:text-gray-200' %><br />
-        <%= f.email_field :email, autofocus: true, autocomplete: "email",placeholder:'Enter your Email', class: 'w-full placeholder-shown:border-gray-400 text-base dark:bg-[rgba(0,0,0,0.6)] dark:placeholder-shown:border-gray-700   dark:text-gray-50' %>
+        <%= f.label :email, class: 'font-semibold  text-sm text-gray-200' %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email",placeholder:'Enter your Email', class: 'w-full placeholder-shown:border-gray-400 text-base bg-[rgba(0,0,0,0.6)] placeholder-shown:border-gray-700   text-gray-50' %>
       </div>
       <div class="actions">
-        <%= f.submit "Send me reset password instructions",class: 'py-2 px-6 w-full bg-blue-800 dark:bg-blue-600 dark:bg-opacity-70 w-full text-white font-semibold text-sm'  %>
+        <%= f.submit "Send me reset password instructions",class: 'py-2 px-6 w-full bg-blue-800 bg-blue-600 dark:bg-opacity-70 w-full text-white font-semibold text-sm'  %>
       </div>
     <% end %>
     <%= render "users/shared/links" %>
