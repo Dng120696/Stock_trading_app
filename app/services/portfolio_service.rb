@@ -15,7 +15,27 @@ class PortfolioService
   end
 
   def calculate_total_portfolio_value
-    @user.stocks.sum { |stock| stock.shares * Stock.fetch_price(stock.symbol)  }
+    total_portfolio_value = 0
+    @user.stocks.select(:symbol).distinct.each do |stock|
+      latest_stock = @user.stocks.where(symbol: stock.symbol).order(created_at: :desc).first
+      stock_purchase = @user.transactions.where(stock_symbol: stock.symbol, transaction_type: :buy)
+      stock_prices = stock_purchase.map { |transaction| transaction.stock_price }
+      avg_price = stock_prices[0].to_f
+      if  stock_prices.count > 1
+          stock_prices.each_with_index do |stock_price,i|
+            avg_price += stock_prices[i + 1].to_f
+            if stock_prices.last != stock_prices[i + 1]
+              avg_price /=  2
+            end
+           avg_price
+          end
+      else
+           avg_price = stock_prices[0]
+      end
+          total = avg_price * latest_stock.shares
+         total_portfolio_value += total
+    end
+    total_portfolio_value
   end
 
   def calculate_total_profit_loss_and_gain
@@ -23,7 +43,7 @@ class PortfolioService
     total_gain_loss = 0
 
     @user.stocks.each do |stock|
-      latest_stock_price = Stock.update_latest_price(stock.symbol)
+      latest_stock_price = Stock.fetch_price(stock.symbol)
 
       stock_purchase = @user.transactions.where(stock_symbol: stock.symbol, transaction_type: :buy)
       stock_prices = stock_purchase.map { |transaction| transaction.stock_price }
@@ -55,7 +75,7 @@ class PortfolioService
   def get_portfolio_stocks
     @user.stocks.select(:symbol).distinct.map do |stock|
       latest_stock = @user.stocks.where(symbol: stock.symbol).order(created_at: :desc).first
-      latest_stock_price = Stock.update_latest_price(stock.symbol)
+      latest_stock_price = Stock.fetch_price(stock.symbol)
 
       stock_purchase = @user.transactions.where(stock_symbol: stock.symbol, transaction_type: :buy)
       stock_prices = stock_purchase.map { |transaction| transaction.stock_price }

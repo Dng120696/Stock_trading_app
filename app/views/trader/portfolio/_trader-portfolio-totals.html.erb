@@ -1,0 +1,25 @@
+<div class = ' flex items-center justify-center p-6 shadow-[0_0_10px_rgba(0,0,0,0.15)] rounded-sm dark:shadow-[0_0_10px_rgba(0,0,0,0.55)] bg-white dark:bg-gray-700 h-full'>
+  <ul>
+    <li class =' text-2xl font-bold text-gray-500 dark:text-gray-200 mb-2 '>
+      Cash Balance
+    </li>
+    <li  class = ' pl-10 text-3xl font-bold text-sky-800 dark:text-blue-500  mb-4'>
+      <%= number_to_currency(current_user.balance) %>
+    </li>
+    <li class =' text-2xl font-bold text-gray-500 dark:text-gray-200  mb-2 '>
+      Porfolio Value
+    </li>
+    <li class = ' pl-10  text-3xl font-bold text-sky-800 dark:text-blue-500   mb-4'>
+      <%= number_to_currency(@total_portfolio) %>
+    </li>
+    <li class =' text-2xl font-bold text-gray-500  dark:text-gray-200 mb-2 '>
+      Portfolio Profit & Loss
+    </li>
+    <li  class = "pl-10 text-3xl font-bold mb-4 flex items-center gap-2 <%= @total_profit_loss >= 0 ? 'text-green-800 dark:text-green-600' : 'text-red-800 dark:text-red-600' %> ">
+      <%= number_to_currency(@total_profit_loss) %>
+      <span class = "text-[14px] ">
+        (<%= format('%.2f', @total_gain_loss) %>%)
+      </span>
+    </li>
+  </ul>
+</div>
