@@ -5,7 +5,7 @@
     <%= link_to 'View All Transactions', admin_transactions_path, class: "bg-blue-500 hover:bg-gray-600 text-gray-100 font-bold py-2 px-6 rounded" %>
   </div>
   <div class="mt-6 dark:text-gray-50">
-    <h2 class="text-base font-semibold mb-4">Confirmed users pending approvals:</h2>
+    <h2 class="text-base font-semibold mb-4">Pending approvals:</h2>
     <ul class = 'grid grid-cols-[300px,100px,100px] text-lg font-bold items-center gap-4 mb-2 pb-2s border-b-[2px] border-b-gray-600'>
       <li class = 'text-center'>Accounts</li>
       <li class = 'text-center'>Status</li>
@@ -21,7 +21,7 @@
         </div>
       <% end %>
     <% else %>
-      <p class = 'h-[10vh] flex items-center justify-center text-gray-400 '>No confirmed users found.</p>
+      <p class = 'h-[10vh] flex items-center justify-center text-gray-400 '>No pending users found.</p>
     <% end %>
   </div>
 </div>
