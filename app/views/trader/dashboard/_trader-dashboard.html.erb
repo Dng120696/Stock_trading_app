@@ -1,0 +1,98 @@
+<% if @error_message.present? %>
+  <div class="alert alert-danger">
+    <%= @error_message %>
+  </div>
+<% end %>
+<h1 class = ' pb-8 text-gray-600 text-3xl dark:text-gray-50' >Hello <%= current_user.firstname%>👋</h1>
+<div class = 'flex items-center justify-between mb-10'>
+  <div class = 'shadow-[0_0_10px_rgba(0,0,0,0.15)] dark:shadow-[0_0_10px_rgba(0,0,0,0.3)] p-8 w-[350px] h-[150px]  bg-white dark:bg-gray-700  rounded-sm'>
+    <h1 class =' text-2xl font-bold text-gray-500 dark:text-gray-100 mb-2 '>Cash balance</h1>
+    <p class = 'text-center text-3xl font-bold text-sky-800 dark:text-blue-500 '><%= number_to_currency(current_user.balance)   %></p>
+  </div>
+  <div class = 'shadow-[0_0_10px_rgba(0,0,0,0.15)] dark:shadow-[0_0_10px_rgba(0,0,0,0.3)] p-8 w-[350px] h-[150px]  bg-white dark:bg-gray-700  rounded-sm'>
+    <h1  class =' text-2xl font-bold text-gray-500 mb-2 dark:text-gray-100'>Portfolio Value</h1>
+    <p class = 'text-center text-3xl font-bold text-sky-800 dark:text-blue-500 '><%= number_to_currency(@total_portfolio)   %></p>
+  </div>
+  <div class = 'shadow-[0_0_10px_rgba(0,0,0,0.15)] dark:shadow-[0_0_10px_rgba(0,0,0,0.3)] p-8 w-[350px] h-[150px] bg-white dark:bg-gray-700  rounded-sm'>
+    <h1 class =' text-2xl font-bold text-gray-500 mb-2 dark:text-gray-100'>Portfolio Profit & Loss</h1>
+    <p class = "text-3xl font-bold flex items-center justify-center gap-1  <%= @total_profit_loss >= 0 ? 'text-green-800 dark:text-green-500' : 'text-red-800 dark:text-red-500' %> ">
+      <span>
+        <%= number_to_currency(@total_profit_loss) %>
+      </span>
+      <span class = "text-[14px] ">
+        (<%= format('%.2f', @total_gain_loss) %>%)
+      </span>
+    </p>
+  </div>
+</div>
+<div>
+  <%= form_tag search_symbol_trader_dashboard_index_path, method: :get do %>
+    <div class="flex gap-2 items-center">
+      <%= text_field_tag :search, params[:search], placeholder: 'Enter stock symbol...', class: 'w-full placeholder-shown:border-gray-400 rounded-sm dark:bg-gray-600 dark:placeholder-shown:border-gray-700 dark:text-gray-50'%>
+      <%= submit_tag 'Search', class: 'bg-blue-600 text-white py-2 px-4 rounded-sm' %>
+    </div>
+  <% end %>
+</div>
+<% if @stock %>
+  <ul class = ' grid grid-cols-[0.75fr,1.75fr,0.75fr,0.75fr,1fr,1fr,1fr] text-lg font-bold mt-4 mb-2 pb-2 border-b-[2px] border-b-gray-600 dark:text-gray-200 dark:border-b-gray-600'>
+    <li>Symbol</li>
+    <li>Company</li>
+    <li> Price</li>
+    <li> Change</li>
+    <li class = 'text-sm flex items-center justify-center'> All-time High Price</li>
+    <li class = 'text-sm flex items-center justify-center'> All-time Low Price</li>
+  </ul>
+  <div class = ' grid grid-cols-[0.75fr,1.75fr,0.75fr,0.75fr,1fr,1fr,1fr] text-center text-md mb-2 pb-2 border-b-[1px] border-b-gray-300 dark:text-gray-200 dark:border-b-gray-600 '>
+    <p class = 'flex items-center gap-2 '>
+      <%= image_tag(@stock[:logo], alt: 'Logo',class: 'w-6 h-6  object-fit') %> <%= @stock[:symbol] %></p>
+    <p  class = 'flex items-center gap-2 '><%= @stock[:company_name] %></p>
+    <p  class = 'flex items-center gap-2 '><%= number_to_currency(@stock[:latest_price])   %></p>
+    <p  class = "flex items-center gap-2 <%= @stock[:change] >= 0 ? 'text-green-600 dark:text-green-500' : 'text-red-600 dark:text-red-500'%>">
+      <%= @stock[:change] >= 0 ? '+' : ''%>
+      <%= number_to_currency(@stock[:change]) %></p>
+    <p  class = 'flex items-center gap-2 text-green-600'><%= number_to_currency(@stock[:week_52_high]) %></p>
+    <p  class = 'flex items-center gap-2 text-red-600'><%= number_to_currency(@stock[:week_52_low])  %></p>
+    <div class='flex gap-2 items-center'>
+      <%= link_to 'Buy',  new_trader_transaction_path(transaction: { stock_symbol: @stock[:symbol], stock_price: @stock[:latest_price], transaction_type: :buy }), class: 'text-sm px-5 py-2 bg-green-600 text-white rounded-md' %>
+      <% if current_user && current_user.stocks.exists?(symbol: @stock[:symbol]) && current_user.stocks.find_by(symbol: @stock[:symbol]).shares > 0 %>
+        <%= link_to 'Sell', new_trader_transaction_path(transaction: { stock_symbol: @stock[:symbol], stock_price: @stock[:latest_price], transaction_type: :sell }), class: 'text-sm px-5 py-2 bg-red-600 text-white rounded-md' %>
+      <% else %>
+        <span class='text-sm px-5 py-2 bg-gray-400 dark:bg-gray-600 text-white rounded-md cursor-not-allowed'>Sell</span>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+<%if @top_stocks %>
+  <div class = ' mt-6'>
+    <h1 class = 'text-2xl font-bold py-2 dark:text-gray-50'>Top 10 List of Stocks</h1>
+    <ul class = 'grid grid-cols-[0.75fr,1.75fr,0.75fr,0.75fr,1fr,1fr,1fr] text-lg font-bold  my-2 pb-2 border-b-[2px] border-b-gray-600 dark:text-gray-200 dark:border-b-gray-600'>
+      <li>Symbol</li>
+      <li>Company</li>
+      <li> Price</li>
+      <li> Change</li>
+      <li class = 'text-base'>All-time High Price</li>
+      <li class = 'text-base'>All-time Low Price</li>
+    </ul>
+    <div class = 'dashboard_scroll overflow-y-scroll overflow-x-hidden h-[35vh]' >
+      <% @top_stocks.each do |stock| %>
+        <div class="grid grid-cols-[0.75fr,1.75fr,0.75fr,0.75fr,1fr,1fr,1fr] text-center mb-2 pb-2 border-b-[1px] border-b-gray-200 dark:text-gray-200 dark:border-b-gray-600">
+          <p  class = 'flex items-center gap-2 '><%= image_tag(stock[:logo], alt: 'Logo',class: 'w-6 h-6  object-fit') %> <%= stock[:symbol] %></p>
+          <p  class = 'flex items-center pl-6 gap-2 '><%= stock[:company_name] %></p>
+          <p  class = 'flex items-center gap-2 '> <%= number_to_currency( stock[:latest_price]) %></p>
+          <p  class = "flex items-center gap-2 <%= stock[:change] >= 0 ? 'text-green-600 dark:text-green-500' : 'text-red-600 dark:text-red-500'%>">
+            <%= stock[:change] >= 0 ? '+' : ''%>
+            <%= number_to_currency(stock[:change]) %></p>
+          <p  class = 'flex items-center gap-2 text-green-600 dark:text-green-500'> <%= number_to_currency( stock[:week_52_high]) %></p>
+          <p  class = 'flex items-center gap-2 text-red-600 dark:text-red-500 '> <%= number_to_currency( stock[:week_52_low]) %></p>
+          <div class='flex gap-2 items-center'>
+            <%= link_to 'Buy', new_trader_transaction_path(transaction: { stock_symbol: stock[:symbol], stock_price: stock[:latest_price], transaction_type: :buy }) , class: 'text-sm px-5 py-2 bg-green-600 dark:bg-green-700 text-white rounded-md' %>
+            <% if current_user && current_user.stocks.exists?(symbol: stock[:symbol]) && current_user.stocks.find_by(symbol: stock[:symbol]).shares > 0 %>
+              <%= link_to 'Sell', new_trader_transaction_path(transaction: { stock_symbol: stock[:symbol], stock_price: stock[:latest_price], transaction_type: :sell }), class: 'text-sm px-5 py-2 bg-red-600 dark:bg-red-600 text-white rounded-md' %>
+            <% else %>
+              <span class='text-sm px-5 py-2 bg-gray-400 text-white rounded-md cursor-not-allowed dark:bg-gray-600'>Sell</span>
+            <% end %>
+          </div>
+        </div>
+      <%end%>
+    </div>
+  <%end%>

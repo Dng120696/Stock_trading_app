@@ -5,15 +5,6 @@ class Stock < ApplicationRecord
   validates_presence_of :symbol, :company_name, :latest_price, :shares,:logo
   validates :shares, numericality: { greater_than_or_equal_to: 0 }
 
-  def self.update_latest_price(ticker_symbol)
-    begin
-      iex_api_service.fetch_price(ticker_symbol)
-    rescue IEX::Errors::SymbolNotFoundError => e
-      Rails.logger.error "Symbol not found: #{e.message}"
-      nil
-    end
-  end
-
   def self.new_lookup(ticker_symbol)
     stock_data = iex_api_service.fetch_stock_quote(ticker_symbol)
     if stock_data

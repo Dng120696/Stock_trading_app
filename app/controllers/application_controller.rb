@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
     if resource.is_a?(AdminUser)
       admin_dashboard_index_path
     elsif resource.is_a?(User)
-      trader_dashboard_index_path
+      news_path
     else
       root_path
     end

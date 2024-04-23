@@ -12,6 +12,7 @@ RSpec.describe "Authentication", type: :system do
     visit new_user_session_path
 
     log_in("newuser@example.com","password")
+    expect(page).to have_content('Signed in successfully.',wait:30)
 
   end
 

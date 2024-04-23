@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root 'pages#home'
   get 'news', to: 'pages#news'
+  get 'pages/news_load', to: 'pages#news_load'
 
 devise_for :users, controllers: {
   sessions: 'users/sessions'
@@ -18,11 +19,28 @@ devise_for :admin_users, controllers: {
   end
 
   namespace :trader do
-   resources :transactions, only: [:index,:new, :create ]
-    resources :dashboard,only:[:index]
-    resources :stocks,only: [:create]
-    resources :portfolio,only: [:index]
+    resources :transactions, only: [:index, :new, :create] do
+      get 'index_load', on: :collection
+      # get 'new_load_form', on: :collection
+      # get 'new_load_header', on: :collection
+    end
+
+    resources :dashboard, only: [:index] do
+      get 'index_load', on: :collection
+      collection do
+        get 'search', to: 'dashboard#search_symbol', as: 'search_symbol'
+      end
+    end
+
+    resources :stocks, only: [:create]
+
+    resources :portfolio, only: [:index] do
+      get 'index_load_total', on: :collection
+      get 'index_load_table', on: :collection
+    end
   end
+
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
