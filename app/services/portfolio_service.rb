@@ -7,10 +7,12 @@ class PortfolioService
     stock_values = {}
 
     @user.stocks.each do |stock|
-      total_value = stock.latest_price * stock.shares
-      stock_values[stock.symbol] = total_value if total_value.positive?
+      stock_purchase = @user.transactions.where(stock_symbol: stock.symbol, transaction_type: :buy)
+      stock_prices = stock_purchase.map { |transaction| transaction.stock_price }
+      avg_price = calculate_avg_price(stock_prices)
+      total_value = avg_price * stock.shares
+      stock_values[stock.symbol] = total_value.round(3) if total_value.positive?
     end
-
     stock_values.map { |symbol, total_value| [symbol, total_value] }
   end
 
@@ -20,18 +22,7 @@ class PortfolioService
       latest_stock = @user.stocks.where(symbol: stock.symbol).order(created_at: :desc).first
       stock_purchase = @user.transactions.where(stock_symbol: stock.symbol, transaction_type: :buy)
       stock_prices = stock_purchase.map { |transaction| transaction.stock_price }
-      avg_price = stock_prices[0].to_f
-      if  stock_prices.count > 1
-          stock_prices.each_with_index do |stock_price,i|
-            avg_price += stock_prices[i + 1].to_f
-            if stock_prices.last != stock_prices[i + 1]
-              avg_price /=  2
-            end
-           avg_price
-          end
-      else
-           avg_price = stock_prices[0]
-      end
+      avg_price = calculate_avg_price(stock_prices)
           total = avg_price * latest_stock.shares
          total_portfolio_value += total
     end
@@ -47,18 +38,7 @@ class PortfolioService
 
       stock_purchase = @user.transactions.where(stock_symbol: stock.symbol, transaction_type: :buy)
       stock_prices = stock_purchase.map { |transaction| transaction.stock_price }
-      avg_price = stock_prices[0].to_f
-      if  stock_prices.count > 1
-          stock_prices.each_with_index do |stock_price,i|
-            avg_price += stock_prices[i + 1].to_f
-            if stock_prices.last != stock_prices[i + 1]
-              avg_price /=  2
-            end
-           avg_price
-          end
-      else
-           avg_price = stock_prices[0]
-      end
+      avg_price = calculate_avg_price(stock_prices)
 
       portfolio_stock_total = stock.shares * latest_stock_price
       total_purchase = avg_price * stock.shares
@@ -79,18 +59,7 @@ class PortfolioService
 
       stock_purchase = @user.transactions.where(stock_symbol: stock.symbol, transaction_type: :buy)
       stock_prices = stock_purchase.map { |transaction| transaction.stock_price }
-      avg_price = stock_prices[0].to_f
-      if  stock_prices.count > 1
-          stock_prices.each_with_index do |stock_price,i|
-            avg_price += stock_prices[i + 1].to_f
-            if stock_prices.last != stock_prices[i + 1]
-              avg_price /=  2
-            end
-           avg_price
-          end
-      else
-           avg_price = stock_prices[0]
-      end
+      avg_price = calculate_avg_price(stock_prices)
 
       total_purchase = avg_price * latest_stock.shares
 
@@ -112,6 +81,22 @@ class PortfolioService
   end
 
   private
+
+  def calculate_avg_price(stock_prices)
+    avg_price = stock_prices[0].to_f
+    if  stock_prices.count > 1
+        stock_prices.each_with_index do |stock_price,i|
+          avg_price += stock_prices[i + 1].to_f
+          if stock_prices.last != stock_prices[i + 1]
+            avg_price /=  2
+          end
+         avg_price
+        end
+    else
+         avg_price = stock_prices[0]
+    end
+    avg_price
+  end
 
   def calculate_profit_loss_and_gain(total_purchase,portfolio_stock_total)
       profit_loss_total = portfolio_stock_total - total_purchase

@@ -4,7 +4,6 @@ import "@hotwired/turbo-rails"
 import "controllers"
 import "chartkick"
 import "Chart.bundle"
-// import "../../node_modules/chartkick/chart.js"
 
 document.addEventListener("turbo:load", function() {
   const themeToggle = document.getElementById("theme-toggle");
