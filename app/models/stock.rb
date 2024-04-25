@@ -23,11 +23,10 @@ class Stock < ApplicationRecord
   def self.fetch_stock_details(ticker_symbol)
     stock_data = iex_api_service.fetch_stock_quote(ticker_symbol)
     historical_price_data = iex_api_service.fetch_historical_prices(ticker_symbol)
-    p historical_price_data
+
     highest_price = nil
     lowest_price = nil
 
-    # Iterate through each entry in historical_prices
     historical_price_data.each do |price_data|
       # Check if the price data is not nil (skip entries with nil prices)
       next if price_data.high.nil? || price_data.high.nil?

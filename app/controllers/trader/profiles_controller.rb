@@ -72,7 +72,7 @@ class Trader::ProfilesController < ApplicationController
   private
 
   def set_user
-    @user = current_user # Assuming you have Devise or similar for authentication
+    @user = current_user
   end
 
   def invalid_amount?(amount)
@@ -88,7 +88,7 @@ class Trader::ProfilesController < ApplicationController
   end
 
   def generate_otp
-    SecureRandom.hex(6 / 2).upcase # Generate a random OTP
+    SecureRandom.hex(6 / 2).upcase
   end
 
   def redirect_to_edit_with_alert(alert_message)
