@@ -9,8 +9,8 @@
     <li class = 'ml-[-8px]'> Total</li>
   </ul>
   <% if @porfolio_stocks.present? %>
-    <div class = 'portfolio_scroll overflow-y-scroll overflow-x-hidden h-[32vh]'>
-      <% @porfolio_stocks.each do |stock|%>
+    <div class = 'portfolio_scroll overflow-y-scroll overflow-x-hidden h-[30vh]'>
+      <%@porfolio_stocks.sort_by! { |stock| stock[:created_at] }.reverse!.each do |stock|%>
         <ul class = 'grid  grid-cols-[0.75fr,1.4fr,0.75fr,0.75fr,0.75fr,1fr,0.75fr,1fr]  text-center text-md mb-2 pb-2 border-b-[1px] border-b-gray-200 dark:text-gray-200 dark:border-b-gray-600' >
           <li class = 'flex items-center  gap-2 '>
             <%= image_tag(stock[:logo], alt: 'Logo',class: 'w-6 h-6  object-fit') %> <%= stock[:symbol] %>

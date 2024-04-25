@@ -28,4 +28,5 @@ document.addEventListener("turbo:load", function() {
       themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>'; 
     }
   });
+
 });

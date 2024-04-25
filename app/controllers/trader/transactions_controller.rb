@@ -6,7 +6,7 @@ class Trader::TransactionsController < ApplicationController
   def index_load
     sleep(1)
     @transactions = current_user.transactions.order(created_at: :desc)
-    render partial: 'trader/transactions/transaction-index', transactions: @transactions
+    render partial: 'trader/transactions/transaction-index'
   end
 
   def new
@@ -14,7 +14,7 @@ class Trader::TransactionsController < ApplicationController
     @stock = Stock.fetch_stock_details(@stock_symbol)
     @chart_data = Stock.fetch_historical_prices(@stock_symbol)
     @transaction = current_user.transactions.new(transaction_params)
-    p @transaction
+
   end
 
   def create

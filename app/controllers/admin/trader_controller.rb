@@ -9,7 +9,6 @@ class Admin::TraderController < ApplicationController
   def create
     @trader = User.new(trader_params)
     @trader.password = Rails.application.credentials.new_account[:password]
-    @trader.balance = Rails.application.credentials.new_account[:balance]
     @trader.skip_confirmation!
     @trader.status = 1
 

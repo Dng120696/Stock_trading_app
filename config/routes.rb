@@ -21,16 +21,24 @@ devise_for :admin_users, controllers: {
   namespace :trader do
     resources :transactions, only: [:index, :new, :create] do
       get 'index_load', on: :collection
-      # get 'new_load_form', on: :collection
-      # get 'new_load_header', on: :collection
     end
 
     resources :dashboard, only: [:index] do
       get 'index_load', on: :collection
+
       collection do
         get 'search', to: 'dashboard#search_symbol', as: 'search_symbol'
       end
     end
+    resource :profiles, only: [:edit] do
+      patch 'add_balance', on: :member
+      get 'confirm_otp'
+      post 'process_otp_confirmation'
+      get 'deposit_balance', on: :collection
+      get 'otp_index', on: :collection
+      post 'resend_otp', on: :member
+    end
+
 
     resources :stocks, only: [:create]
 

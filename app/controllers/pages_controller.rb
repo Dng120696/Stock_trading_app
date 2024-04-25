@@ -14,7 +14,7 @@ class PagesController < ApplicationController
     sleep(1)
     @news = Stock.fetch_news('MSFT')
 
-    render partial: 'pages/stock-news', news: @news
+    render partial: 'pages/stock-news'
   end
 
 end

@@ -19,19 +19,27 @@
             <% @transactions.each do |transaction|%>
               <ul class = 'grid  grid-cols-[0.75fr,0.75fr,1.25fr,0.75fr,0.75fr,.75fr,0.75fr] text-center text-md mb-2 pb-2 border-b-[1px] border-b-gray-200 dark:text-gray-200 dark:border-b-gray-600 ' >
                 <li class = 'flex items-center  gap-2 '>
-                  <%= image_tag(transaction[:logo], alt: 'Logo',class: 'w-6 h-6  object-fit') %> <%= transaction[:stock_symbol] %>
+                  <% if transaction[:logo].present? && transaction[:stock_symbol].present? %>
+                    <%= image_tag(transaction[:logo], alt: 'Logo', class: 'w-6 h-6 object-fit') %> <%= transaction[:stock_symbol] %>
+                  <% else %>
+                    <span>-</span>
+                  <% end %>
                 </li>
-                <li class = "flex items-center  gap-2 <%= transaction[:transaction_type] == 'buy' ? 'text-green-700 dark:text-green-500' : 'text-red-700 dark:text-red-500' %>">
-                  <%= transaction[:transaction_type] == 'buy' ? 'Buy' : 'Sell' %>
+                <li class = "flex items-center  gap-2 <%= transaction[:transaction_type] == 'buy' || transaction[:transaction_type] == 'deposit' ? 'text-green-700 dark:text-green-500' : 'text-red-700 dark:text-red-500' %>">
+                  <%= transaction[:transaction_type] == 'buy' ? 'Buy' :  transaction[:transaction_type] == 'sell' ? 'Sell' : 'Deposit' %>
                 </li>
                 <li class = 'flex items-center  gap-2 '>
                   <% transaction_created_at = transaction[:created_at] + 8.hours%>
                   <%= transaction_created_at.strftime("%B %d, %Y %H:%M:%S %p") %>
                 </li>
                 <li class = 'flex items-center  gap-2 '>
-                  <%= number_to_currency(transaction[:stock_price]) %>
+                  <% if transaction[:stock_price].present? %>
+                    <%= number_to_currency(transaction[:stock_price]) %>
+                  <% else %>
+                    <span>-</span>
+                  <% end %>
                 </li>
-                <li class = 'flex items-center pl-4  gap-2 <%= transaction[:transaction_type] == 'buy' ? 'text-green-700 dark:text-green-500' : 'text-red-700 dark:text-red-500' %>'>
+                <li class = 'flex items-center pl-4  gap-2 <%= transaction[:transaction_type] == 'buy' || transaction[:transaction_type] == 'deposit' ? 'text-green-700 dark:text-green-500' : 'text-red-700 dark:text-red-500' %>'>
                   <%= transaction[:transaction_type] == 'buy' ? '+' : '-' %>
                   <%= transaction[:quantity]%>
                 </li>

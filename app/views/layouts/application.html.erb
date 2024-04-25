@@ -9,16 +9,6 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <script src="https://kit.fontawesome.com/4a45b90c57.js" crossorigin="anonymous"></script>
     <%= javascript_importmap_tags %>
-    <style>
-      .flash_message {
-        opacity: 0;
-        transition: opacity 0.3s ease-in-out;
-      }
-
-      .show {
-        opacity: 1;
-      }
-    </style>
   </head>
   <% if request.path == new_user_session_path ||  request.path == new_admin_user_session_path || request.path == new_user_registration_path || request.path == new_user_confirmation_path  ||  request.path == new_user_password_path  ||  request.path == new_admin_user_password_path || request.path == root_path || request.path == user_registration_path || request.path ==  user_confirmation_path || request.path ==  user_password_path || request.path ==   admin_user_password_path %>
     <section class="backgound__video">

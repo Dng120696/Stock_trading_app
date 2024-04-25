@@ -1,6 +1,5 @@
 class Trader::DashboardController < ApplicationController
-  before_action :authenticate_user!
-
+  include PortfolioCommon
   def index
   end
 
@@ -10,9 +9,8 @@ class Trader::DashboardController < ApplicationController
   end
 
   def index_load
-    portfolio_service = PortfolioService.new(current_user)
-    @total_profit_loss, @total_gain_loss = portfolio_service.calculate_total_profit_loss_and_gain
-    @total_portfolio = portfolio_service.calculate_total_portfolio_value
+    #method in concern files(portfolio_common)
+    calculate_portfolio_totals
     @top_stocks = Stock.get_top_stocks
     @symbol =  session[:search_symbol]
 
@@ -22,14 +20,7 @@ class Trader::DashboardController < ApplicationController
       @stock = nil
       flash.now[:alert] = 'Stock symbol not provided'
     end
-    p @stock
-    render partial: 'trader/dashboard/trader-dashboard', locals:   {
-        total_profit_loss: @total_profit_loss,
-        total_gain_loss: @total_gain_loss,
-        total_portfolio: @total_portfolio,
-        top_stocks: @top_stocks,
-        stock: @stock
-      }
+    render partial: 'trader/dashboard/trader-dashboard'
   end
 
   private

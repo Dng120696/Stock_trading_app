@@ -3,9 +3,9 @@ class IexApiService
     @iex_client = initialize_iex_client
   end
 
-  def fetch_historical_prices(ticker_symbol, range)
+  def fetch_historical_prices(ticker_symbol)
     begin
-      @iex_client.historical_prices(ticker_symbol,range)
+      @iex_client.historical_prices(ticker_symbol)
     rescue IEX::Errors::SymbolNotFoundError => e
       Rails.logger.error "Symbol '#{ticker_symbol}' not found: #{e.message}"
       nil

@@ -49,6 +49,9 @@ html {
 #admin_user_password::placeholder{
   @apply text-gray-400 dark:text-gray-200  text-sm;
 }
+#amount::placeholder{
+	@apply text-gray-400 text-sm;
+}
 
 .link_items a.active,
 .log_in .active{

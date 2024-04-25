@@ -11,7 +11,7 @@ class PortfolioService
       stock_prices = stock_purchase.map { |transaction| transaction.stock_price }
       avg_price = calculate_avg_price(stock_prices)
       total_value = avg_price * stock.shares
-      stock_values[stock.symbol] = total_value.round(3) if total_value.positive?
+      stock_values[stock.symbol] = total_value.round(3)
     end
     stock_values.map { |symbol, total_value| [symbol, total_value] }
   end
