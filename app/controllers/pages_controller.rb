@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-
+  before_action :authenticate_user!,only: [:news]
   def home
     if user_signed_in?
       flash[:alert] = "You are already signed in."
