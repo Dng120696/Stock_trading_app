@@ -121,19 +121,12 @@ class Trader::ProfilesController < ApplicationController
   end
 
   def build_transaction(amount,type)
-    if type == 'deposit'
       @user.transactions.new(
         transaction_type: type,
         total: amount,
-        user_balance: @user.balance + amount
+        user_balance: type == 'deposit' ? @user.balance + amount : @user.balance - amount
       )
-    else
-      @user.transactions.new(
-        transaction_type: type,
-        total: amount,
-        user_balance: @user.balance - amount
-      )
-    end
+
   end
 
   def generate_otp
