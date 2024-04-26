@@ -13,7 +13,7 @@ class Admin::TraderController < ApplicationController
     @trader.status = 1
 
     if @trader.save
-      UserMailer.approved_email(@trader).deliver_now
+      UserMailer.admin_created_trader_acount(@trader).deliver_now
       redirect_to admin_trader_index_path, notice: "User created successfully."
     else
       render :new,alert: "User not created."

@@ -5,17 +5,22 @@ class UserMailer < ApplicationMailer
       mail(to: @user.email, subject: 'Welcome to Our Trading Community!')
   end
 
+  def admin_created_trader_acount(user)
+      @user = user
+      mail(to: @user.email, subject: "Congratulations, #{@user.firstname} #{@user.lastname}!")
+  end
   def approved_email(user)
       @user = user
       mail(to: @user.email, subject: "Congratulations, #{@user.firstname} #{@user.lastname}!")
   end
   def otp_confirmation_email(user)
     @user = user
-    mail(to: @user.email, subject: 'Confirm OTP for Adding Balance to your Account')
+    mail(to: @user.email, subject: 'Confirm OTP to your Account')
   end
-  def notify_funds_added_success(user,amount)
+  def notify_funds_success(user,amount,type)
     @user = user
     @amount = amount
-    mail(to: @user.email, subject: 'Funds Successfully Added to Your Account')
+    @type = type
+    mail(to: @user.email, subject: 'Funds Successfully Processed')
   end
 end

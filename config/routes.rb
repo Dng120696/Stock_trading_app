@@ -13,7 +13,7 @@ devise_for :admin_users, controllers: {
   namespace :admin do
     resources :trader
     resources :transactions, only: [:index]
-    resources :dashboard do
+    resources :dashboard, only: [:index] do
       post 'approve', on: :member
     end
   end
@@ -30,11 +30,15 @@ devise_for :admin_users, controllers: {
         get 'search', to: 'dashboard#search_symbol', as: 'search_symbol'
       end
     end
-    resource :profiles, only: [:edit] do
-      patch 'add_balance', on: :member
+    resource :profiles, only: [:index,:edit] do
+      get 'deposit', on: :member
+      get 'withdraw', on: :member
+      patch 'deposit_balance', on: :member
+      patch 'withdraw_balance', on: :member
       get 'confirm_otp'
       post 'process_otp_confirmation'
-      get 'deposit_balance', on: :collection
+      get 'deposit_index', on: :collection
+      get 'withdraw_index', on: :collection
       get 'otp_index', on: :collection
       post 'resend_otp', on: :member
     end

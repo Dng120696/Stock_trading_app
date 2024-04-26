@@ -1,7 +1,7 @@
 class Transaction < ApplicationRecord
   belongs_to :user
 
-  enum transaction_type: { buy: 0, sell: 1, deposit: 2 }
+  enum transaction_type: { buy: 0, sell: 1, deposit: 2,withdraw: 3 }
 
 
 
@@ -12,12 +12,16 @@ class Transaction < ApplicationRecord
       logo_url = Stock.fetch_logo(transaction_attr[:stock_symbol]).url
       transaction.logo = logo_url
       transaction.total =(transaction_attr[:quantity].to_i * transaction_attr[:stock_price].to_f).round(2)
-      if transaction[:transaction_type] == 'buy'
+      if transaction[:transaction_type] == 'buy' || transaction[:transaction_type] == 'withdraw'
         transaction.user_balance = user.balance -  transaction.total
       else
         transaction.user_balance = user.balance +  transaction.total
       end
       transaction.save!
+
+      if user.balance == 0
+        raise ActiveRecord::RecordInvalid.new(transaction), "Please Add a Fund/Cash to your account"
+      end
 
       if user.balance < transaction.total
         raise ActiveRecord::RecordInvalid.new(transaction), "Insufficient balance"

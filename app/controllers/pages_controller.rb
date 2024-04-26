@@ -5,6 +5,9 @@ class PagesController < ApplicationController
     if user_signed_in?
       flash[:alert] = "You are already signed in."
       redirect_to news_path
+    elsif admin_user_signed_in?
+      flash[:alert] = "You are already signed in."
+      redirect_to admin_dashboard_index_path
     end
   end
 

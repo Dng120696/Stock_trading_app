@@ -9,9 +9,14 @@ class PortfolioService
     @user.stocks.each do |stock|
       stock_purchase = @user.transactions.where(stock_symbol: stock.symbol, transaction_type: :buy)
       stock_prices = stock_purchase.map { |transaction| transaction.stock_price }
-      avg_price = calculate_avg_price(stock_prices)
+\
+      avg_price = calculate_avg_price(stock_prices).round(2)
       total_value = avg_price * stock.shares
-      stock_values[stock.symbol] = total_value.round(3)
+
+      if total_value != 0
+        stock_values[stock.symbol] = total_value.round(3)
+      end
+
     end
     stock_values.map { |symbol, total_value| [symbol, total_value] }
   end
@@ -22,7 +27,7 @@ class PortfolioService
       latest_stock = @user.stocks.where(symbol: stock.symbol).order(created_at: :desc).first
       stock_purchase = @user.transactions.where(stock_symbol: stock.symbol, transaction_type: :buy)
       stock_prices = stock_purchase.map { |transaction| transaction.stock_price }
-      avg_price = calculate_avg_price(stock_prices)
+      avg_price = calculate_avg_price(stock_prices).round(2)
           total = avg_price * latest_stock.shares
          total_portfolio_value += total
     end
@@ -59,7 +64,8 @@ class PortfolioService
 
       stock_purchase = @user.transactions.where(stock_symbol: stock.symbol, transaction_type: :buy)
       stock_prices = stock_purchase.map { |transaction| transaction.stock_price }
-      avg_price = calculate_avg_price(stock_prices)
+
+      avg_price = calculate_avg_price(stock_prices).round(2)
 
       total_purchase = avg_price * latest_stock.shares
 
@@ -99,8 +105,14 @@ class PortfolioService
   end
 
   def calculate_profit_loss_and_gain(total_purchase,portfolio_stock_total)
+    if total_purchase != 0
       profit_loss_total = portfolio_stock_total - total_purchase
-      gain_loss_total = (profit_loss_total / total_purchase.to_f) * 100
+      gain_loss_total = (profit_loss_total.to_f / total_purchase.to_f) * 100
+
+    else
+      gain_loss_total = 0
+      profit_loss_total = 0
+    end
 
     [profit_loss_total, gain_loss_total]
   end

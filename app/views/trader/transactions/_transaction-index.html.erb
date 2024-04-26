@@ -25,8 +25,8 @@
                     <span>-</span>
                   <% end %>
                 </li>
-                <li class = "flex items-center  gap-2 <%= transaction[:transaction_type] == 'buy' || transaction[:transaction_type] == 'deposit' ? 'text-green-700 dark:text-green-500' : 'text-red-700 dark:text-red-500' %>">
-                  <%= transaction[:transaction_type] == 'buy' ? 'Buy' :  transaction[:transaction_type] == 'sell' ? 'Sell' : 'Deposit' %>
+                <li class = "flex items-center  gap-2 <%= transaction[:transaction_type] == 'buy' || transaction[:transaction_type] == 'deposit' ? 'text-green-700 dark:text-green-500' : transaction[:transaction_type] == 'withdraw' || 'sell'  ? 'text-red-700 dark:text-red-500' : '' %>">
+                  <%= transaction[:transaction_type] == 'buy' ? 'Buy' :  transaction[:transaction_type] == 'sell' ? 'Sell' :  transaction[:transaction_type] == 'withdraw' ? 'Withdraw' : 'Deposit' %>
                 </li>
                 <li class = 'flex items-center  gap-2 '>
                   <% transaction_created_at = transaction[:created_at] + 8.hours%>
@@ -39,16 +39,15 @@
                     <span>-</span>
                   <% end %>
                 </li>
-                <li class = 'flex items-center pl-4  gap-2 <%= transaction[:transaction_type] == 'buy' || transaction[:transaction_type] == 'deposit' ? 'text-green-700 dark:text-green-500' : 'text-red-700 dark:text-red-500' %>'>
+                <li class = 'flex items-center pl-4  gap-2 <%= transaction[:transaction_type] == 'buy' ? 'text-green-700 dark:text-green-500' : transaction[:transaction_type] == 'sell' ?  'text-red-700 dark:text-red-500': '' %>'>
                   <%= transaction[:transaction_type] == 'buy' ? '+' : '-' %>
                   <%= transaction[:quantity]%>
                 </li>
-                <li class = "flex items-center  gap-2  <%= transaction[:transaction_type] == 'buy' ? 'text-red-700 dark:text-red-500' : 'text-green-700 dark:text-green-500' %>">
-                  <%= transaction[:transaction_type] == 'buy' ? '-' : '+' %>
+                <li class = "flex items-center  gap-2  <%= transaction[:transaction_type] == 'buy' ||  transaction[:transaction_type] == 'withdraw' ? 'text-red-700 dark:text-red-500' : 'text-green-700 dark:text-green-500' %>">
+                  <%= transaction[:transaction_type] == 'buy' ||  transaction[:transaction_type] == 'withdraw' ? '-' : '+' %>
                   <%= number_to_currency(transaction[:total]) %>
                 </li>
-                <li class = "flex items-center  gap-2  <%= transaction[:transaction_type] == 'buy' ? 'text-red-700  dark:text-red-500' : 'text-green-700  dark:text-green-500' %>">
-                  <%= transaction[:transaction_type] == 'buy' ? '-' : '+' %>
+                <li class = "flex items-center  gap-2">
                   <%= number_to_currency(transaction[:user_balance]) %>
                 </li>
               </ul>

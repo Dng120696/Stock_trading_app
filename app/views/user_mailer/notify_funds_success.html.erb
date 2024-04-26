@@ -1,0 +1,4 @@
+<p>Dear <strong> <%= @user.firstname %> </strong>,</p>
+<p>We're pleased to inform you that <strong> <%= number_to_currency(@amount) %> </strong> has been successfully <strong> <%= @type == 'withdraw' ? 'Withdraw' : 'Deposit' %></strong>  to your account balance.</p>
+<p>Your updated balance is now <strong> <%= number_to_currency(@user.balance) %> </strong>.</p>
+<p>Thank you for choosing our service!</p>
