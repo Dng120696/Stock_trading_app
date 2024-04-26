@@ -1,6 +1,6 @@
-<div class = 'my-2 text-center'>
+<div class = 'my-2'>
   <%- if controller_name != 'sessions' %>
-    <%= link_to "Log in", new_session_path(resource_name), class: ' py-2 block  bg-blue-600 bg-opacity-70   w-full text-white font-semibold'%>
+    <span class = 'text-sm font-semibold  text-gray-200'>Have an Account?</span> <%= link_to "Sign in", new_session_path(resource_name), class: 'underline  text-blue-500  font-semibold text-sm text-blue-500'%>
   <% end %>
 </div>
 <div class = 'mt-2'>

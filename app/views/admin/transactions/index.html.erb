@@ -1,20 +1,20 @@
-<div class="w-full mt-10 p-6 bg-white dark:bg-gray-700 dark:text-gray-50 sshadow-[0_0_10px_rgba(0,0,0,0.15)] rounded-md">
+<div class="w-full mt-10 p-6 bg-white dark:bg-gray-700 dark:text-gray-50 shadow-[0_0_10px_rgba(0,0,0,0.15)] rounded-md">
   <h1 class="text-3xl font-semibold mb-4">All Transactions</h1>
-  <div class="overflow-x-auto">
-    <table class="table-auto w-full">
-      <thead>
-        <tr class = 'dark:border-gray-400 border'>
-          <th class="px-4 py-2 bg-gray-200 dark:bg-gray-500 dark:border-gray-400 border">User Email</th>
-          <th class="px-4 py-2 bg-gray-200 dark:bg-gray-500 dark:border-gray-400 border">Stock Symbol</th>
-          <th class="px-4 py-2 bg-gray-200 dark:bg-gray-500 dark:border-gray-400 border">Date</th>
-          <th class="px-4 py-2 bg-gray-200 dark:bg-gray-500 dark:border-gray-400 border">Transaction Type</th>
-          <th class="px-4 py-2 bg-gray-200 dark:bg-gray-500 dark:border-gray-400 border">Quantity</th>
-          <th class="px-4 py-2 bg-gray-200 dark:bg-gray-500 dark:border-gray-400 border">Stock Price</th>
-          <th class="px-4 py-2 bg-gray-200 dark:bg-gray-500 dark:border-gray-400 border">Total</th>
-        </tr>
-      </thead>
-      <div>
-        <% if @transactions.present?%>
+  <div class="">
+    <% if @transactions.present?%>
+      <table class="table-auto w-full">
+        <thead>
+          <tr class = 'dark:border-gray-400 border'>
+            <th class="px-4 py-2 bg-gray-200 dark:bg-gray-500 dark:border-gray-400 border">User Email</th>
+            <th class="px-4 py-2 bg-gray-200 dark:bg-gray-500 dark:border-gray-400 border">Stock Symbol</th>
+            <th class="px-4 py-2 bg-gray-200 dark:bg-gray-500 dark:border-gray-400 border">Date</th>
+            <th class="px-4 py-2 bg-gray-200 dark:bg-gray-500 dark:border-gray-400 border">Transaction Type</th>
+            <th class="px-4 py-2 bg-gray-200 dark:bg-gray-500 dark:border-gray-400 border">Quantity</th>
+            <th class="px-4 py-2 bg-gray-200 dark:bg-gray-500 dark:border-gray-400 border">Stock Price</th>
+            <th class="px-4 py-2 bg-gray-200 dark:bg-gray-500 dark:border-gray-400 border">Total</th>
+          </tr>
+        </thead>
+        <div>
           <tbody class = 'admin_transaction_scroll overflow-y-scroll overflow-x-hidden h-[5vh]'>
             <% @transactions.reverse.each do |transaction| %>
               <tr>
@@ -54,8 +54,8 @@
         <%end %>
       </div>
     </table>
-  </div>
-  <div class="mt-6">
-    <%= link_to 'Back', admin_dashboard_index_path, class: " bg-blue-500 hover:bg-gray-600 text-gray-100 font-bold py-2 px-4 rounded" %>
+    <div class="mt-6">
+      <%= link_to 'Back', admin_dashboard_index_path, class: " bg-blue-500 hover:bg-gray-600 text-gray-100 font-bold py-2 px-4 rounded" %>
+    </div>
   </div>
 </div>
