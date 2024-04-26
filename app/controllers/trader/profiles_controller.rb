@@ -32,7 +32,12 @@ class Trader::ProfilesController < ApplicationController
     amount_to_deposit = params[:amount].to_f
 
     if invalid_amount?(amount_to_deposit)
-      redirect_to_edit_with_alert('Amount must be greater than 0') and return
+      redirect_to deposit_trader_profiles_path, alert: 'Amount must be greater than 0'
+      return
+    end
+    if amount_to_deposit > 1000000
+      redirect_to deposit_trader_profiles_path, alert: 'Deposit Exceeds $1,000,000.00'
+      return
     end
 
     # Generate and store OTP
@@ -47,6 +52,7 @@ class Trader::ProfilesController < ApplicationController
     p session[:type],amount_to_deposit
     redirect_to confirm_otp_trader_profiles_path
   end
+
   def withdraw_balance
     amount_to_withdraw = params[:amount].to_f
 
@@ -97,7 +103,7 @@ class Trader::ProfilesController < ApplicationController
 
         redirect_to trader_transactions_path, notice: 'Updating balance was successful'
       else
-        redirect_to_edit_with_alert('Updating balance was unsuccessful')
+        redirect_to confirm_otp_trader_profiles_path, alert: 'Transaction Faileds'
       end
     else
       redirect_to confirm_otp_trader_profiles_path, alert: 'Invalid OTP'
@@ -133,7 +139,4 @@ class Trader::ProfilesController < ApplicationController
     SecureRandom.hex(6 / 2).upcase
   end
 
-  def redirect_to_edit_with_alert(alert_message)
-    redirect_to edit_trader_profiles_path, alert: alert_message
-  end
 end
