@@ -71,7 +71,7 @@ class Stock < ApplicationRecord
     end
   end
 
-  def self.fetch_historical_prices(ticker_symbol)
+  def self.fetch_chart_data(ticker_symbol)
     begin
       historical_prices = iex_api_service.fetch_historical_prices(ticker_symbol)
       latest_price_entry = iex_api_service.fetch_stock_quote(ticker_symbol)

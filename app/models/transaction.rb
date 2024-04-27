@@ -12,7 +12,7 @@ class Transaction < ApplicationRecord
       logo_url = Stock.fetch_logo(transaction_attr[:stock_symbol]).url
       transaction.logo = logo_url
       transaction.total =(transaction_attr[:quantity].to_i * transaction_attr[:stock_price].to_f).round(2)
-      if transaction[:transaction_type] == 'buy' || transaction[:transaction_type] == 'withdraw'
+      if transaction[:transaction_type] == 'buy'
         transaction.user_balance = user.balance -  transaction.total
       else
         transaction.user_balance = user.balance +  transaction.total

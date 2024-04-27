@@ -12,7 +12,7 @@ class Trader::TransactionsController < ApplicationController
   def new
     @stock_symbol = params[:transaction][:stock_symbol]
     @stock = Stock.fetch_stock_details(@stock_symbol)
-    @chart_data = Stock.fetch_historical_prices(@stock_symbol)
+    @chart_data = Stock.fetch_chart_data(@stock_symbol)
     @transaction = current_user.transactions.new(transaction_params)
 
   end

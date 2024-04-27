@@ -69,9 +69,9 @@ class PortfolioService
 
       total_purchase = avg_price * latest_stock.shares
 
-      portfolio_stock_total = latest_stock.shares * latest_stock_price
+      portfolio_stock_total = (latest_stock.shares * latest_stock_price).round(2)
       profit_loss_total, gain_loss_total = calculate_profit_loss_and_gain(total_purchase,portfolio_stock_total)
-
+      p profit_loss_total, gain_loss_total
       {
         symbol: stock.symbol,
         shares: latest_stock.shares,
@@ -105,6 +105,7 @@ class PortfolioService
   end
 
   def calculate_profit_loss_and_gain(total_purchase,portfolio_stock_total)
+    p portfolio_stock_total,total_purchase
     if total_purchase != 0
       profit_loss_total = portfolio_stock_total - total_purchase
       gain_loss_total = (profit_loss_total.to_f / total_purchase.to_f) * 100
@@ -113,7 +114,6 @@ class PortfolioService
       gain_loss_total = 0
       profit_loss_total = 0
     end
-
     [profit_loss_total, gain_loss_total]
   end
 end
