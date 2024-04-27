@@ -23,10 +23,5 @@ class Trader::DashboardController < ApplicationController
     render partial: 'trader/dashboard/trader-dashboard'
   end
 
-  private
 
-  def store_transaction_data(symbol, transaction_type)
-    session[:selected_stock_symbol] = symbol
-    session[:transaction_type] = transaction_type
-  end
 end

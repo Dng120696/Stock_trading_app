@@ -13,7 +13,7 @@ class Trader::PortfolioController < ApplicationController
 
   def index_load_table
     @porfolio_stocks = portfolio_service.get_portfolio_stocks
-
+    p @porfolio_stocks
     render partial: 'trader/portfolio/trader-portfolio-table'
   end
 

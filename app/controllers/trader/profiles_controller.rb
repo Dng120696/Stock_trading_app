@@ -77,8 +77,6 @@ class Trader::ProfilesController < ApplicationController
     redirect_to confirm_otp_trader_profiles_path
   end
 
-
-
   def process_otp_confirmation
     @user = User.find(session[:user_id])
     amount = session[:amount]
@@ -87,17 +85,13 @@ class Trader::ProfilesController < ApplicationController
 
     if @user.cash_otp == otp
       transaction = build_transaction(amount,type)
-
       if transaction.save
-
         if transaction.transaction_type == 'deposit'
-        @user.update!(balance: @user.balance + amount, cash_otp: nil)
+          @user.update!(balance: @user.balance + amount, cash_otp: nil)
         else
           @user.update!(balance: @user.balance - amount, cash_otp: nil)
         end
-
         UserMailer.notify_funds_success(@user, amount,type).deliver_now
-
         session.delete(:user_id)
         session.delete(:amount)
 
