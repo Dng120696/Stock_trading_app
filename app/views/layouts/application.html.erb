@@ -81,7 +81,7 @@
         </div>
       </nav>
     </header>
-    <div class="w-[clamp(300px,90%,1300px)] mx-auto min-h-screen grid place-items-center <%= request.path == new_user_session_path || request.path == new_admin_user_session_path ? '' : (request.path == new_user_registration_path || request.path == root_path || request.path ==  user_registration_path   ? 'pt-0 pb-0' : 'pt-20 pb-6') %>
+    <div class="w-[clamp(300px,90%,1300px)] mx-auto min-h-screen grid place-items-center <%= request.path == new_user_session_path || request.path == new_admin_user_session_path ? '' : (request.path == new_user_registration_path || request.path == root_path || request.path ==  user_registration_path   ? 'pt-0 pb-0' : 'pt-[85px] pb-6') %>
 relative z-100">
       <div class="absolute top-[100px] right-0 translate-x-0 translate-y-[-40%] w-[clamp(300px,90%,550px)] z-10">
         <% unless notice.blank? %>

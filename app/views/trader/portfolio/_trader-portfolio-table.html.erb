@@ -29,7 +29,7 @@
           </li>
           <li class = 'flex items-center  gap-1 '>
             <span class = "<%= stock[:profit_loss] >= 0  ? 'text-green-700 dark:text-green-500' : 'text-red-700 dark:text-red-500'%>">
-              <%= stock[:profit_loss] >= 0 ? '+' : '-' %>
+              <%= stock[:profit_loss] >= 0 ? '+' : '' %>
               <%= number_to_currency(stock[:profit_loss]) %>
             </span>
             <span class = "text-[14px]  <%= stock[:gain_loss] >= 0  ? 'text-green-600 text-green-500' : 'text-red-600 text-red-500'%>">
