@@ -1,0 +1,20 @@
+<div class = 'w-[clamp(300px,90%,500px)] mx-auto p-8 rounded-sm  shadow-[0_0_10px_rgba(0,0,0,0.15)] dark:shadow-[0_0_10px_rgba(0,0,0,0.55)] dark:bg-gray-700'>
+  <h1 class = 'text-2xl dark:text-gray-100 mb-4 text-center font-semibold'>
+    Edit Profile
+  </h1>
+  <%= form_with model:@user, url: trader_profiles_path , method: :patch do |f| %>
+    <div class = 'mb-4'>
+      <%= f.label :email ,class: 'text-sm font-semibold mb-2 text-gray-500 dark:text-gray-200' %><br />
+      <%= f.text_field :email,class: 'w-full placeholder-shown:border-gray-400 text-base bg-gray-50 dark:bg-gray-200 dark:placeholder-shown:border-gray-700 rounded-sm '%>
+    </div>
+    <div class = 'mb-4'>
+      <%= f.label :firstname ,class: 'text-sm font-semibold mb-2 text-gray-500 dark:text-gray-200' %><br />
+      <%= f.text_field :firstname,class: 'w-full placeholder-shown:border-gray-400 text-base bg-gray-50 dark:bg-gray-200 dark:placeholder-shown:border-gray-700 rounded-sm '%>
+    </div>
+    <div class = 'mb-4'>
+      <%= f.label :lastname ,class: 'text-sm font-semibold mb-2 text-gray-500 dark:text-gray-200' %><br />
+      <%= f.text_field :lastname,class: 'w-full placeholder-shown:border-gray-400 text-base bg-gray-50 dark:bg-gray-200 dark:placeholder-shown:border-gray-700 rounded-sm '%>
+    </div>
+    <%= f.submit 'Update Profile' ,class: ' w-full h-full rounded-sm font-semibold bg-blue-600 dark:bg-blue-700 text-gray-100 py-2'%>
+  <%end%>
+</div>

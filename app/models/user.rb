@@ -8,6 +8,8 @@ class User < ApplicationRecord
   after_create :send_admin_notification
   has_many :transactions, dependent: :destroy
   has_many :stocks,  dependent: :destroy
+  has_one_attached :profile_picture
+
   validates_presence_of :firstname, :lastname
   validates :balance, numericality: { greater_than_or_equal_to: 0 }
 

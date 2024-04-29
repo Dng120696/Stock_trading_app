@@ -89,6 +89,12 @@ html {
   border-radius: 6px;
 }
 
+#profile_picture_container:hover .upload_profile{
+	@apply opacity-100;
+	transition: 300ms;
+}
+
+/* Loading CSS */
 #floatingCirclesG{
 	position:relative;
 	width:125px;

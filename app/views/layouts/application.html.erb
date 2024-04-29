@@ -62,10 +62,12 @@
             <%= link_to 'Sign In', new_user_session_path, class: 'text-gray-200 dark:text-white ' %>
           <% else %>
             <% if current_user %>
-              <%= link_to "Logout", destroy_user_session_path, data: {
-                turbo_method: :delete,
-                turbo_confirm: "Are you sure?"
-              } %>
+              <% if current_user.profile_picture.attached? %>
+                <%= image_tag url_for(current_user.profile_picture),class: 'w-8 h-8 rounded-full object-cover' %>
+              <% else %>
+                <%= image_tag image_path('default_profile.png'),class: 'w-8 h-8 rounded-full object-cover' %>
+              <% end %>
+              <%= link_to "Profile", profile_trader_profiles_path %>
             <% elsif current_admin_user %>
               <%= link_to "Logout", destroy_admin_user_session_path, data: {
                 turbo_method: :delete,

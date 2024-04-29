@@ -2,7 +2,7 @@
   <h1 class = 'text-2xl dark:text-gray-100 mb-4 text-center font-semibold' >Deposit Cash to Your Account</h1>
   <div>
   </div>
-  <%= form_with url: deposit_balance_trader_profiles_path, method: :patch, class: 'flex flex-col  gap-2' do |f| %>
+  <%= form_with url: deposit_balance_trader_funds_path, method: :patch, class: 'flex flex-col  gap-2' do |f| %>
     <%= f.label :amount, class: 'font-semibold   text-sm text-gray-600 dark:text-gray-300' %>
     <div class = 'grid grid-cols-[2fr,1fr] gap-4 '>
       <%= f.text_field :amount, placeholder: 'Enter Amount',autofocus: true,class: 'placeholder-shown:border-gray-400 text-base bg-gray-50 dark:bg-gray-200 dark:placeholder-shown:border-gray-700 rounded-sm ' %>

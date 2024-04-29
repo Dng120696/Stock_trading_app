@@ -6,10 +6,10 @@
 <h1 class = ' pb-8 text-gray-600 text-3xl dark:text-gray-50' >Hello <%= current_user.firstname%>👋</h1>
 <div class = "flex items-center gap-6  mb-6 ">
   <span class= 'w-[150px] shadow-[0_0_10px_rgba(0,0,0,0.15)] dark:shadow-[0_0_10px_rgba(0,0,0,0.3)] bg-white dark:bg-gray-700 dark:border-gray-500  text-gray-600 dark:text-gray-100  py-2 px-6 text-lg font-bold text-center'>
-    <%= link_to 'Cash In', deposit_trader_profiles_path %>
+    <%= link_to 'Cash In', deposit_trader_funds_path %>
   </span>
   <span class= 'w-[150px] shadow-[0_0_10px_rgba(0,0,0,0.15)] dark:shadow-[0_0_10px_rgba(0,0,0,0.3)] bg-white dark:bg-gray-700 dark:border-gray-500  text-gray-600 dark:text-gray-100 py-2 px-6  text-lg font-bold text-center'>
-    <%= link_to 'Cash Out', withdraw_trader_profiles_path %>
+    <%= link_to 'Cash Out', withdraw_trader_funds_path %>
   </span>
 </div>
 <div class = 'flex items-center justify-between mb-8'>

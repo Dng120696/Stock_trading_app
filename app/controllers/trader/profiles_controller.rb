@@ -1,80 +1,59 @@
 class Trader::ProfilesController < ApplicationController
-  before_action :authenticate_user!
-  before_action :set_user, only: [ :deposit_balance,:withdraw_balance,:confirm_otp,:otp_index,:deposit_index,:withdraw_index,:resend_otp]
+  include PortfolioCommon
+  before_action :set_user, only: [:index, :edit,:edit_password,:update, :change_password, :confirm_otp, :otp_index, :resend_otp,:upload_image]
 
   def index
+     @total_deposit = @user.transactions.where(transaction_type: :deposit).sum(:total)
+     @total_withdraw = @user.transactions.where(transaction_type: :withdraw).sum(:total)
+     @capital_gain_loss = (@user.balance + portfolio_service.calculate_total_portfolio_value) -(@total_deposit - @total_withdraw)
+
+    end
+
+   def edit; end
+
+  def edit_password; end
+
+  def update
+    if @user.update(params.require(:user).permit(:firstname, :lastname, :email))
+      if @user.previous_changes.present?
+        flash[:notice] = 'Profile updated successfully'
+     else
+       flash[:alert] = 'No Changes were made.'
+     end
+        redirect_to profile_trader_profiles_path
+    else
+      redirect_to :edit, alert: 'Profile not updated'
+    end
+  end
+
+  def upload_image
+    profile_picture = params[:profile_picture]
+
+    if @user.update(profile_picture: profile_picture)
+      redirect_to profile_trader_profiles_path
+    end
 
   end
-  def edit
+
+  def change_password
+      old_password = params[:old_password]
+      new_password = params[:new_password]
+      password_confirmation = params[:password_confirmation]
+
+      if @user.valid_password?(old_password) && new_password == password_confirmation
+          @user.update!(password: new_password)
+          redirect_to profile_trader_profiles_path ,alert: 'Account Password Updated Successfully '
+      else
+        redirect_to edit_password_trader_profiles_path ,alert: 'Password Incorrect'
+      end
 
   end
-
-  def deposit; end
-  def withdraw; end
 
   def confirm_otp; end
 
   def otp_index
     sleep(1)
     render partial: 'trader/profiles/otp-index'
-  end
-
-  def deposit_index
-    sleep(1)
-    render partial: 'trader/profiles/deposit-index'
-  end
-  def withdraw_index
-    sleep(1)
-    render partial: 'trader/profiles/withdraw-index'
-  end
-
-  def deposit_balance
-    amount_to_deposit = params[:amount].to_f
-
-    if invalid_amount?(amount_to_deposit)
-      redirect_to deposit_trader_profiles_path, alert: 'Amount must be greater than 0'
-      return
-    end
-    if amount_to_deposit > 1000000
-      redirect_to deposit_trader_profiles_path, alert: 'Deposit Exceeds $1,000,000.00'
-      return
-    end
-
-    # Generate and store OTP
-    @user.update(cash_otp: generate_otp)
-
-    UserMailer.otp_confirmation_email(@user).deliver_now
-
-    # Store the intended balance update for later confirmation
-    session[:user_id] = @user.id
-    session[:amount] = amount_to_deposit
-    session[:type] = :deposit
-    p session[:type],amount_to_deposit
-    redirect_to confirm_otp_trader_profiles_path
-  end
-
-  def withdraw_balance
-    amount_to_withdraw = params[:amount].to_f
-
-    if invalid_amount?(amount_to_withdraw)
-      redirect_to withdraw_trader_profiles_path, alert: 'Amount must be greater than 0'
-      return
-    elsif amount_to_withdraw > @user.balance
-      redirect_to withdraw_trader_profiles_path, alert: 'Insufficient balance'
-      return
-    end
-
-    # Generate and store OTP
-    @user.update(cash_otp: generate_otp)
-
-    UserMailer.otp_confirmation_email(@user).deliver_now
-
-    # Store the intended balance update for later confirmation
-    session[:user_id] = @user.id
-    session[:amount] = amount_to_withdraw
-    session[:type] = :withdraw
-
-    redirect_to confirm_otp_trader_profiles_path
   end
 
   def process_otp_confirmation
@@ -116,10 +95,6 @@ class Trader::ProfilesController < ApplicationController
     @user = current_user
   end
 
-  def invalid_amount?(amount)
-    amount <= 0 || amount < 100
-  end
-
   def build_transaction(amount,type)
       @user.transactions.new(
         transaction_type: type,
@@ -129,8 +104,6 @@ class Trader::ProfilesController < ApplicationController
 
   end
 
-  def generate_otp
-    SecureRandom.hex(6 / 2).upcase
-  end
+
 
 end

@@ -30,17 +30,25 @@ devise_for :admin_users, controllers: {
         get 'search', to: 'dashboard#search_symbol', as: 'search_symbol'
       end
     end
-    resource :profiles, only: [:index,:edit] do
+
+    resource :profiles, only: [:index,:edit,:update] do
+      post 'upload_image', on: :member
+      get 'edit_password', on: :member
+      get 'profile' , to: 'profiles#index', as: 'profile'
+      patch 'change_password', on: :member
+      get 'confirm_otp'
+      post 'process_otp_confirmation'
+      get 'otp_index', on: :collection
+      post 'resend_otp', on: :member
+    end
+
+    resource :funds, only: [] do
       get 'deposit', on: :member
       get 'withdraw', on: :member
       patch 'deposit_balance', on: :member
       patch 'withdraw_balance', on: :member
-      get 'confirm_otp'
-      post 'process_otp_confirmation'
       get 'deposit_index', on: :collection
       get 'withdraw_index', on: :collection
-      get 'otp_index', on: :collection
-      post 'resend_otp', on: :member
     end
 
 
