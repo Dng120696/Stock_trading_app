@@ -1,6 +1,6 @@
 <div class="text-red-400 text-sm my-4">
   <% if obj.errors.any? %>
-    <h2>The following errors prevented the category from being saved:</h2>
+    <h2>The following errors prevented from being saved:</h2>
     <ul class = 'list-disc  pl-8'>
       <% obj.errors.full_messages.each do |error| %>
         <li class = ''><%= error %></li>

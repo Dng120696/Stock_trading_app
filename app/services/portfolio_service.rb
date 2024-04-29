@@ -34,7 +34,7 @@ class PortfolioService
     @user.stocks.each do |stock|
       latest_stock_price = Stock.fetch_price(stock.symbol)
       avg_price = get_avg_price(@user,stock)
-      portfolio_stock_total = stock.shares * latest_stock_price
+      portfolio_stock_total = (stock.shares * latest_stock_price).round(2)
       total_purchase = avg_price * stock.shares
       profit_loss_total, gain_loss_total = calculate_profit_loss_and_gain(total_purchase,portfolio_stock_total)
 
