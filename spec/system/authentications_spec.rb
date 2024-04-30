@@ -18,7 +18,7 @@ RSpec.describe "Authentication", type: :system do
 
   private
 
-  def sign_up(email, password, firstname, lastname, balance)
+  def sign_up(email, password, firstname, lastname)
     visit new_user_registration_path
     fill_in 'Firstname', with: firstname
     fill_in 'Lastname', with: lastname
