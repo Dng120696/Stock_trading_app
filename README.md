@@ -27,7 +27,14 @@
 - **User Story #6:** As an Admin, I want to approve a trader sign up so that he/she can start adding stocks
 - **User Story #7:** As an Admin, I want to see all the transactions so that I can monitor the transaction flow of the app
 
-## **Live Demo**
+
+### Enhanced Features
+
+- **Cash-In and Cash Out:** Traders can deposit funds into their trading account (cash-in) and withdraw funds from their trading account (cash-out). This feature allows traders to manage their liquidity for buying and selling stocks effectively.
+- **Lazy Loading:** Lazy loading is implemented to improve the performance and user experience of the application. Instead of loading all the data at once, lazy loading loads data progressively as the user interacts with the application. This ensures faster initial page load times and smoother navigation throughout the application.
+- **Profit/Loss Computation:** The application calculates and displays the profit or loss for each stock in the trader's portfolio. It considers the purchase price, current market price, and quantity of stocks owned by the trader. This feature helps traders assess the performance of their investments and make informed decisions.
+- **OTP Confirmation(One-Time Password):** confirmation is used to enhance the security of trader accounts. When traders perform sensitive actions such as deposit or withdrawing funds, they receive a one-time password via email or SMS. They must enter this OTP to verify their identity and complete the action. This adds an extra layer of security and reduces the risk of unauthorized access to trader accounts.
+
 
 Check out the live demo of the app in the link below:
 

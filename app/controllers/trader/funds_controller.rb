@@ -36,7 +36,7 @@ class Trader::FundsController < ApplicationController
     session[:user_id] = @user.id
     session[:amount] = amount_to_deposit
     session[:type] = :deposit
-    p session[:type],amount_to_deposit
+
     redirect_to confirm_otp_trader_profiles_path
   end
 
