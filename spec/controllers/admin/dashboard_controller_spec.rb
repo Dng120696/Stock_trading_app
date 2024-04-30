@@ -50,7 +50,7 @@ end
 
       it 'redirects to admin dashboard with success notice' do
         patch :approve, params: { id: user.id }
-        expect(response).to redirect_to(admin_dashboard_path)
+        expect(response).to redirect_to(admin_dashboard_index_path)
         expect(flash[:notice]).to eq('Trader account approved successfully')
       end
     end
