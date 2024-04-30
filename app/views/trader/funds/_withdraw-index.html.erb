@@ -1,12 +1,12 @@
 <div class = 'w-[clamp(300px,90%,500px)] mx-auto p-8 rounded-sm  shadow-[0_0_10px_rgba(0,0,0,0.15)] dark:shadow-[0_0_10px_rgba(0,0,0,0.55)] dark:bg-gray-700'>
-  <h1 class = 'text-2xl dark:text-gray-100 mb-4 text-center font-semibold' >Withdraw Cash from Your Account</h1>
+  <h1 class = 'text-2xl dark:text-gray-100 mb-4 text-center font-semibold' >Cash Out from Your Account</h1>
   <div>
   </div>
   <%= form_with url: withdraw_balance_trader_funds_path, method: :patch, class: 'flex flex-col  gap-2' do |f| %>
     <%= f.label :amount, class: 'font-semibold   text-sm text-gray-600 dark:text-gray-300' %>
     <div class = 'grid grid-cols-[2fr,1fr] gap-4 '>
       <%= f.text_field :amount, placeholder: 'Enter Amount',autofocus: true,class: 'placeholder-shown:border-gray-400 text-base bg-gray-50 dark:bg-gray-200 dark:placeholder-shown:border-gray-700 rounded-sm ' %>
-      <%= f.submit 'Withdraw',class: 'w-full h-full rounded-sm font-semibold bg-red-600 dark:bg-red-700 text-gray-100 ' %>
+      <%= f.submit 'Cash out',class: 'w-full h-full rounded-sm font-semibold bg-red-600 dark:bg-red-700 text-gray-100 ' %>
     </div>
     <span class =  'font-semibold   text-sm text-gray-600 dark:text-gray-300'>
       Available:  <%= number_to_currency(current_user.balance)%>

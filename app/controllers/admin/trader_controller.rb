@@ -32,7 +32,12 @@ class Admin::TraderController < ApplicationController
 
   def update
     if @trader.update(trader_params)
-      redirect_to admin_trader_index_path, notice: "User details updated successfully."
+      if @trader.previous_changes.present?
+        flash[:notice] = 'User details updated successfully.'
+     else
+       flash[:alert] = 'No Changes were made.'
+     end
+      redirect_to admin_trader_index_path
     else
       render :edit
     end

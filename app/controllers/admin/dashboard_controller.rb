@@ -9,9 +9,9 @@ class Admin::DashboardController < ApplicationController
 
     if trader&.update(status: :approved)
       UserMailer.approved_email(trader).deliver_now
-      redirect_to admin_dashboard_path, notice: "Trader account approved successfully"
+      redirect_to admin_dashboard_index_path, notice: "Trader account approved successfully"
     else
-      redirect_to admin_dashboard_path, alert: "Failed to approve trader account"
+      redirect_to admin_dashboard_index_path, alert: "Failed to approve trader account"
     end
 
   end
