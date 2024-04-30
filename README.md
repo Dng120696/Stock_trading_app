@@ -79,3 +79,13 @@ rails db:seed
 - iex-ruby-client
 - chartkick
 - groupdate
+
+## Created by
+
+**Development Team:**
+
+- **Christian Patrick Nebab**
+  - Email: [christianpatrickcnebab@gmail.com](mailto:christianpatrickcnebab@gmail.com)
+
+- **Jeffrey Binas**
+
