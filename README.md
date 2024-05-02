@@ -41,31 +41,31 @@
 
 #### **News page**
 
-![news_page][news_page_pic]
+![news_page](docs/img/news_page.png)
 
 #### **Dashboard page**
 
-![dashboard_page][dashboard_page_pic]
+![dashboard_page](docs/img/dashboard_page.png)
 
 #### **Portfolio page**
 
-![portfolio_page][portfolio_page_pic]
+![portfolio_page](docs/img/portfolio_page.png)
 
 #### **Buy Stock page**
 
-![buy_stock_page][buy_stock_page_pic]
+![buy_stock_page](docs/img/buy_stock_page.png)
 
 #### **Sell Stock page**
 
-![sell_stock_page][sell_stock_page_pic]
+![sell_stock_page](docs/img/sell_stock_page.png)
 
 #### **Transaction History page**
 
-![transaction_history][transaction_history_pic]
+![transaction_history](docs/img/transaction_history.png)
 
 #### **Profile page**
 
-![profile_page][profile_page_pic]
+![profile_page](docs/img/profile_page.png)
 
 Check out the live demo of the app in the link below:
 
