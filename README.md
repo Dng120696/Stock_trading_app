@@ -34,7 +34,38 @@
 - **Lazy Loading:** Lazy loading is implemented to improve the performance and user experience of the application. Instead of loading all the data at once, lazy loading loads data progressively as the user interacts with the application. This ensures faster initial page load times and smoother navigation throughout the application.
 - **Profit/Loss Computation:** The application calculates and displays the profit or loss for each stock in the trader's portfolio. It considers the purchase price, current market price, and quantity of stocks owned by the trader. This feature helps traders assess the performance of their investments and make informed decisions.
 - **OTP Confirmation(One-Time Password):** confirmation is used to enhance the security of trader accounts. When traders perform sensitive actions such as deposit or withdrawing funds, they receive a one-time password via email or SMS. They must enter this OTP to verify their identity and complete the action. This adds an extra layer of security and reduces the risk of unauthorized access to trader accounts.
+- **Dark/Light Mode:** User preferences for interface appearance vary, and providing a choice between dark and light modes accommodates these preferences. Dark mode is not only aesthetically pleasing but also reduces eye strain, especially during prolonged usage, making it a sought-after feature by many users. By offering both modes, the application caters to a broader user base and enhances overall user satisfaction.
 
+
+### **Trader App Views**
+
+#### **News page**
+
+![news_page][news_page_pic]
+
+#### **Dashboard page**
+
+![dashboard_page][dashboard_page_pic]
+
+#### **Portfolio page**
+
+![portfolio_page][portfolio_page_pic]
+
+#### **Buy Stock page**
+
+![buy_stock_page][buy_stock_page_pic]
+
+#### **Sell Stock page**
+
+![sell_stock_page][sell_stock_page_pic]
+
+#### **Transaction History page**
+
+![transaction_history][transaction_history_pic]
+
+#### **Profile page**
+
+![profile_page][profile_page_pic]
 
 Check out the live demo of the app in the link below:
 

@@ -73,6 +73,7 @@ class Trader::ProfilesController < ApplicationController
         UserMailer.notify_funds_success(@user, amount,type).deliver_now
         session.delete(:user_id)
         session.delete(:amount)
+        session.delete(:type)
 
         redirect_to trader_transactions_path, notice: 'Updating balance was successful'
       else
